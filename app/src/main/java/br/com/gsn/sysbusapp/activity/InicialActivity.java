@@ -17,6 +17,8 @@ public class InicialActivity extends Activity {
     }
 
     public void realizarLogin(View view) {
+//        DialogFragment.instantiate(this, "");
+
         startActivity(new Intent(this, MainActivity.class));
     }
 

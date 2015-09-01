@@ -1,4 +1,4 @@
-package br.com.gsn.sysbusapp.activity;
+package br.com.gsn.sysbusapp.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 
 import br.com.gsn.sysbusapp.R;
 
-public class FriendsFragment extends Fragment {
+public class ReclamacaoFragment extends Fragment {
 
 
-    public FriendsFragment() {
+    public ReclamacaoFragment() {
         // Required empty public constructor
     }
 
@@ -25,6 +25,6 @@ public class FriendsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_friends, container, false);
+        return inflater.inflate(R.layout.fragment_reclamacao, container, false);
     }
 }

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="45dp"
-        android:text="HOME"
+        android:text="Configurações"
         android:textStyle="bold"/>
 
     <TextView
@@ -25,7 +25,7 @@
         android:textSize="12dp"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
-        android:text="Editar fragment home" />
+        android:text="Editar fragment configurações" />
 
 </RelativeLayout>
 

@@ -14,6 +14,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import br.com.gsn.sysbusapp.R;
+import br.com.gsn.sysbusapp.fragment.ConfiguracoesFragment;
+import br.com.gsn.sysbusapp.fragment.FavoritosFragment;
+import br.com.gsn.sysbusapp.fragment.FragmentDrawer;
+import br.com.gsn.sysbusapp.fragment.HomeFragment;
+import br.com.gsn.sysbusapp.fragment.ReclamacaoFragment;
 
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
@@ -84,12 +89,16 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getString(R.string.title_home);
                 break;
             case 1:
-                fragment = new FriendsFragment();
-                title = getString(R.string.title_friends);
+                fragment = new FavoritosFragment();
+                title = getString(R.string.title_favoritos);
                 break;
             case 2:
-                fragment = new MessagesFragment();
-                title = getString(R.string.title_messages);
+                fragment = new ReclamacaoFragment();
+                title = getString(R.string.title_reclamacoes);
+                break;
+            case 3:
+                fragment = new ConfiguracoesFragment();
+                title = getString(R.string.title_configuracoes);
                 break;
             default:
                 break;

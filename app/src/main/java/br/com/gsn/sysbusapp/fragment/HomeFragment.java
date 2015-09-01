@@ -1,4 +1,4 @@
-package br.com.gsn.sysbusapp.activity;
+package br.com.gsn.sysbusapp.fragment;
 
 
 import android.app.Activity;

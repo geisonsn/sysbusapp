@@ -6,21 +6,35 @@
     <string name="drawer_close">Close</string>
 
     <string name="nav_item_home">Home</string>
-    <string name="nav_item_friends">Friends</string>
-    <string name="nav_item_notifications">Messages</string>
+    <string name="nav_item_favoritos">Favoritos</string>
+    <string name="nav_item_reclamacoes">Reclamações</string>
+    <string name="nav_item_configuracoes">Configurações</string>
 
     <string name="fazer_login">Fazer login</string>
     <string name="cadastrar_se">Cadastrar-se</string>
 
+    <string name="nenhum_favorito_adicionado">Nenhum favorito adicionado</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
         <item>@string/nav_item_home</item>
-        <item>@string/nav_item_friends</item>
-        <item>@string/nav_item_notifications</item>
+        <item>@string/nav_item_favoritos</item>
+        <item>@string/nav_item_reclamacoes</item>
+        <item>@string/nav_item_configuracoes</item>
+    </string-array>
+
+    <string-array name="objeto_reclamado_valores">
+        <item name="cobrador">Cobrador</item>
+        <item name="motorista">Motorista</item>
+        <item name="veiculo">Veículo</item>
+        <item name="outros">Outros</item>
     </string-array>
 
     <string name="title_messages">Messages</string>
     <string name="title_friends">Friends</string>
     <string name="title_home">Home</string>
+    <string name="title_favoritos">Favoritos</string>
+    <string name="title_reclamacoes">Reclamações</string>
+    <string name="title_configuracoes">Configurações</string>
+
 </resources>

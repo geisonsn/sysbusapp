@@ -22,8 +22,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+
         android:orientation="vertical"
         android:background="@color/accent_material_dark">
 
@@ -40,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/cadastrar_se"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold"
                 android:onClick="realizarCadastro"
                 android:layout_marginRight="40dp"/>
 
@@ -48,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/fazer_login"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold"
                 android:onClick="realizarLogin"/>
 
         </LinearLayout>
@@ -56,7 +58,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
             android:text="Acessar sem usuário"
+            android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:gravity="center_horizontal"/>
 
