@@ -10,9 +10,12 @@
     <string name="nav_item_reclamacoes">Reclamações</string>
     <string name="nav_item_configuracoes">Configurações</string>
 
+    <string name="reclamado">Reclamado</string>
     <string name="fazer_login">Fazer login</string>
     <string name="cadastrar_se">Cadastrar-se</string>
 
+    <string name="msg_usuario_ja_cadastrado">Usuário já cadastrado</string>
+    <string name="msg_registro_ja_cadastrado">Já existe um registro ativo com os dados informados</string>
     <string name="nenhum_favorito_adicionado">Nenhum favorito adicionado</string>
 
     <!-- navigation drawer item labels  -->

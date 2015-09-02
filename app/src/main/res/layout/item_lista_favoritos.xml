@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dip">
+
+    <LinearLayout
+        android:id="@+id/containerDetalhesOnibus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="3dip">
+
+        <TextView
+            android:id="@+id/nomeLinha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="35sp"
+            android:text="999"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/nomeBairro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/containerDetalhesOnibus"
+        android:paddingTop="5dip"
+        android:text="Bairro"/>
+
+    <TextView
+        android:id="@+id/outros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nomeBairro"
+        android:layout_toRightOf="@+id/containerDetalhesOnibus"
+        android:text="Outra Informação"/>
+
+</RelativeLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="msg_servidor_indisponivel">Ops! O servidor está fora do ar.</string>
+
+    <string name="msg_senha_usuario_incorreto">Senha ou usuário incorretos</string>
+
+</resources>

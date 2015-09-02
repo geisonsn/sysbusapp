@@ -17,5 +17,14 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/nenhum_favorito_adicionado"/>
+    
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleLargeInverse"
+        android:layout_alignBottom="@android:id/empty"
+        android:layout_alignRight="@android:id/empty"
+        android:layout_alignTop="@android:id/empty"
+        android:id="@+id/progressBar"/>
 
 </RelativeLayout>
