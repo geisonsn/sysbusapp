@@ -7,40 +7,65 @@
     android:layout_marginTop="20dp"
     android:theme="@android:style/Theme.Holo.Light">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reclamado"/>
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/objetoReclamado"
-        android:entries="@array/objeto_reclamado_valores"
-        android:prompt="@string/reclamado"/>
+        android:entries="@array/objeto_reclamado_valores"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/origem_reclamacao"/>
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/origemReclamacao"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/linha"/>
+
     <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Linha"
         android:id="@+id/linha"
         android:lineSpacingExtra="30dp"/>
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Placa"
-        android:id="@+id/placa"/>
+        android:text="@string/placa"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descreva o problema"/>
+        android:id="@+id/placa"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/detalhes"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/detalhes"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/data_ocorrencia"/>
 
     <EditText
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:hint="Data da ocorrência"
         android:id="@+id/dataOcorrencia"/>
 
     <Button

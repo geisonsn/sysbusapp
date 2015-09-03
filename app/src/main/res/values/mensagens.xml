@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="msg_servidor_indisponivel">Ops! O servidor está fora do ar.</string>
-
     <string name="msg_senha_usuario_incorreto">Senha ou usuário incorretos</string>
-
+    <string name="msg_usuario_ja_cadastrado">Usuário já cadastrado</string>
+    <string name="msg_registro_ja_cadastrado">Já existe um registro ativo com os dados informados</string>
+    <string name="msg_sem_conexao">Sem conexão com a internet</string>
 </resources>

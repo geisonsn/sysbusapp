@@ -18,6 +18,8 @@ public abstract class AbstractSpringRestResponse {
     private Context context;
     private int statusCode;
     private Object objectReturn;
+    private boolean connectionFailed = false;
+    private boolean serverError = false;
 
     private OnHttpOk onHttpOk;
     private OnHttpNotFound onHttpNotFound;
@@ -33,6 +35,13 @@ public abstract class AbstractSpringRestResponse {
     protected AbstractSpringRestResponse(Context context, int statusCode) {
         this.context = context;
         this.statusCode = statusCode;
+
+        if (StatusCodeFamily.getFamily(this.statusCode) == StatusCodeFamily.SERVER_ERROR) {
+            this.serverError = true;
+        } else if (StatusCodeFamily.getFamily(this.statusCode) == StatusCodeFamily.OTHER) {
+            this.connectionFailed = true;
+        }
+
     }
 
     public int getStatusCode() {
@@ -41,6 +50,14 @@ public abstract class AbstractSpringRestResponse {
 
     public Object getObjectReturn() {
         return objectReturn;
+    }
+
+    public boolean getConnectionFailed() {
+        return this.connectionFailed;
+    }
+
+    public boolean getServerError() {
+        return this.serverError;
     }
 
     protected void onHttpOk() {
@@ -61,14 +78,14 @@ public abstract class AbstractSpringRestResponse {
 
     protected void onHttpConflict() {
         if (onHttpConflict == null) {
-            Toast.makeText(context, context.getResources().getString(R.string.msg_registro_ja_cadastrado), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.msg_registro_ja_cadastrado, Toast.LENGTH_SHORT).show();
         } else {
             onHttpConflict.doThis();
         }
     }
 
     protected void onHttpUnavailable() {
-        Toast.makeText(context, context.getResources().getString(R.string.msg_servidor_indisponivel), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, R.string.msg_servidor_indisponivel, Toast.LENGTH_SHORT).show();
     }
 
     protected void onHttpNotFound() {

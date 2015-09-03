@@ -11,20 +11,20 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.gsn.sysbusapp.R;
-import br.com.gsn.sysbusapp.model.LinhaFavoritaDTO;
+import br.com.gsn.sysbusapp.model.ReclamacaoRankingDTO;
 
 /**
  * Created by Geison on 01/09/2015.
  */
-public class LinhaFavoritaAdapter extends ArrayAdapter<LinhaFavoritaDTO> {
+public class ReclamacaoRankingAdapter extends ArrayAdapter<ReclamacaoRankingDTO> {
 
     private Context context;
-    private List<LinhaFavoritaDTO> linhasFavoritas;
+    private List<ReclamacaoRankingDTO> linhas;
 
-    public LinhaFavoritaAdapter(Context context, List<LinhaFavoritaDTO> linhasFavoritas) {
-        super(context, R.layout.item_lista_favoritos, linhasFavoritas);
+    public ReclamacaoRankingAdapter(Context context, List<ReclamacaoRankingDTO> linhas) {
+        super(context, R.layout.item_lista_reclamacao_ranking, linhas);
         this.context = context;
-        this.linhasFavoritas = linhasFavoritas;
+        this.linhas = linhas;
     }
 
     @Override
@@ -33,21 +33,21 @@ public class LinhaFavoritaAdapter extends ArrayAdapter<LinhaFavoritaDTO> {
 
         if (view == null) {
             LayoutInflater layoutInflater = ((Activity) context).getLayoutInflater();
-            view = layoutInflater.inflate(R.layout.item_lista_favoritos, null);
+            view = layoutInflater.inflate(R.layout.item_lista_reclamacao_ranking, null);
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.numeroLinha = (TextView) view.findViewById(R.id.numeroLinha);
             viewHolder.nomeEmpresa = (TextView) view.findViewById(R.id.nomeEmpresa);
-            viewHolder.descricaoLinha = (TextView) view.findViewById(R.id.descricaoLinha);
+            viewHolder.totalReclamacoes = (TextView) view.findViewById(R.id.totalReclamacoes);
             view.setTag(viewHolder);
         }
 
         ViewHolder holder = (ViewHolder) view.getTag();
 
-        LinhaFavoritaDTO linha = linhasFavoritas.get(position);
+        ReclamacaoRankingDTO linha = linhas.get(position);
 
         holder.numeroLinha.setText(linha.getNumeroLinha());
-        holder.nomeEmpresa.setText(linha.getEmpresaLinha());
-        holder.descricaoLinha.setText(linha.getDescricaoLinha());
+        holder.nomeEmpresa.setText(linha.getNomeEmpresa());
+        holder.totalReclamacoes.setText(linha.getTotalReclamacoes().toString());
 
         return view;
     }
@@ -55,6 +55,6 @@ public class LinhaFavoritaAdapter extends ArrayAdapter<LinhaFavoritaDTO> {
     static  class ViewHolder {
         TextView numeroLinha;
         TextView nomeEmpresa;
-        TextView descricaoLinha;
+        TextView totalReclamacoes;
     }
 }

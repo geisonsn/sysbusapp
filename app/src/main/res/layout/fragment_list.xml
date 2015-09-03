@@ -1,9 +1,7 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="androidhive.info.materialdesign.activity.FriendsFragment">
+    android:orientation="vertical">
 
     <ListView
         android:id="@android:id/list"
@@ -16,14 +14,18 @@
         android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:gravity="center_vertical|center_horizontal"/>
-    
-    <ProgressBar
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="?android:attr/progressBarStyleLargeInverse"
-        android:layout_alignBottom="@android:id/empty"
-        android:layout_alignRight="@android:id/empty"
-        android:layout_alignTop="@android:id/empty"
-        android:id="@+id/progressBar"/>
+        android:layout_gravity="center_vertical|center_horizontal">
 
-</RelativeLayout>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleLarge"
+            android:id="@+id/progressBar"/>
+
+    </LinearLayout>
+
+</FrameLayout>

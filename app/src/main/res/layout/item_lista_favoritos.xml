@@ -6,13 +6,13 @@
     android:padding="5dip">
 
     <LinearLayout
-        android:id="@+id/containerDetalhesOnibus"
+        android:id="@+id/containerNumeroLinha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="3dip">
+        android:paddingRight="3dp">
 
         <TextView
-            android:id="@+id/nomeLinha"
+            android:id="@+id/numeroLinha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="35sp"
@@ -20,19 +20,19 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/nomeBairro"
+        android:id="@+id/nomeEmpresa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/containerDetalhesOnibus"
-        android:paddingTop="5dip"
-        android:text="Bairro"/>
+        android:layout_toRightOf="@+id/containerNumeroLinha"
+        android:paddingTop="5dp"
+        android:text="Empresa"/>
 
     <TextView
-        android:id="@+id/outros"
+        android:id="@+id/descricaoLinha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/nomeBairro"
-        android:layout_toRightOf="@+id/containerDetalhesOnibus"
-        android:text="Outra Informação"/>
+        android:layout_below="@+id/nomeEmpresa"
+        android:layout_toRightOf="@+id/containerNumeroLinha"
+        android:text="Descrição da linha"/>
 
 </RelativeLayout>

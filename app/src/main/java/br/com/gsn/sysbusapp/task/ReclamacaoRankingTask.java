@@ -12,9 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.gsn.sysbusapp.R;
-import br.com.gsn.sysbusapp.adapter.LinhaFavoritaAdapter;
+import br.com.gsn.sysbusapp.adapter.ReclamacaoRankingAdapter;
 import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
-import br.com.gsn.sysbusapp.model.LinhaFavoritaDTO;
+import br.com.gsn.sysbusapp.model.ReclamacaoRankingDTO;
 import br.com.gsn.sysbusapp.model.SprintRestResponse;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
@@ -22,21 +22,20 @@ import br.com.gsn.sysbusapp.util.UrlServico;
 /**
  * Created by geison on 07/05/15.
  */
-public class LinhaFavoritaTask extends AsyncTask<Void, Integer, SprintRestResponse> {
+public class ReclamacaoRankingTask extends AsyncTask<Void, Integer, SprintRestResponse> {
 
     private ListFragment listFragment;
     private Activity context;
 
-    public LinhaFavoritaTask(ListFragment context) {
+    public ReclamacaoRankingTask(ListFragment context) {
         this.context = context.getActivity();
         this.listFragment = context;
     }
 
     @Override
     protected SprintRestResponse doInBackground(Void... param) {
-        String url = UrlServico.URL_LISTAGEM_LINHA_FAVORITA;
-        url = url.replace("{idUsuario}", String.valueOf(1));
-        return SpringRestClient.getForObject(context, url, LinhaFavoritaDTO[].class);
+        String url = UrlServico.URL_LISTAGEM_RECLAMACAO_RANKING;
+        return SpringRestClient.getForObject(context, url, ReclamacaoRankingDTO[].class);
     }
 
     @Override
@@ -50,20 +49,21 @@ public class LinhaFavoritaTask extends AsyncTask<Void, Integer, SprintRestRespon
         response.setOnHttpOk(new AbstractSpringRestResponse.OnHttpOk() {
             @Override
             public void doThis() {
-                LinhaFavoritaDTO[] linhas = (LinhaFavoritaDTO[]) response.getObjectReturn();
-                List<LinhaFavoritaDTO> linhasFavoritas = Arrays.asList(linhas);
-                if (linhasFavoritas.isEmpty()) {
-                    emptyView.setText(R.string.nenhum_favorito_adicionado);
-                    listView.setEmptyView(emptyView);
-                } else {
-                    listFragment.setListAdapter(new LinhaFavoritaAdapter(context, linhasFavoritas));
-                }
+            ReclamacaoRankingDTO[] linhas = (ReclamacaoRankingDTO[]) response.getObjectReturn();
+            List<ReclamacaoRankingDTO> linhasFavoritas = Arrays.asList(linhas);
+            if (linhasFavoritas.isEmpty()) {
+                emptyView.setText(R.string.nenhum_favorito_adicionado);
+                listView.setEmptyView(emptyView);
+            } else {
+                listFragment.setListAdapter(new ReclamacaoRankingAdapter(context, linhasFavoritas));
+            }
             }
         });
+
         response.setOnHttpNotFound(new AbstractSpringRestResponse.OnHttpNotFound() {
             @Override
             public void doThis() {
-                emptyView.setText(R.string.nenhum_favorito_adicionado);
+                emptyView.setText("Ranking não criado por falta de reclamações");
                 listView.setEmptyView(emptyView);
             }
         });

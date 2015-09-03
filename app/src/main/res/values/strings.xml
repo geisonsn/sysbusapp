@@ -11,11 +11,11 @@
     <string name="nav_item_configuracoes">Configurações</string>
 
     <string name="reclamado">Reclamado</string>
+    <string name="origem_reclamacao">Origem da reclamação</string>
+
     <string name="fazer_login">Fazer login</string>
     <string name="cadastrar_se">Cadastrar-se</string>
 
-    <string name="msg_usuario_ja_cadastrado">Usuário já cadastrado</string>
-    <string name="msg_registro_ja_cadastrado">Já existe um registro ativo com os dados informados</string>
     <string name="nenhum_favorito_adicionado">Nenhum favorito adicionado</string>
 
     <!-- navigation drawer item labels  -->
@@ -39,5 +39,9 @@
     <string name="title_favoritos">Favoritos</string>
     <string name="title_reclamacoes">Reclamações</string>
     <string name="title_configuracoes">Configurações</string>
+    <string name="linha">Linha</string>
+    <string name="placa">Placa</string>
+    <string name="detalhes">Detalhes</string>
+    <string name="data_ocorrencia">Data da ocorrência</string>
 
 </resources>
