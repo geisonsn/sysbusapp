@@ -20,28 +20,30 @@ public abstract class AbstractSpringRestResponse {
     private Object objectReturn;
     private boolean connectionFailed = false;
     private boolean serverError = false;
+    private boolean showMessage = true;
 
     private OnHttpOk onHttpOk;
     private OnHttpNotFound onHttpNotFound;
     private OnHttpCreated onHttpCreated;
     private OnHttpConflict onHttpConflict;
 
-    protected AbstractSpringRestResponse(Context context, Object objectReturn, int statusCode) {
+    protected AbstractSpringRestResponse(Context context, Object objectReturn, int statusCode, boolean showMessage) {
         this.context = context;
         this.objectReturn = objectReturn;
         this.statusCode = statusCode;
+        this.showMessage = showMessage;
     }
 
-    protected AbstractSpringRestResponse(Context context, int statusCode) {
+    protected AbstractSpringRestResponse(Context context, int statusCode, boolean showMessage) {
         this.context = context;
         this.statusCode = statusCode;
+        this.showMessage = showMessage;
 
         if (StatusCodeFamily.getFamily(this.statusCode) == StatusCodeFamily.SERVER_ERROR) {
             this.serverError = true;
         } else if (StatusCodeFamily.getFamily(this.statusCode) == StatusCodeFamily.OTHER) {
             this.connectionFailed = true;
         }
-
     }
 
     public int getStatusCode() {
@@ -62,7 +64,9 @@ public abstract class AbstractSpringRestResponse {
 
     protected void onHttpOk() {
         if (onHttpOk == null) {
-            Toast.makeText(context, "Requisição realizada com sucesso", Toast.LENGTH_SHORT).show();
+            if (showMessage) {
+                Toast.makeText(context, "Requisição realizada com sucesso", Toast.LENGTH_SHORT).show();
+            }
         } else {
             onHttpOk.doThis();
         }
@@ -70,7 +74,9 @@ public abstract class AbstractSpringRestResponse {
 
     protected void onHttpCreated() {
         if (onHttpCreated == null) {
-            Toast.makeText(context, "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show();
+            if (showMessage) {
+                Toast.makeText(context, "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show();
+            }
         } else {
             onHttpCreated.doThis();
         }
@@ -78,30 +84,40 @@ public abstract class AbstractSpringRestResponse {
 
     protected void onHttpConflict() {
         if (onHttpConflict == null) {
-            Toast.makeText(context, R.string.msg_registro_ja_cadastrado, Toast.LENGTH_SHORT).show();
+            if (showMessage) {
+                Toast.makeText(context, R.string.msg_registro_ja_cadastrado, Toast.LENGTH_SHORT).show();
+            }
         } else {
             onHttpConflict.doThis();
         }
     }
 
     protected void onHttpUnavailable() {
-        Toast.makeText(context, R.string.msg_servidor_indisponivel, Toast.LENGTH_SHORT).show();
+        if (showMessage) {
+            Toast.makeText(context, R.string.msg_servidor_indisponivel, Toast.LENGTH_SHORT).show();
+        }
     }
 
     protected void onHttpNotFound() {
         if (onHttpNotFound == null) {
-            Toast.makeText(context, "Não encontrado", Toast.LENGTH_SHORT).show();
+            if (showMessage) {
+                Toast.makeText(context, "Não encontrado", Toast.LENGTH_SHORT).show();
+            }
         } else {
             onHttpNotFound.doThis();
         }
     }
 
     protected void onConnectionFailed() {
-        Toast.makeText(context, "Falha na conexão! Verifique sua conexão e tente novamente.", Toast.LENGTH_LONG).show();
+        if (showMessage) {
+            Toast.makeText(context, "Falha na conexão! Verifique sua conexão e tente novamente.", Toast.LENGTH_LONG).show();
+        }
     }
 
     protected void onUnexpectedError() {
-        Toast.makeText(context, "Ops! Ocorreu um erro inesperado.", Toast.LENGTH_SHORT).show();
+        if (showMessage) {
+            Toast.makeText(context, "Ops! Ocorreu um erro inesperado.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void setOnHttpOk(OnHttpOk onHttpOk) {

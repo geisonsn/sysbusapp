@@ -35,7 +35,9 @@ public class ReclamacaoRankingTask extends AsyncTask<Void, Integer, SprintRestRe
     @Override
     protected SprintRestResponse doInBackground(Void... param) {
         String url = UrlServico.URL_LISTAGEM_RECLAMACAO_RANKING;
-        return SpringRestClient.getForObject(context, url, ReclamacaoRankingDTO[].class);
+        return new SpringRestClient()
+            .showMessage(false)
+            .getForObject(context, url, ReclamacaoRankingDTO[].class);
     }
 
     @Override
@@ -44,19 +46,12 @@ public class ReclamacaoRankingTask extends AsyncTask<Void, Integer, SprintRestRe
         final TextView emptyView = (TextView) context.findViewById(android.R.id.empty);
         final ListView listView = (ListView) context.findViewById(android.R.id.list);
 
-        progressBar.setVisibility(View.GONE);
-
         response.setOnHttpOk(new AbstractSpringRestResponse.OnHttpOk() {
             @Override
             public void doThis() {
-            ReclamacaoRankingDTO[] linhas = (ReclamacaoRankingDTO[]) response.getObjectReturn();
-            List<ReclamacaoRankingDTO> linhasFavoritas = Arrays.asList(linhas);
-            if (linhasFavoritas.isEmpty()) {
-                emptyView.setText(R.string.nenhum_favorito_adicionado);
-                listView.setEmptyView(emptyView);
-            } else {
+                ReclamacaoRankingDTO[] linhas = (ReclamacaoRankingDTO[]) response.getObjectReturn();
+                List<ReclamacaoRankingDTO> linhasFavoritas = Arrays.asList(linhas);
                 listFragment.setListAdapter(new ReclamacaoRankingAdapter(context, linhasFavoritas));
-            }
             }
         });
 
@@ -69,7 +64,7 @@ public class ReclamacaoRankingTask extends AsyncTask<Void, Integer, SprintRestRe
         });
 
         if (response.getConnectionFailed()) {
-            emptyView.setText(R.string.msg_sem_conexao);
+            emptyView.setText(R.string.msg_falha_na_conexao);
             listView.setEmptyView(emptyView);
         } else if (response.getServerError()) {
             emptyView.setText(R.string.msg_servidor_indisponivel);
@@ -77,5 +72,7 @@ public class ReclamacaoRankingTask extends AsyncTask<Void, Integer, SprintRestRe
         }
 
         response.executeCallbacks();
+
+        progressBar.setVisibility(View.GONE);
     }
 }

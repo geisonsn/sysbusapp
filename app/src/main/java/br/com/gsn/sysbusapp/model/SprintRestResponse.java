@@ -8,12 +8,12 @@ import android.content.Context;
 public class SprintRestResponse extends AbstractSpringRestResponse {
 
 
-    public SprintRestResponse(Context context, Object object, int statusCode) {
-        super(context, object, statusCode);
+    public SprintRestResponse(Context context, Object object, int statusCode, boolean showMessage) {
+        super(context, object, statusCode, showMessage);
     }
 
-    public SprintRestResponse(Context context, int statusCode) {
-        super(context, statusCode);
+    public SprintRestResponse(Context context, int statusCode, boolean showMessage) {
+        super(context, statusCode, showMessage);
     }
 
 }

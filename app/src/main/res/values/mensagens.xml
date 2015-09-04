@@ -5,4 +5,5 @@
     <string name="msg_usuario_ja_cadastrado">Usuário já cadastrado</string>
     <string name="msg_registro_ja_cadastrado">Já existe um registro ativo com os dados informados</string>
     <string name="msg_sem_conexao">Sem conexão com a internet</string>
+    <string name="msg_falha_na_conexao">Falha na conexão com a internet</string>
 </resources>

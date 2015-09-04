@@ -36,7 +36,10 @@ public class LinhaFavoritaTask extends AsyncTask<Void, Integer, SprintRestRespon
     protected SprintRestResponse doInBackground(Void... param) {
         String url = UrlServico.URL_LISTAGEM_LINHA_FAVORITA;
         url = url.replace("{idUsuario}", String.valueOf(1));
-        return SpringRestClient.getForObject(context, url, LinhaFavoritaDTO[].class);
+
+        return new SpringRestClient()
+            .showMessage(false)
+            .getForObject(context, url, LinhaFavoritaDTO[].class);
     }
 
     @Override
@@ -45,19 +48,12 @@ public class LinhaFavoritaTask extends AsyncTask<Void, Integer, SprintRestRespon
         final TextView emptyView = (TextView) context.findViewById(android.R.id.empty);
         final ListView listView = (ListView) context.findViewById(android.R.id.list);
 
-        progressBar.setVisibility(View.GONE);
-
         response.setOnHttpOk(new AbstractSpringRestResponse.OnHttpOk() {
             @Override
             public void doThis() {
                 LinhaFavoritaDTO[] linhas = (LinhaFavoritaDTO[]) response.getObjectReturn();
                 List<LinhaFavoritaDTO> linhasFavoritas = Arrays.asList(linhas);
-                if (linhasFavoritas.isEmpty()) {
-                    emptyView.setText(R.string.nenhum_favorito_adicionado);
-                    listView.setEmptyView(emptyView);
-                } else {
-                    listFragment.setListAdapter(new LinhaFavoritaAdapter(context, linhasFavoritas));
-                }
+                listFragment.setListAdapter(new LinhaFavoritaAdapter(context, linhasFavoritas));
             }
         });
         response.setOnHttpNotFound(new AbstractSpringRestResponse.OnHttpNotFound() {
@@ -69,7 +65,7 @@ public class LinhaFavoritaTask extends AsyncTask<Void, Integer, SprintRestRespon
         });
 
         if (response.getConnectionFailed()) {
-            emptyView.setText(R.string.msg_sem_conexao);
+            emptyView.setText(R.string.msg_falha_na_conexao);
             listView.setEmptyView(emptyView);
         } else if (response.getServerError()) {
             emptyView.setText(R.string.msg_servidor_indisponivel);
@@ -77,5 +73,7 @@ public class LinhaFavoritaTask extends AsyncTask<Void, Integer, SprintRestRespon
         }
 
         response.executeCallbacks();
+
+        progressBar.setVisibility(View.GONE);
     }
 }
