@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.support.v4.app.ListFragment;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class ReclamacaoRankingTask extends AsyncTask<Void, Integer, SprintRestRe
         final ProgressBar progressBar = (ProgressBar) context.findViewById(R.id.progressBar);
         final TextView emptyView = (TextView) context.findViewById(android.R.id.empty);
         final ListView listView = (ListView) context.findViewById(android.R.id.list);
+        final LinearLayout header = (LinearLayout) context.findViewById(R.id.header);
 
         response.setOnHttpOk(new AbstractSpringRestResponse.OnHttpOk() {
             @Override
@@ -52,6 +54,7 @@ public class ReclamacaoRankingTask extends AsyncTask<Void, Integer, SprintRestRe
                 ReclamacaoRankingDTO[] linhas = (ReclamacaoRankingDTO[]) response.getObjectReturn();
                 List<ReclamacaoRankingDTO> linhasFavoritas = Arrays.asList(linhas);
                 listFragment.setListAdapter(new ReclamacaoRankingAdapter(context, linhasFavoritas));
+                header.setVisibility(View.VISIBLE);
             }
         });
 
@@ -66,9 +69,11 @@ public class ReclamacaoRankingTask extends AsyncTask<Void, Integer, SprintRestRe
         if (response.getConnectionFailed()) {
             emptyView.setText(R.string.msg_falha_na_conexao);
             listView.setEmptyView(emptyView);
+            header.setVisibility(View.GONE);
         } else if (response.getServerError()) {
             emptyView.setText(R.string.msg_servidor_indisponivel);
             listView.setEmptyView(emptyView);
+            header.setVisibility(View.GONE);
         }
 
         response.executeCallbacks();

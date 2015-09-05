@@ -28,26 +28,29 @@
             android:layout_weight="2"
             android:gravity="right"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="99"/>
+            android:text="Total"/>
 
     </LinearLayout>
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"/>
 
     <TextView
         android:id="@android:id/empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:gravity="center_vertical|center_horizontal"/>
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal">
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
 
         <ProgressBar
             android:layout_width="wrap_content"

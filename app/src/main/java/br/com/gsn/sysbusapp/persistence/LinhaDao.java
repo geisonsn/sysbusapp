@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.gsn.sysbusapp.model.LinhaDTO;
-import br.com.gsn.sysbusapp.model.cache.Linha;
+import br.com.gsn.sysbusapp.cache.Linha;
 
 /**
  * Created by Geison on 29/08/2015.

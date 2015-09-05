@@ -1,4 +1,4 @@
-package br.com.gsn.sysbusapp.model.cache;
+package br.com.gsn.sysbusapp.cache;
 
 import android.content.ContentValues;
 import android.database.Cursor;

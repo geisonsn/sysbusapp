@@ -19,14 +19,21 @@ import br.com.gsn.sysbusapp.fragment.FavoritosFragment;
 import br.com.gsn.sysbusapp.fragment.FragmentDrawer;
 import br.com.gsn.sysbusapp.fragment.HomeFragment;
 import br.com.gsn.sysbusapp.fragment.ReclamacaoFragment;
+import br.com.gsn.sysbusapp.abstraction.TaskCancelable;
+import br.com.gsn.sysbusapp.abstraction.Host;
 
 
-public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
+public class MainActivity extends AppCompatActivity implements Host, FragmentDrawer.FragmentDrawerListener {
 
     private static String TAG = MainActivity.class.getSimpleName();
 
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
+
+    /**
+     * Identifica o fragmento apresentado na view
+     */
+    private TaskCancelable mCurrentContentFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +112,11 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         }
 
         if (fragment != null) {
+
+            if (mCurrentContentFragment != null) {
+                mCurrentContentFragment.cancelTaskOperation();
+            }
+
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_body, fragment);
@@ -113,5 +125,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             // set the toolbar title
             getSupportActionBar().setTitle(title);
         }
+    }
+
+    @Override
+    public void seCurrentFragment(TaskCancelable fragment) {
+        this.mCurrentContentFragment = fragment;
     }
 }

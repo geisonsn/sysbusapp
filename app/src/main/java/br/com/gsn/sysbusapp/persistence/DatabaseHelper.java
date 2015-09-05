@@ -4,8 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import br.com.gsn.sysbusapp.model.cache.Linha;
-import br.com.gsn.sysbusapp.model.cache.LinhaFavorita;
+import br.com.gsn.sysbusapp.cache.Linha;
+import br.com.gsn.sysbusapp.cache.LinhaFavorita;
 
 
 /**
