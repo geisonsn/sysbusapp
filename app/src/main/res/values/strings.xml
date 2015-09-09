@@ -43,5 +43,14 @@
     <string name="placa">Placa</string>
     <string name="detalhes">Detalhes</string>
     <string name="data_ocorrencia">Data da ocorrência</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="acessar">Acessar</string>
+    <string name="esqueci_senha">Esqueci a senha</string>
+    <string name="nome">Nome</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="novo_usuario">Novo usuário</string>
+    <string name="cadastre_se">Cadastre-se</string>
 
 </resources>

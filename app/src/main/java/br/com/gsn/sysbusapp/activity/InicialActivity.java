@@ -1,14 +1,21 @@
 package br.com.gsn.sysbusapp.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import br.com.gsn.sysbusapp.R;
+import br.com.gsn.sysbusapp.fragment.DialogContentFragment;
+import br.com.gsn.sysbusapp.dialog.LoginDialog;
+import br.com.gsn.sysbusapp.dialog.NovoUsuarioDialog;
 
 
-public class InicialActivity extends Activity {
+public class InicialActivity extends FragmentActivity {
+
+    private DialogFragment dialogLogin;
+    private DialogContentFragment dialogNovoUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,12 +24,16 @@ public class InicialActivity extends Activity {
     }
 
     public void realizarLogin(View view) {
-//        DialogFragment.instantiate(this, "");
-
-        startActivity(new Intent(this, MainActivity.class));
+        dialogLogin = new LoginDialog();
+        dialogLogin.show(getSupportFragmentManager(), "login");
     }
 
     public void realizarCadastro(View view) {
-        startActivity((new Intent(this, MainActivity.class)));
+        dialogNovoUsuario = new NovoUsuarioDialog();
+        dialogNovoUsuario.show(getSupportFragmentManager(), "cadastroUsuario");
+    }
+
+    public void acessarSemUsuario(View view) {
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

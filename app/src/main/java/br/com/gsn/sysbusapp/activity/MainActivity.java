@@ -14,16 +14,16 @@ import android.view.View;
 import android.widget.Toast;
 
 import br.com.gsn.sysbusapp.R;
+import br.com.gsn.sysbusapp.abstraction.BusinessTaskOperation;
+import br.com.gsn.sysbusapp.abstraction.HostBusinessDelegate;
 import br.com.gsn.sysbusapp.fragment.ConfiguracoesFragment;
 import br.com.gsn.sysbusapp.fragment.FavoritosFragment;
 import br.com.gsn.sysbusapp.fragment.FragmentDrawer;
 import br.com.gsn.sysbusapp.fragment.HomeFragment;
 import br.com.gsn.sysbusapp.fragment.ReclamacaoFragment;
-import br.com.gsn.sysbusapp.abstraction.TaskCancelable;
-import br.com.gsn.sysbusapp.abstraction.Host;
 
 
-public class MainActivity extends AppCompatActivity implements Host, FragmentDrawer.FragmentDrawerListener {
+public class MainActivity extends AppCompatActivity implements HostBusinessDelegate, FragmentDrawer.FragmentDrawerListener {
 
     private static String TAG = MainActivity.class.getSimpleName();
 
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements Host, FragmentDra
     /**
      * Identifica o fragmento apresentado na view
      */
-    private TaskCancelable mCurrentContentFragment = null;
+    private BusinessTaskOperation mCurrentBusinessDelegate = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,8 +113,8 @@ public class MainActivity extends AppCompatActivity implements Host, FragmentDra
 
         if (fragment != null) {
 
-            if (mCurrentContentFragment != null) {
-                mCurrentContentFragment.cancelTaskOperation();
+            if (mCurrentBusinessDelegate != null) {
+                mCurrentBusinessDelegate.cancelTaskOperation();
             }
 
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements Host, FragmentDra
     }
 
     @Override
-    public void seCurrentFragment(TaskCancelable fragment) {
-        this.mCurrentContentFragment = fragment;
+    public void seCurrentBusinessDelegate(BusinessTaskOperation mCurrentBusinessDelegate) {
+        this.mCurrentBusinessDelegate = mCurrentBusinessDelegate;
     }
 }

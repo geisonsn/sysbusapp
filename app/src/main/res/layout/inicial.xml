@@ -62,7 +62,9 @@
             android:text="Acessar sem usuário"
             android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal"
+            android:clickable="true"
+            android:onClick="acessarSemUsuario"/>
 
     </LinearLayout>
 

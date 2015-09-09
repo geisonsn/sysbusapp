@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.HttpURLConnection;
 
 import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
-import br.com.gsn.sysbusapp.model.SprintRestResponse;
+import br.com.gsn.sysbusapp.model.SpringRestResponse;
 
 /**
  * Created by Geison on 23/08/2015.
@@ -33,10 +33,10 @@ public final class SpringRestClient {
         return this;
     }
 
-    public static <T> SprintRestResponse post(Context context, final String url, final T param, Class<T> returnType) {
+    public static <T> SpringRestResponse post(Context context, final String url, final T param, Class<T> returnType) {
 
         if (!isConnected(context)) {
-            return new SprintRestResponse(context, AbstractSpringRestResponse.CONNECTION_FAILED, showMessage);
+            return new SpringRestResponse(context, AbstractSpringRestResponse.CONNECTION_FAILED, showMessage);
         }
 
         try {
@@ -51,22 +51,22 @@ public final class SpringRestClient {
 
             ResponseEntity<T> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, returnType);
 
-            return new SprintRestResponse(context, responseEntity.getBody(), responseEntity.getStatusCode().value(), showMessage);
+            return new SpringRestResponse(context, responseEntity.getBody(), responseEntity.getStatusCode().value(), showMessage);
 
         } catch (HttpStatusCodeException e) {
-            return new SprintRestResponse(context, e.getStatusCode().value(), showMessage);
+            return new SpringRestResponse(context, e.getStatusCode().value(), showMessage);
         } catch (RestClientException e) {
-            return new SprintRestResponse(context, AbstractSpringRestResponse.CONNECTION_FAILED, showMessage);
+            return new SpringRestResponse(context, AbstractSpringRestResponse.CONNECTION_FAILED, showMessage);
         } catch (Exception e) {
-            return new SprintRestResponse(context, AbstractSpringRestResponse.UNEXPECTED_ERROR, showMessage);
+            return new SpringRestResponse(context, AbstractSpringRestResponse.UNEXPECTED_ERROR, showMessage);
         }
     }
 
-    public static <T> SprintRestResponse postForObject(Context context, final String url, final T param, Class<T> returnType)
+    public static <T> SpringRestResponse postForObject(Context context, final String url, final T param, Class<T> returnType)
             throws HttpStatusCodeException {
 
         if (!isConnected(context)) {
-            return new SprintRestResponse(context, AbstractSpringRestResponse.CONNECTION_FAILED, showMessage);
+            return new SpringRestResponse(context, AbstractSpringRestResponse.CONNECTION_FAILED, showMessage);
         }
 
         try {
@@ -76,20 +76,20 @@ public final class SpringRestClient {
 
             T returnObject = restTemplate.postForObject(url, param, returnType);
 
-            return new SprintRestResponse(context, returnObject, HttpURLConnection.HTTP_OK, showMessage);
+            return new SpringRestResponse(context, returnObject, HttpURLConnection.HTTP_OK, showMessage);
         } catch (HttpStatusCodeException e) {
-            return new SprintRestResponse(context, e.getStatusCode().value(), showMessage);
+            return new SpringRestResponse(context, e.getStatusCode().value(), showMessage);
         } catch (RestClientException e) {
-            return new SprintRestResponse(context, AbstractSpringRestResponse.CONNECTION_FAILED, showMessage);
+            return new SpringRestResponse(context, AbstractSpringRestResponse.CONNECTION_FAILED, showMessage);
         } catch (Exception e) {
-            return new SprintRestResponse(context, AbstractSpringRestResponse.UNEXPECTED_ERROR, showMessage);
+            return new SpringRestResponse(context, AbstractSpringRestResponse.UNEXPECTED_ERROR, showMessage);
         }
     }
 
-    public static <T> SprintRestResponse getForObject(Context context, final String url, Class<T> returnType) {
+    public static <T> SpringRestResponse getForObject(Context context, final String url, Class<T> returnType) {
 
         if (!isConnected(context)) {
-            return new SprintRestResponse(context, AbstractSpringRestResponse.CONNECTION_FAILED, showMessage);
+            return new SpringRestResponse(context, AbstractSpringRestResponse.CONNECTION_FAILED, showMessage);
         }
 
         try {
@@ -98,13 +98,13 @@ public final class SpringRestClient {
 
             T returnObject = restTemplate.getForObject(url, returnType);
 
-            return new SprintRestResponse(context, returnObject, HttpURLConnection.HTTP_OK, showMessage);
+            return new SpringRestResponse(context, returnObject, HttpURLConnection.HTTP_OK, showMessage);
         } catch (HttpStatusCodeException e) {
-            return new SprintRestResponse(context, e.getStatusCode().value(), showMessage);
+            return new SpringRestResponse(context, e.getStatusCode().value(), showMessage);
         } catch (RestClientException e) {
-            return new SprintRestResponse(context, AbstractSpringRestResponse.CONNECTION_FAILED, showMessage);
+            return new SpringRestResponse(context, AbstractSpringRestResponse.CONNECTION_FAILED, showMessage);
         } catch (Exception e) {
-            return new SprintRestResponse(context, AbstractSpringRestResponse.UNEXPECTED_ERROR, showMessage);
+            return new SpringRestResponse(context, AbstractSpringRestResponse.UNEXPECTED_ERROR, showMessage);
         }
     }
 

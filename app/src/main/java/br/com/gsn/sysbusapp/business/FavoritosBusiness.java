@@ -1,6 +1,5 @@
-package br.com.gsn.sysbusapp.task;
+package br.com.gsn.sysbusapp.business;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.support.v4.app.ListFragment;
 import android.view.View;
@@ -12,38 +11,56 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.gsn.sysbusapp.R;
+import br.com.gsn.sysbusapp.abstraction.BusinessTaskOperation;
+import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
+import br.com.gsn.sysbusapp.fragment.ListContentFragment;
 import br.com.gsn.sysbusapp.adapter.LinhaFavoritaAdapter;
 import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
 import br.com.gsn.sysbusapp.model.LinhaFavoritaDTO;
-import br.com.gsn.sysbusapp.model.SprintRestResponse;
+import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
 
 /**
- * Created by geison on 07/05/15.
+ * Created by Geison on 06/09/2015.
  */
-public class LinhaFavoritaTask extends AsyncTask<Void, Integer, SprintRestResponse> {
+public class FavoritosBusiness extends BusinessTaskOperation<Void, Integer, SpringRestResponse> {
 
     private ListFragment listFragment;
-    private Activity context;
+    private TemplateAsyncTask<Void, Integer, SpringRestResponse> task;
 
-    public LinhaFavoritaTask(ListFragment context) {
+    public FavoritosBusiness(ListContentFragment context) {
         this.context = context.getActivity();
         this.listFragment = context;
     }
 
+    public void listarLinhas() {
+        task = new TemplateAsyncTask<>(this);
+        task.execute();
+    }
+
     @Override
-    protected SprintRestResponse doInBackground(Void... param) {
+    public void onPreExecute() {
+
+    }
+
+    @Override
+    public void onProgressUpdate(Integer... values) {
+
+    }
+
+    @Override
+    public SpringRestResponse doInBackground(Void... params) {
         String url = UrlServico.URL_LISTAGEM_LINHA_FAVORITA;
         url = url.replace("{idUsuario}", String.valueOf(1));
 
         return new SpringRestClient()
-            .showMessage(false)
-            .getForObject(context, url, LinhaFavoritaDTO[].class);
+                .showMessage(false)
+                .getForObject(context, url, LinhaFavoritaDTO[].class);
     }
 
     @Override
-    protected void onPostExecute(final SprintRestResponse response) {
+    public void onPostExecute(final SpringRestResponse response) {
         final ProgressBar progressBar = (ProgressBar) context.findViewById(R.id.progressBar);
         final TextView emptyView = (TextView) context.findViewById(android.R.id.empty);
         final ListView listView = (ListView) context.findViewById(android.R.id.list);
@@ -75,5 +92,12 @@ public class LinhaFavoritaTask extends AsyncTask<Void, Integer, SprintRestRespon
         response.executeCallbacks();
 
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void cancelTaskOperation() {
+        if (task != null && task.getStatus() == AsyncTask.Status.RUNNING) {
+            task.cancel(true);
+        }
     }
 }

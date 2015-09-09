@@ -1,6 +1,5 @@
 package br.com.gsn.sysbusapp.fragment;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,18 +7,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import br.com.gsn.sysbusapp.R;
-import br.com.gsn.sysbusapp.abstraction.ListContentFragment;
-import br.com.gsn.sysbusapp.task.ReclamacaoRankingTask;
+import br.com.gsn.sysbusapp.business.ReclamacaoRankingBusiness;
 
-public class ReclamacaoFragment extends ListContentFragment {
-
-    private ReclamacaoRankingTask task;
+public class ReclamacaoFragment extends ListContentFragment /*implements BusinessDelegate<BusinessTaskOperation>*/ {
 
     public ReclamacaoFragment() {}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void setDelegate() {
+        this.delegate = new ReclamacaoRankingBusiness(this);
     }
 
     @Override
@@ -31,16 +27,9 @@ public class ReclamacaoFragment extends ListContentFragment {
         LinearLayout header = (LinearLayout) rootView.findViewById(R.id.header);
         header.setVisibility(View.GONE);
 
-        task = new ReclamacaoRankingTask(this);
-        task.execute();
+        ((ReclamacaoRankingBusiness)delegate).listarReclamacoes();
 
         return rootView;
     }
 
-    @Override
-    public void cancelTaskOperation() {
-        if (task != null && task.getStatus() == AsyncTask.Status.RUNNING) {
-            task.cancel(true);
-        }
-    }
 }
