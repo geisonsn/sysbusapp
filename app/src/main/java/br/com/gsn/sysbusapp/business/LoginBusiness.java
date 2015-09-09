@@ -6,10 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import br.com.gsn.sysbusapp.R;
@@ -19,6 +16,8 @@ import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.model.UsuarioDTO;
 import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
+import br.com.gsn.sysbusapp.util.ConnectionUtil;
+import br.com.gsn.sysbusapp.util.RegexValidatorUtil;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
 
@@ -72,7 +71,7 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
         });
 
         response.executeCallbacks();
-        showProgressBar();
+        super.showRequestProgress();
     }
 
     @Override
@@ -90,9 +89,13 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
         EditText senha = (EditText) dialogFragment.findViewById(R.id.senha);
 
         if (loginValido(dialogFragment)) {
-            showProgressBar();
-            task = new TemplateAsyncTask(this);
-            task.execute(email.getText().toString(), senha.getText().toString());
+            if (ConnectionUtil.isNetworkConnected(context)) {
+                super.showRequestProgress();
+                task = new TemplateAsyncTask(this);
+                task.execute(email.getText().toString(), senha.getText().toString());
+            } else {
+                Toast.makeText(context, R.string.sem_conexao_com_internet, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -108,6 +111,12 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
             campoComFoco = email;
             email.setError(email.getHint() + " obrigatório");
             isValid = false;
+        } else {
+            if (!RegexValidatorUtil.isValidEmail(email.getText().toString())) {
+                campoComFoco = email;
+                email.setError("Email inválido");
+                isValid = false;
+            }
         }
 
         if (TextUtils.isEmpty(senha.getText())) {
@@ -123,18 +132,5 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
         }
 
         return isValid;
-    }
-
-    private void showProgressBar() {
-        Dialog dialogFragment = ((Dialog) this.dialog);
-        ProgressBar progressBar = (ProgressBar) dialogFragment.findViewById(R.id.progress_bar);
-        Button botaoLogin = (Button) dialogFragment.findViewById(R.id.botao_login);
-        if (progressBar.getVisibility() == View.VISIBLE) {
-            progressBar.setVisibility(View.GONE);
-            botaoLogin.setEnabled(true);
-        } else {
-            progressBar.setVisibility(View.VISIBLE);
-            botaoLogin.setEnabled(false);
-        }
     }
 }

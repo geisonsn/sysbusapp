@@ -110,7 +110,7 @@ public abstract class AbstractSpringRestResponse {
 
     protected void onConnectionFailed() {
         if (showMessage) {
-            Toast.makeText(context, "Falha na conexão! Verifique sua conexão e tente novamente.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.sem_conexao_com_internet), Toast.LENGTH_LONG).show();
         }
     }
 

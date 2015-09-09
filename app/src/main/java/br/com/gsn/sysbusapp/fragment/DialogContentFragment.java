@@ -1,7 +1,6 @@
 package br.com.gsn.sysbusapp.fragment;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -39,6 +38,7 @@ public abstract class DialogContentFragment extends DialogFragment implements Bu
         super.onStart();
         Dialog dialog = getDialog();
         if (dialog != null) {
+            dialog.setCancelable(false);
             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
         delegate.setCurrentDialog(getDialog());
@@ -48,16 +48,7 @@ public abstract class DialogContentFragment extends DialogFragment implements Bu
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                delegate.cancelTaskOperation();
-            }
-        });
-
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }

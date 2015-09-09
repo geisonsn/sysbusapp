@@ -20,6 +20,7 @@ import br.com.gsn.sysbusapp.activity.MainActivity;
 import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.model.UsuarioDTO;
+import br.com.gsn.sysbusapp.util.ConnectionUtil;
 import br.com.gsn.sysbusapp.util.RegexValidatorUtil;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
@@ -40,9 +41,14 @@ public class NovoUsuarioBusiness extends BusinessDialogTaskOperation<UsuarioDTO,
         Dialog form = ((Dialog) dialog);
         boolean validForm = isValidForm(form);
         if (validForm) {
-            UsuarioDTO usuarioDTO = getUsuarioDTO(form);
-            task = new TemplateAsyncTask(this);
-            task.execute(usuarioDTO);
+            if (ConnectionUtil.isNetworkConnected(context)) {
+                super.showRequestProgress();
+                UsuarioDTO usuarioDTO = getUsuarioDTO(form);
+                task = new TemplateAsyncTask(this);
+                task.execute(usuarioDTO);
+            } else {
+                Toast.makeText(context, R.string.sem_conexao_com_internet, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -67,6 +73,7 @@ public class NovoUsuarioBusiness extends BusinessDialogTaskOperation<UsuarioDTO,
             }
         });
         response.executeCallbacks();
+        super.showRequestProgress();
     }
 
     @Override

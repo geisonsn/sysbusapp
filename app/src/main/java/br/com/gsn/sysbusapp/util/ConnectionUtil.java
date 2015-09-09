@@ -32,7 +32,7 @@ public final class ConnectionUtil {
      * @param context
      * @return true se conectado a alguma rede
      */
-    private static boolean isNetworkConnected(Context context) {
+    public static boolean isNetworkConnected(Context context) {
 
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = cm.getActiveNetworkInfo();

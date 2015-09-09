@@ -4,31 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <FrameLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:text="@string/fazer_login"/>
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?android:progressBarStyleSmall"
-            android:visibility="gone"
-            android:id="@+id/progress_bar"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_gravity="top|right"/>
-
-    </FrameLayout>
+        android:textSize="20sp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/fazer_login"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -38,6 +22,7 @@
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"
         android:layout_marginBottom="12dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/email"/>
 
     <EditText
@@ -50,6 +35,31 @@
         android:layout_marginBottom="12dp"
         android:id="@+id/senha"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/container_loading"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:progressBarStyle"
+            android:id="@+id/progress_bar"
+            android:visibility="visible"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/progress_bar"
+            android:layout_toRightOf="@id/progress_bar"
+            android:id="@+id/texto_loading"
+            android:text="Aguarde..."/>
+
+    </RelativeLayout>
+
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
@@ -58,7 +68,8 @@
         android:paddingTop="10dp"
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"
-        android:gravity="right">
+        android:gravity="right"
+        android:id="@+id/container_botoes">
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
