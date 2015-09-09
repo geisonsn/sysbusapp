@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import br.com.gsn.sysbusapp.R;
-import br.com.gsn.sysbusapp.fragment.DialogContentFragment;
 import br.com.gsn.sysbusapp.business.LoginBusiness;
+import br.com.gsn.sysbusapp.fragment.DialogContentFragment;
 
 /**
  * Created by Geison on 05/09/2015.

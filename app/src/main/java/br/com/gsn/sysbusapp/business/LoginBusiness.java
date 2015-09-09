@@ -4,17 +4,21 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.abstraction.BusinessDialogTaskOperation;
-import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
 import br.com.gsn.sysbusapp.activity.MainActivity;
 import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.model.UsuarioDTO;
+import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
 
@@ -23,6 +27,7 @@ import br.com.gsn.sysbusapp.util.UrlServico;
  */
 public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, SpringRestResponse> {
 
+    private DialogInterface dialog;
     private TemplateAsyncTask<String, Integer, SpringRestResponse> task;
 
     public LoginBusiness(Activity context) {
@@ -55,8 +60,8 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
             public void doThis() {
                 UsuarioDTO usuario = (UsuarioDTO) response.getObjectReturn();
                 Toast.makeText(context, "Usuário " + usuario.getEmail() + " logado", Toast.LENGTH_SHORT).show();
-                context.startActivity(new Intent(context, MainActivity.class));
                 onCloseDialog();
+                context.startActivity(new Intent(context, MainActivity.class));
             }
         });
         response.setOnHttpNotFound(new AbstractSpringRestResponse.OnHttpNotFound() {
@@ -67,21 +72,25 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
         });
 
         response.executeCallbacks();
+        showProgressBar();
     }
 
     @Override
     public void cancelTaskOperation() {
-        task.cancel(true);
+        if (task != null && task.getStatus() == AsyncTask.Status.RUNNING) {
+            task.cancel(true);
+        }
     }
 
     @Override
     public void onConfirmButton(DialogInterface dialog) {
-//        context.startActivity((new Intent(context, MainActivity.class)));
+        this.dialog = dialog;
         Dialog dialogFragment = ((Dialog) dialog);
         EditText email = (EditText) dialogFragment.findViewById(R.id.email);
         EditText senha = (EditText) dialogFragment.findViewById(R.id.senha);
 
         if (loginValido(dialogFragment)) {
+            showProgressBar();
             task = new TemplateAsyncTask(this);
             task.execute(email.getText().toString(), senha.getText().toString());
         }
@@ -114,5 +123,18 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
         }
 
         return isValid;
+    }
+
+    private void showProgressBar() {
+        Dialog dialogFragment = ((Dialog) this.dialog);
+        ProgressBar progressBar = (ProgressBar) dialogFragment.findViewById(R.id.progress_bar);
+        Button botaoLogin = (Button) dialogFragment.findViewById(R.id.botao_login);
+        if (progressBar.getVisibility() == View.VISIBLE) {
+            progressBar.setVisibility(View.GONE);
+            botaoLogin.setEnabled(true);
+        } else {
+            progressBar.setVisibility(View.VISIBLE);
+            botaoLogin.setEnabled(false);
+        }
     }
 }

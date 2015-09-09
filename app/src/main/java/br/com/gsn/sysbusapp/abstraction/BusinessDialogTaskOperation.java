@@ -20,6 +20,7 @@ public abstract class BusinessDialogTaskOperation<Params,Progress, Result> exten
 
     @Override
     public void onCancelButton(DialogInterface dialog) {
+        this.cancelTaskOperation();
         this.onCloseDialog();
     }
 

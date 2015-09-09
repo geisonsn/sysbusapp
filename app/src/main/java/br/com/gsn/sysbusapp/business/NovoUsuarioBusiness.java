@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -70,7 +71,9 @@ public class NovoUsuarioBusiness extends BusinessDialogTaskOperation<UsuarioDTO,
 
     @Override
     public void cancelTaskOperation() {
-        task.cancel(true);
+        if (task != null && task.getStatus() == AsyncTask.Status.RUNNING) {
+            task.cancel(true);
+        }
     }
 
     public boolean isValidForm(Dialog dialog) {
