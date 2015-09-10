@@ -18,6 +18,7 @@ public abstract class ListContentFragment extends ListFragment implements Busine
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDelegate();
+        setHasOptionsMenu(true);
     }
 
     @Override

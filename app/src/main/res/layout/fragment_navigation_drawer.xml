@@ -21,17 +21,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_below="@id/foto_perfil"
             android:text="Geison"
-            android:id="@+id/nome_perfil"/>
+            android:layout_marginLeft="10dp"
+            android:id="@+id/nome_usuario"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_below="@id/nome_perfil"
-            android:text="geison.sn@gmail.com"/>
+            android:layout_below="@id/nome_usuario"
+            android:layout_marginLeft="10dp"
+            android:text="geison.sn@gmail.com"
+            android:id="@+id/email_usuario"/>
 
     </RelativeLayout>
 

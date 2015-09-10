@@ -33,12 +33,11 @@
         <item name="outros">Outros</item>
     </string-array>
 
-    <string name="title_messages">Messages</string>
-    <string name="title_friends">Friends</string>
     <string name="title_home">Home</string>
     <string name="title_favoritos">Favoritos</string>
     <string name="title_reclamacoes">Reclamações</string>
     <string name="title_configuracoes">Configurações</string>
+    <string name="title_desconectar">Desconectar</string>
     <string name="linha">Linha</string>
     <string name="placa">Placa</string>
     <string name="detalhes">Detalhes</string>
@@ -52,5 +51,8 @@
     <string name="cadastrar">Cadastrar</string>
     <string name="novo_usuario">Novo usuário</string>
     <string name="cadastre_se">Cadastre-se</string>
+    <string name="salvar">Salvar</string>
+    <string name="action_nova_reclamacao">Nova reclamação</string>
+    <string name="action_progress_bar">Aguarde</string>
 
 </resources>
