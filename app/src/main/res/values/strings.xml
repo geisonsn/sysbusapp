@@ -27,6 +27,7 @@
     </string-array>
 
     <string-array name="objeto_reclamado_valores">
+        <item name="selecione">Selecione</item>
         <item name="cobrador">Cobrador</item>
         <item name="motorista">Motorista</item>
         <item name="veiculo">Veículo</item>

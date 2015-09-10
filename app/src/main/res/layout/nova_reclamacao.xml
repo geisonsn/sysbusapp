@@ -14,128 +14,149 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/container_objeto_reclamado"
-            android:layout_marginBottom="@dimen/field_margin_bottom">
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:id="@+id/container_objeto_reclamado">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingRight="16dp"
+                android:textSize="16dp"
                 android:text="Reclamado"/>
 
             <Spinner
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:id="@+id/objetoReclamado"
                 android:entries="@array/objeto_reclamado_valores"/>
         </LinearLayout>
+
+        <include layout="@layout/horizontal_divider"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@id/container_objeto_reclamado"
-            android:id="@+id/container_motivo_reclamacao"
-            android:layout_marginBottom="@dimen/field_margin_bottom">
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:id="@+id/container_motivo_reclamacao">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Motivo da reclamação"/>
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingRight="30dp"
+                android:textSize="16sp"
+                android:text="Reclamação"/>
 
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:id="@+id/origemReclamacao"/>
 
         </LinearLayout>
 
+        <include layout="@layout/horizontal_divider"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:orientation="horizontal"
-            android:divider="@drawable/horizontal_divider"
-            android:dividerPadding="13dp"
-            android:id="@+id/container_linha"
-            android:layout_below="@id/container_motivo_reclamacao"
-            android:layout_marginBottom="@dimen/field_margin_bottom">
+            android:id="@+id/container_linha">
 
             <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:background="@android:color/transparent"
                 android:hint="Linha"
                 android:id="@+id/linha"/>
 
         </LinearLayout>
 
+        <include layout="@layout/horizontal_divider"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:orientation="horizontal"
-            android:layout_below="@id/container_linha"
-            android:id="@+id/container_placa"
-            android:layout_marginBottom="@dimen/field_margin_bottom">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Placa"/>
+            android:id="@+id/container_placa">
 
             <EditText
-                android:layout_width="150dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:background="@android:color/transparent"
+                android:hint="Placa"
                 android:id="@+id/placa"/>
 
         </LinearLayout>
 
+        <include layout="@layout/horizontal_divider"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@id/container_placa"
-            android:id="@+id/container_descricao"
-            android:layout_marginBottom="@dimen/field_margin_bottom">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Descrição"/>
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:id="@+id/container_data">
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:hint="Data da ocorrência"
+                android:background="@android:color/transparent"
+                android:id="@+id/dataOcorrencia"/>
+
+        </LinearLayout>
+
+        <include layout="@layout/horizontal_divider"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:id="@+id/container_descricao">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:inputType="textMultiLine"
+                android:background="@android:color/transparent"
                 android:hint="Descreva o problema"/>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/container_descricao"
-            android:id="@+id/container_data">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Data da ocorrência"/>
-
-            <EditText
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/dataOcorrencia"/>
-
-        </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>
 </LinearLayout>
