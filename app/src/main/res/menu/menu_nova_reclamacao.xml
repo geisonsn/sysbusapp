@@ -4,15 +4,24 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_nova_reclamacao"
+        android:id="@+id/action_save_reclamacao"
         android:title=""
         android:icon="@drawable/ic_action_save"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_recarregar"
+        android:title="Recarregar dados"
+        android:icon="@drawable/ic_action_cached"
+        android:orderInCategory="100"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_progresso"
-        android:title=""
+        android:title="Aguarde..."
+        android:visible="false"
         android:actionLayout="@layout/progress_bar"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 </menu>
