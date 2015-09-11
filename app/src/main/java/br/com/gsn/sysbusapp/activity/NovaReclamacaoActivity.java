@@ -21,6 +21,7 @@ import br.com.gsn.sysbusapp.business.NovaReclamacaoBusiness;
 import br.com.gsn.sysbusapp.enums.ObjetoReclamadoEnum;
 import br.com.gsn.sysbusapp.util.DatePickerUtil;
 import br.com.gsn.sysbusapp.util.Dates;
+import br.com.gsn.sysbusapp.util.TimerPickerUtil;
 
 /**
  * Created by Geison on 09/09/2015.
@@ -31,7 +32,7 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
     private MenuItem menuItemProgressBar;
     private ProgressBar progressBar;
     private Spinner reclamado, reclamacao, linha;
-    private EditText dataOcorrencia;
+    private EditText dataOcorrencia, horaOcorrencia;
     private String[] emptySource = new String[] {"Selecione"};
 
     @Override
@@ -51,6 +52,9 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
         dataOcorrencia = (EditText) findViewById(R.id.dataOcorrencia);
         dataOcorrencia.setHint(Dates.getCurrentDate());
         dataOcorrencia.setOnClickListener(onClickListener);
+
+        horaOcorrencia = (EditText) findViewById(R.id.horaOcorrencia);
+        horaOcorrencia.setOnClickListener(onClickListener);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -127,6 +131,10 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
         new DatePickerUtil(this, R.id.dataOcorrencia).show();
     }
 
+    public void showTimer() {
+        new TimerPickerUtil(this, R.id.horaOcorrencia).show();
+    }
+
     private void save() {
         delegate.saveReclamacao();
     }
@@ -149,7 +157,11 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showCalendar();
+            if (v.getId() == R.id.dataOcorrencia) {
+                showCalendar();
+            } else {
+                showTimer();
+            }
         }
     };
 

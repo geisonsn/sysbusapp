@@ -153,6 +153,8 @@ public abstract class AbstractSpringRestResponse {
         } else if (StatusCodeFamily.getFamily(this.statusCode) == StatusCodeFamily.SERVER_ERROR) {
             if (this.statusCode == HttpURLConnection.HTTP_UNAVAILABLE) {
                 onHttpUnavailable();
+            } else {
+                Toast.makeText(context, "Ocorreu um erro no servidor. Tente novamente.", Toast.LENGTH_SHORT).show();
             }
         } else if (StatusCodeFamily.getFamily(this.statusCode) == StatusCodeFamily.OTHER) {
             if (this.statusCode == AbstractSpringRestResponse.CONNECTION_FAILED) {

@@ -14,6 +14,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.HttpURLConnection;
+import java.util.Arrays;
 
 import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
@@ -42,6 +43,7 @@ public final class SpringRestClient {
         try {
             HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setContentType(new MediaType("application", "json"));
+            requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
             HttpEntity<T> requestEntity = new HttpEntity<>(param, requestHeaders);
 
             RestTemplate restTemplate = new RestTemplate();

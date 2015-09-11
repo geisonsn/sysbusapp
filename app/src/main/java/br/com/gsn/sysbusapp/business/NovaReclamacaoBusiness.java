@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,18 +60,18 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
 
     @Override
     public SpringRestResponse doInBackground(ReclamacaoRequestDTO... params) {
-//        return SpringRestClient.post(context, UrlServico.URL_NOVA_RECLAMACAO, params[0], ReclamacaoRequestDTO.class);
-        return SpringRestClient.postForObject(context, UrlServico.URL_NOVA_RECLAMACAO, params[0], ReclamacaoRequestDTO.class);
+        return SpringRestClient.post(context, UrlServico.URL_NOVA_RECLAMACAO, params[0], ReclamacaoRequestDTO.class);
+//        return SpringRestClient.postForObject(context, UrlServico.URL_NOVA_RECLAMACAO, params[0], ReclamacaoRequestDTO.class);
     }
 
     @Override
     public void onPostExecute(final SpringRestResponse response) {
 //        final ProgressBar progressBar = (ProgressBar) context.findViewById(R.id.progressBar);
 
-        response.setOnHttpOk(new AbstractSpringRestResponse.OnHttpOk() {
+        response.setOnHttpCreated(new AbstractSpringRestResponse.OnHttpCreated() {
             @Override
             public void doThis() {
-                String resposta = (String) response.getObjectReturn();
+                Toast.makeText(context, "Sua reclamação foi registrada com sucesso", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -103,23 +104,12 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
         origemReclamacaoBusiness.listarOrigemReclamacao(reclamado);
     }
 
-    /*@Override
-    public void closeDialog(OnCloseDialog onCloseDialog) {
-        onCloseDialog = new OnCloseDialog() {
-            @Override
-            public void closeDialog() {
-
-            }
-        };
-    }*/
-
-
     public boolean isValidForm() {
 
         boolean isValid = true;
 
         Spinner reclamado, reclamacao, linha;
-        EditText placa, dataOcorrencia, descricaoReclamacao;
+        EditText placa, descricaoReclamacao;
 
         reclamado = (Spinner) context.findViewById(R.id.objetoReclamado);
         reclamacao = (Spinner) context.findViewById(R.id.reclamacao);
@@ -165,13 +155,14 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
     private ReclamacaoRequestDTO buildDTO() {
 
         Spinner reclamado, reclamacao, linha;
-        EditText placa, dataOcorrencia, descricaoReclamacao;
+        EditText placa, dataOcorrencia, horaOcorrencia, descricaoReclamacao;
 
         reclamado = (Spinner) context.findViewById(R.id.objetoReclamado);
         reclamacao = (Spinner) context.findViewById(R.id.reclamacao);
         linha = (Spinner) context.findViewById(R.id.linha);
         placa = (EditText) context.findViewById(R.id.placa);
         dataOcorrencia = (EditText) context.findViewById(R.id.dataOcorrencia);
+        horaOcorrencia = (EditText) context.findViewById(R.id.horaOcorrencia);
         descricaoReclamacao = (EditText) context.findViewById(R.id.descricaoReclamacao);
 
         ReclamacaoRequestDTO rec = new ReclamacaoRequestDTO();
@@ -185,12 +176,15 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
             rec.setIdLinha(((LinhaDTO)linha.getSelectedItem()).getIdLinha());
         }
         if (!TextUtils.isEmpty(placa.getText())) {
-            rec.setPlaca(placa.getText().toString());
+            rec.setPlaca(placa.getText().toString().replaceAll("-", ""));
         }
         if (!TextUtils.isEmpty(dataOcorrencia.getText())) {
             rec.setDataOcorrencia(dataOcorrencia.getText().toString());
         } else {
             rec.setDataOcorrencia(dataOcorrencia.getHint().toString());
+        }
+        if (!TextUtils.isEmpty(horaOcorrencia.getText())) {
+            rec.setHora(horaOcorrencia.getText().toString());
         }
 
         if (!TextUtils.isEmpty(descricaoReclamacao.getText())) {
