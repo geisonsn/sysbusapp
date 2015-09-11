@@ -2,15 +2,14 @@ package br.com.gsn.sysbusapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -19,8 +18,9 @@ import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.abstraction.BusinessDelegate;
 import br.com.gsn.sysbusapp.abstraction.BusinessTaskOperation;
 import br.com.gsn.sysbusapp.business.NovaReclamacaoBusiness;
-import br.com.gsn.sysbusapp.dialog.DatePickerFragment;
 import br.com.gsn.sysbusapp.enums.ObjetoReclamadoEnum;
+import br.com.gsn.sysbusapp.util.DatePickerUtil;
+import br.com.gsn.sysbusapp.util.Dates;
 
 /**
  * Created by Geison on 09/09/2015.
@@ -30,8 +30,9 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
     private NovaReclamacaoBusiness delegate;
     private MenuItem menuItemProgressBar;
     private ProgressBar progressBar;
-    private Spinner reclamado;
+    private Spinner reclamado, reclamacao, linha;
     private EditText dataOcorrencia;
+    private String[] emptySource = new String[] {"Selecione"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,15 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
         reclamado = (Spinner) findViewById(R.id.objetoReclamado);
         reclamado.setOnItemSelectedListener(onItemSelectedListener);
 
+        reclamacao = (Spinner) findViewById(R.id.reclamacao);
+        reclamacao.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, emptySource));
+
+        linha = (Spinner) findViewById(R.id.reclamacao);
+        linha.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, emptySource));
+
         dataOcorrencia = (EditText) findViewById(R.id.dataOcorrencia);
-        dataOcorrencia.setOnTouchListener(touchListener);
+        dataOcorrencia.setHint(Dates.getCurrentDate());
+        dataOcorrencia.setOnClickListener(onClickListener);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -84,12 +92,13 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
 
         if (item.getItemId() == R.id.action_save_reclamacao) {
 //            NavUtils.navigateUpFromSameTask(this);
-            delegate.saveReclamacao();
+            this.save();
         }
 
         if (item.getItemId() == R.id.action_recarregar) {
-            DialogFragment calendar = new DatePickerFragment();
-            calendar.show(getSupportFragmentManager(), "calendar");
+//            DialogFragment calendar = new DatePickerFragment();
+//            calendar.show(getSupportFragmentManager(), "calendar");
+
             showProgressBar();
         }
 
@@ -114,6 +123,14 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
         this.delegate = new NovaReclamacaoBusiness(this);
     }
 
+    public void showCalendar() {
+        new DatePickerUtil(this, R.id.dataOcorrencia).show();
+    }
+
+    private void save() {
+        delegate.saveReclamacao();
+    }
+
     private AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
 
         @Override
@@ -126,19 +143,14 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
+        public void onNothingSelected(AdapterView<?> parent) {}
     };
 
-    private View.OnTouchListener touchListener = new View.OnTouchListener() {
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            return false;
+        public void onClick(View v) {
+            showCalendar();
         }
     };
 
-    public void showCalendar(View view) {
-
-    }
 }

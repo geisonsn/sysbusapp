@@ -2,7 +2,9 @@ package br.com.gsn.sysbusapp.business;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import br.com.gsn.sysbusapp.R;
@@ -26,6 +28,7 @@ public class LinhaBusiness extends BusinessTaskOperation<Void, Integer, SpringRe
     }
 
     public void listarLinhas() {
+        showProgressBar();
         this.task = new TemplateAsyncTask<>(this);
         task.execute();
     }
@@ -58,12 +61,24 @@ public class LinhaBusiness extends BusinessTaskOperation<Void, Integer, SpringRe
             }
         });
         response.executeCallbacks();
+        showProgressBar();
     }
 
     @Override
     public void cancelTaskOperation() {
         if (task != null && task.getStatus() == AsyncTask.Status.RUNNING) {
             task.cancel(true);
+        }
+    }
+
+    public void showProgressBar() {
+        ProgressBar progressBar = (ProgressBar) context
+                .findViewById(R.id.progressBarLinha);
+
+        if (progressBar.getVisibility() == View.VISIBLE) {
+            progressBar.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.VISIBLE);
         }
     }
 }

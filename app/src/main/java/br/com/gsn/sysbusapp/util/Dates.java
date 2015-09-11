@@ -49,4 +49,14 @@ public final class Dates {
         c.set(ano, mes, dia);
         return c.getTime();
     }
+
+    public static String getCurrentDate(String format) {
+        Calendar c = Calendar.getInstance();
+        return format(c.getTime(), format);
+    }
+
+    public static String getCurrentDate() {
+        Calendar c = Calendar.getInstance();
+        return format(c.getTime(), FORMAT_PT_BR_DATE);
+    }
 }

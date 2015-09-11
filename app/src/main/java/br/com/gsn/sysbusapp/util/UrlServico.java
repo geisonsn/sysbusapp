@@ -9,6 +9,7 @@ public final class UrlServico {
 
     public static final String URL_LOGIN = "http://sysbusweb-gsanton.rhcloud.com/services/usuario/{usuario}/{senha}";
     public static final String URL_NOVO_USUARIO = "http://sysbusweb-gsanton.rhcloud.com/services/usuario";
+    public static final String URL_NOVA_RECLAMACAO = "http://sysbusweb-gsanton.rhcloud.com/services/reclamacao";
     public static final String URL_NOVA_LINHA = "http://sysbusweb-gsanton.rhcloud.com/services/veiculo";
     public static final String URL_LISTAGEM_LINHA = "http://sysbusweb-gsanton.rhcloud.com/services/linha";
     public static final String URL_LISTAGEM_LINHA_FAVORITA = "http://sysbusweb-gsanton.rhcloud.com/services/linhafavorita/{idUsuario}";

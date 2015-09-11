@@ -76,8 +76,9 @@
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 style="?android:progressBarStyleSmall"
-                android:id="@+id/progressoSpinnerReclamacao"/>
+                android:id="@+id/progressBarReclamacao"/>
 
         </LinearLayout>
 
@@ -111,8 +112,9 @@
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 style="?android:progressBarStyleSmall"
-                android:id="@+id/progressoSpinnerLinha"/>
+                android:id="@+id/progressBarLinha"/>
 
         </LinearLayout>
 
@@ -147,15 +149,22 @@
             android:layout_marginRight="8dp"
             android:id="@+id/container_data">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/ic_event"/>
+
             <EditText
-                android:layout_width="250dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
+                android:paddingRight="8dp"
+                android:focusable="false"
+                android:clickable="true"
                 android:hint="Data da ocorrência"
                 android:background="@android:color/transparent"
-                android:clickable="true"
-                android:onClick="showCalendar"
                 android:id="@+id/dataOcorrencia"/>
 
         </LinearLayout>
@@ -177,7 +186,8 @@
                 android:paddingBottom="16dp"
                 android:inputType="textMultiLine"
                 android:background="@android:color/transparent"
-                android:hint="Descreva o problema"/>
+                android:hint="Descreva o problema"
+                android:id="@+id/descricaoReclamacao"/>
 
         </LinearLayout>
 
