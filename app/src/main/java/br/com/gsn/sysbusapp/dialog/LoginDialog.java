@@ -17,7 +17,7 @@ import br.com.gsn.sysbusapp.fragment.DialogContentFragment;
 public class LoginDialog extends DialogContentFragment {
 
     @Override
-    public void setDelegate() {
+    public void setBusinessDelegate() {
         this.delegate = new LoginBusiness(getActivity());
     }
 

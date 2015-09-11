@@ -16,7 +16,7 @@ public class ReclamacaoFragment extends ListContentFragment /*implements Busines
     public ReclamacaoFragment() {}
 
     @Override
-    public void setDelegate() {
+    public void setBusinessDelegate() {
         this.delegate = new ReclamacaoRankingBusiness(this);
     }
 

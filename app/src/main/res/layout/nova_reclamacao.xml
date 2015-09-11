@@ -41,8 +41,9 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:id="@+id/objetoReclamado"
-                android:entries="@array/objeto_reclamado_valores"/>
+                android:layout_weight="1"
+                android:entries="@array/objeto_reclamado_valores"
+                android:id="@+id/objetoReclamado"/>
         </LinearLayout>
 
         <include layout="@layout/horizontal_divider"/>
@@ -65,11 +66,18 @@
                 android:text="Reclamação"/>
 
             <Spinner
-                android:layout_width="250dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
+                android:layout_weight="1"
                 android:id="@+id/reclamacao"/>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:progressBarStyleSmall"
+                android:id="@+id/progressoSpinnerReclamacao"/>
 
         </LinearLayout>
 
@@ -97,7 +105,14 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
+                android:layout_weight="1"
                 android:id="@+id/linha"/>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:progressBarStyleSmall"
+                android:id="@+id/progressoSpinnerLinha"/>
 
         </LinearLayout>
 
@@ -139,6 +154,8 @@
                 android:paddingBottom="16dp"
                 android:hint="Data da ocorrência"
                 android:background="@android:color/transparent"
+                android:clickable="true"
+                android:onClick="showCalendar"
                 android:id="@+id/dataOcorrencia"/>
 
         </LinearLayout>

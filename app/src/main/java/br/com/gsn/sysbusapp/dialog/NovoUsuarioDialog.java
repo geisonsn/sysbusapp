@@ -17,7 +17,7 @@ import br.com.gsn.sysbusapp.business.NovoUsuarioBusiness;
 public class NovoUsuarioDialog extends DialogContentFragment {
 
     @Override
-    public void setDelegate() {
+    public void setBusinessDelegate() {
         this.delegate = new NovoUsuarioBusiness(getActivity());
     }
 

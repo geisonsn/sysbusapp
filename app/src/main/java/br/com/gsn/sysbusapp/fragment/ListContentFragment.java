@@ -17,7 +17,7 @@ public abstract class ListContentFragment extends ListFragment implements Busine
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDelegate();
+        setBusinessDelegate();
         setHasOptionsMenu(true);
     }
 
@@ -29,7 +29,7 @@ public abstract class ListContentFragment extends ListFragment implements Busine
     }
 
     @Override
-    public BusinessTaskOperation getDelegate() {
+    public BusinessTaskOperation getBusinessDelegate() {
         return delegate;
     }
 

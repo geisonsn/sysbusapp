@@ -27,7 +27,7 @@ public abstract class DialogContentFragment extends DialogFragment implements Bu
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDelegate();
+        setBusinessDelegate();
     }
 
     /**
@@ -54,7 +54,7 @@ public abstract class DialogContentFragment extends DialogFragment implements Bu
     }
 
     @Override
-    public BusinessDialogTaskOperation getDelegate() {
+    public BusinessDialogTaskOperation getBusinessDelegate() {
         return delegate;
     }
 

@@ -18,7 +18,7 @@ public class FavoritosFragment extends ListContentFragment /*implements Business
     public FavoritosFragment() {}
 
     @Override
-    public void setDelegate() {
+    public void setBusinessDelegate() {
         this.delegate = new FavoritosBusiness(this);
     }
 

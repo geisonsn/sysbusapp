@@ -17,7 +17,7 @@ public abstract class ContentFragment extends Fragment implements BusinessDelega
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDelegate();
+        setBusinessDelegate();
     }
 
     @Override
@@ -28,7 +28,7 @@ public abstract class ContentFragment extends Fragment implements BusinessDelega
     }
 
     @Override
-    public BusinessTaskOperation getDelegate() {
+    public BusinessTaskOperation getBusinessDelegate() {
         return delegate;
     }
 }
