@@ -7,6 +7,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.abstraction.BusinessTaskOperation;
 import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
@@ -57,7 +61,14 @@ public class LinhaBusiness extends BusinessTaskOperation<Void, Integer, SpringRe
             public void doThis() {
                 LinhaDTO[] linhas = (LinhaDTO[]) response.getObjectReturn();
                 Spinner spinnerLinhas = (Spinner) context.findViewById(R.id.linha);
-                spinnerLinhas.setAdapter(new ArrayAdapter<LinhaDTO>(context, android.R.layout.simple_spinner_item, linhas));
+
+                List<LinhaDTO> source = new ArrayList<>();
+                LinhaDTO l = new LinhaDTO();
+                l.setNumeroLinha("Selecione");
+                source.add(l);
+                source.addAll(Arrays.asList(linhas));
+
+                spinnerLinhas.setAdapter(new ArrayAdapter<LinhaDTO>(context, android.R.layout.simple_spinner_item, source));
             }
         });
         response.executeCallbacks();

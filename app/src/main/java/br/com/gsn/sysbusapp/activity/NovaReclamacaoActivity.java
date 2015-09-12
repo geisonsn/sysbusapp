@@ -153,13 +153,31 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
             if (position > 0) {
                 String[] source = getResources().getStringArray(R.array.objeto_reclamado_valores);
                 String reclamado = source[position];
-                delegate.listarOrigemReclamacao(ObjetoReclamadoEnum.getFromDescricao(reclamado).name());
+                ObjetoReclamadoEnum objetoReclamadoEnum = ObjetoReclamadoEnum.getFromDescricao(reclamado);
+
+                handleContainerMotivoReclamacao(objetoReclamadoEnum);
+
+                if (!ObjetoReclamadoEnum.OUTROS.equals(objetoReclamadoEnum)) {
+                    delegate.listarOrigemReclamacao(objetoReclamadoEnum.name());
+                }
             }
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
     };
+
+    public void handleContainerMotivoReclamacao(ObjetoReclamadoEnum reclamado) {
+        View containerMotivoReclamacao = findViewById(R.id.container_motivo_reclamacao);
+        View dividerMotivoReclamacao = findViewById(R.id.divider_motivo_reclamacao);
+        if (ObjetoReclamadoEnum.OUTROS.equals(reclamado)) {
+            containerMotivoReclamacao.setVisibility(View.GONE);
+            dividerMotivoReclamacao.setVisibility(View.GONE);
+        } else {
+            containerMotivoReclamacao.setVisibility(View.VISIBLE);
+            dividerMotivoReclamacao.setVisibility(View.VISIBLE);
+        }
+    }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override

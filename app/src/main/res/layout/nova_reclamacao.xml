@@ -82,7 +82,8 @@
 
         </LinearLayout>
 
-        <include layout="@layout/horizontal_divider"/>
+        <include layout="@layout/horizontal_divider"
+            android:id="@+id/divider_motivo_reclamacao"/>
 
         <LinearLayout
             android:layout_width="match_parent"

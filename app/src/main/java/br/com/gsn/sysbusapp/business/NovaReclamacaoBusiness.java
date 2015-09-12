@@ -159,12 +159,12 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
 
     private ReclamacaoRequestDTO buildDTO() {
 
-        Spinner reclamado, reclamacao, linha;
+        Spinner reclamado, reclamacao, linhaSpinner;
         EditText placa, dataOcorrencia, horaOcorrencia, descricaoReclamacao;
 
         reclamado = (Spinner) context.findViewById(R.id.objetoReclamado);
         reclamacao = (Spinner) context.findViewById(R.id.reclamacao);
-        linha = (Spinner) context.findViewById(R.id.linha);
+        linhaSpinner = (Spinner) context.findViewById(R.id.linha);
         placa = (EditText) context.findViewById(R.id.placa);
         dataOcorrencia = (EditText) context.findViewById(R.id.dataOcorrencia);
         horaOcorrencia = (EditText) context.findViewById(R.id.horaOcorrencia);
@@ -175,11 +175,20 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
         String[] objetoReclamadoArray = context
             .getResources().getStringArray(R.array.objeto_reclamado_valores);
 
-        rec.setObjetoReclamado(ObjetoReclamadoEnum.getFromDescricao((String)reclamado.getSelectedItem()).name());
-        rec.setIdOrigemReclamacao(((OrigemReclamacaoDTO)reclamacao.getSelectedItem()).getIdOrigemReclamacao());//TODO resolver para outros
-        if (linha.getSelectedItem() != null) {
-            rec.setIdLinha(((LinhaDTO)linha.getSelectedItem()).getIdLinha());
+        ObjetoReclamadoEnum objetoReclamadoEnum = ObjetoReclamadoEnum.getFromDescricao((String) reclamado.getSelectedItem());
+        rec.setObjetoReclamado(objetoReclamadoEnum.name());
+
+        if (!objetoReclamadoEnum.equals(ObjetoReclamadoEnum.OUTROS)) {
+            rec.setIdOrigemReclamacao(((OrigemReclamacaoDTO) reclamacao.getSelectedItem()).getIdOrigemReclamacao());//TODO resolver para outros
         }
+
+        if (linhaSpinner.getSelectedItem() != null) {
+            LinhaDTO linha = (LinhaDTO) linhaSpinner.getSelectedItem();
+            if (!linha.getNumeroLinha().equalsIgnoreCase("Selecione")) {
+                rec.setIdLinha(linha.getIdLinha());
+            }
+        }
+
         if (!TextUtils.isEmpty(placa.getText())) {
             rec.setPlaca(placa.getText().toString().replaceAll("-", ""));
         }
