@@ -12,8 +12,8 @@ import br.com.gsn.sysbusapp.R;
  */
 public abstract class AbstractSpringRestResponse {
 
-    public static final int CONNECTION_FAILED = -666;
-    public static final int UNEXPECTED_ERROR = -667;
+    public static final int CONNECTION_FAILED = 666;
+    public static final int UNEXPECTED_ERROR = 667;
 
     private Context context;
     private int statusCode;
@@ -213,7 +213,7 @@ public abstract class AbstractSpringRestResponse {
         public static int OTHER = 6;
 
         public static int getFamily(int statusCode) {
-            return Math.abs(statusCode / 100);
+            return statusCode / 100;
         }
     }
 }

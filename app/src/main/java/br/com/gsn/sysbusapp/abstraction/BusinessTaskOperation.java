@@ -1,6 +1,7 @@
 package br.com.gsn.sysbusapp.abstraction;
 
 import android.app.Activity;
+import android.view.MenuItem;
 
 import br.com.gsn.sysbusapp.task.TaskOperation;
 import br.com.gsn.sysbusapp.util.DatePickerUtil;
@@ -14,6 +15,7 @@ public abstract class BusinessTaskOperation<Params,Progress, Result> implements 
     protected Activity context;
     protected DatePickerUtil.DatePickerWrapper datePickerWrapper;
     protected TimePickerUtil.TimePickerWrapper timePickerWrapper;
+    protected MenuItem menuItemProgressBar;
 
     protected BusinessTaskOperation() {
         this.datePickerWrapper =  new DatePickerUtil.DatePickerWrapper();
@@ -26,5 +28,17 @@ public abstract class BusinessTaskOperation<Params,Progress, Result> implements 
 
     public TimePickerUtil.TimePickerWrapper getTimePickerWrapper() {
         return timePickerWrapper;
+    }
+
+    public void setMenuItemProgressBar(MenuItem menuItemProgressBar) {
+        this.menuItemProgressBar = menuItemProgressBar;
+    }
+
+    public void showMenuItemProgressBar() {
+        this.menuItemProgressBar.setVisible(true);
+    }
+
+    public void hideMenuItemProgressBar() {
+        this.menuItemProgressBar.setVisible(false);
     }
 }

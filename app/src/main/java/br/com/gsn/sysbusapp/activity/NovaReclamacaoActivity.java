@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.abstraction.BusinessDelegate;
@@ -29,7 +30,6 @@ import br.com.gsn.sysbusapp.util.TimePickerUtil;
 public class NovaReclamacaoActivity extends AppCompatActivity implements BusinessDelegate<BusinessTaskOperation> {
 
     private NovaReclamacaoBusiness delegate;
-    private MenuItem menuItemProgressBar;
     private ProgressBar progressBar;
     private Spinner reclamado, reclamacao, linha;
     private EditText dataOcorrencia, horaOcorrencia;
@@ -84,16 +84,12 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-
-        menuItemProgressBar = menu.findItem(R.id.action_progresso);
-//        ProgressBar viewById = (ProgressBar) findViewById(item.getItemId());
-//        progressBar = (ProgressBar) MenuItemCompat.getActionView(item);
-
+        delegate.setMenuItemProgressBar(menu.findItem(R.id.action_progresso));
         return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
             delegate.cancelTaskOperation();
@@ -106,22 +102,12 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
             this.save();
         }
 
-        if (item.getItemId() == R.id.action_recarregar) {
-//            DialogFragment calendar = new DatePickerFragment();
-//            calendar.show(getSupportFragmentManager(), "calendar");
-
-            showProgressBar();
+        if (item.getItemId() == R.id.action_recarregar_dados) {
+            Toast.makeText(this, "Será implementado em breve", Toast.LENGTH_SHORT).show();
+            //TODO implementar recarremento de dados
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void showProgressBar() {
-        menuItemProgressBar.setVisible(true);
-    }
-
-    private void HideProgressBar() {
-        menuItemProgressBar.setVisible(false);
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -40,9 +41,12 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
     }
 
     public void saveReclamacao() {
+
         if (ConnectionUtil.isNetworkConnected(context)) {
             if (isValidForm()) {
                 if (ConnectionUtil.isNetworkConnected(context)) {
+                    showMenuItemProgressBar();
+                    handleShowActionButton();
                     task = new TemplateAsyncTask<>(this);
                     task.execute(this.buildDTO());
                 } else {
@@ -51,6 +55,18 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
             }
         } else {
             Toast.makeText(context, R.string.voce_nao_esta_conectado, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void handleShowActionButton() {
+        View botaoSave = context.findViewById(R.id.action_save_reclamacao);
+        View botaoRecarregarDados = context.findViewById(R.id.action_recarregar_dados);
+        if (this.menuItemProgressBar.isVisible()) {
+            botaoSave.setVisibility(View.GONE);
+            botaoRecarregarDados.setVisibility(View.GONE);
+        } else {
+            botaoSave.setVisibility(View.VISIBLE);
+            botaoRecarregarDados.setVisibility(View.VISIBLE);
         }
     }
 
@@ -71,14 +87,16 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
 
     @Override
     public void onPostExecute(final SpringRestResponse response) {
-//        final ProgressBar progressBar = (ProgressBar) context.findViewById(R.id.progressBar);
 
         response.setOnHttpCreated(new AbstractSpringRestResponse.OnHttpCreated() {
             @Override
             public void doThis() {
-                Toast.makeText(context, "Sua reclamação foi registrada com sucesso", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Sua reclamação foi registrada com sucesso", Toast.LENGTH_SHORT).show();
             }
         });
+
+        handleShowActionButton(); //Ocultando progress bar
+        hideMenuItemProgressBar(); //Exibindo botão salvar
 
         response.executeCallbacks();
     }
@@ -127,8 +145,9 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
         int reclamadoSelecionado = reclamado.getSelectedItemPosition();
 
         if (reclamadoSelecionado == 0) {
-            placa.setError("Selecione o reclamado");
-            invalidFields.add(reclamado);
+            TextView viewReclamado = (TextView)reclamado.getSelectedView();
+            viewReclamado.setError("Selecione o reclamado");
+            invalidFields.add(viewReclamado);
             isValid = false;
         }
 
@@ -136,8 +155,9 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
                 && reclamadoSelecionado != 0) { //Diferente da opçao SELECIONE e OUTROS
 
             if (reclamacao.getSelectedItem() == null) {
-                descricaoReclamacao.setError("Informe o motivo da reclamação");
-                invalidFields.add(reclamacao);
+                TextView viewReclamacao = (TextView)reclamacao.getSelectedView();
+                viewReclamacao.setError("Informe o motivo da reclamação");
+                invalidFields.add(viewReclamacao);
                 isValid = false;
             }
         }

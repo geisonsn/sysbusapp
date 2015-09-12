@@ -1,27 +1,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity">
+    tools:context=".activity.NovaReclamacaoActivity">
 
     <item
         android:id="@+id/action_save_reclamacao"
-        android:title=""
+        android:title="Salvar"
+        android:orderInCategory="1"
         android:icon="@drawable/ic_action_save"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_recarregar"
+        android:id="@+id/action_recarregar_dados"
         android:title="Recarregar dados"
+        android:orderInCategory="2"
         android:icon="@drawable/ic_action_cached"
-        android:orderInCategory="100"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_progresso"
-        android:title="Aguarde..."
+        android:title="Loading..."
         android:visible="false"
-        android:actionLayout="@layout/progress_bar"
-        app:showAsAction="ifRoom" />
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"
+        app:actionLayout="@layout/action_view_progress" />
 
 </menu>
