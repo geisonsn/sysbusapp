@@ -11,22 +11,22 @@ import android.widget.Toast;
 
 import java.util.Date;
 
-import br.com.gsn.sysbusapp.dialog.DatePickerFragment;
+import br.com.gsn.sysbusapp.dialog.TimePickerFragment;
 
-public class TimerPickerUtil {
+public class TimePickerUtil {
 
-    private DatePickerFragment datePicker;
+    private TimePickerFragment timePicker;
     private FragmentActivity context;
     private String name = "timerPickerDialog";
     private int sourceId = 0;
 
-    public TimerPickerUtil(FragmentActivity context, int sourceId) {
+    public TimePickerUtil(FragmentActivity context, int sourceId) {
         this.context = context;
-        this.datePicker = new DatePickerFragment();
+        this.timePicker = new TimePickerFragment();
         this.sourceId = sourceId;
     }
 
-    public TimerPickerUtil setName(String name) {
+    public TimePickerUtil setName(String name) {
         this.name = name;
         return this;
     }
@@ -35,11 +35,11 @@ public class TimerPickerUtil {
         Bundle bundle = new Bundle();
         bundle.putString("dialogName", name);
         bundle.putInt("sourceId", sourceId);
-        datePicker.setArguments(bundle);
-        datePicker.show(context.getSupportFragmentManager(), this.name);
+        timePicker.setArguments(bundle);
+        timePicker.show(context.getSupportFragmentManager(), this.name);
     }
 
-    public static class TimerPickerWrapper implements DatePickerListener {
+    public static class TimePickerWrapper implements PickerListener {
 
         private DialogInterface currentDialog;
         private Activity context;

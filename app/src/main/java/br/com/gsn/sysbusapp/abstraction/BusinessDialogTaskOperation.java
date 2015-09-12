@@ -34,7 +34,7 @@ public abstract class BusinessDialogTaskOperation<Params,Progress, Result> exten
         this.currentDialog = dialog;
     }
 
-    public void showRequestProgress() {
+    public void handleProgressRequest() {
         Dialog dialogFragment = ((Dialog) this.currentDialog);
 
         ViewGroup containerLoading = (ViewGroup) dialogFragment.findViewById(R.id.container_loading);

@@ -21,7 +21,7 @@ import br.com.gsn.sysbusapp.business.NovaReclamacaoBusiness;
 import br.com.gsn.sysbusapp.enums.ObjetoReclamadoEnum;
 import br.com.gsn.sysbusapp.util.DatePickerUtil;
 import br.com.gsn.sysbusapp.util.Dates;
-import br.com.gsn.sysbusapp.util.TimerPickerUtil;
+import br.com.gsn.sysbusapp.util.TimePickerUtil;
 
 /**
  * Created by Geison on 09/09/2015.
@@ -71,6 +71,12 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        delegate.cancelTaskOperation();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_nova_reclamacao, menu);
         return super.onCreateOptionsMenu(menu);
@@ -90,6 +96,7 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
+            delegate.cancelTaskOperation();
 //            NavUtils.navigateUpFromSameTask(this);
             NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
         }
@@ -131,8 +138,8 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
         new DatePickerUtil(this, R.id.dataOcorrencia).show();
     }
 
-    public void showTimer() {
-        new TimerPickerUtil(this, R.id.horaOcorrencia).show();
+    public void showTime() {
+        new TimePickerUtil(this, R.id.horaOcorrencia).show();
     }
 
     private void save() {
@@ -159,8 +166,8 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
         public void onClick(View v) {
             if (v.getId() == R.id.dataOcorrencia) {
                 showCalendar();
-            } else {
-                showTimer();
+            } else if (v.getId() == R.id.horaOcorrencia){
+                showTime();
             }
         }
     };

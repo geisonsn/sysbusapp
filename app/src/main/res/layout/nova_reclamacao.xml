@@ -33,14 +33,14 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:paddingRight="16dp"
-                android:textSize="16dp"
                 android:text="Reclamado"/>
 
             <Spinner
-                android:layout_width="250dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
+                android:layout_gravity="right"
                 android:layout_weight="1"
                 android:entries="@array/objeto_reclamado_valores"
                 android:id="@+id/objetoReclamado"/>
@@ -62,14 +62,14 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:paddingRight="30dp"
-                android:textSize="16sp"
                 android:text="Reclamação"/>
 
             <Spinner
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
+                android:layout_gravity="right"
                 android:layout_weight="1"
                 android:id="@+id/reclamacao"/>
 
@@ -98,14 +98,14 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:paddingRight="16dp"
-                android:textSize="16dp"
                 android:text="Linha"/>
 
             <Spinner
-                android:layout_width="250dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
+                android:layout_gravity="right"
                 android:layout_weight="1"
                 android:id="@+id/linha"/>
 

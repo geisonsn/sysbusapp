@@ -50,6 +50,13 @@ public final class Dates {
         return c.getTime();
     }
 
+    public static Date parse(int hora, int minutos) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, hora);
+        c.set(Calendar.MINUTE, minutos);
+        return c.getTime();
+    }
+
     public static String getCurrentDate(String format) {
         Calendar c = Calendar.getInstance();
         return format(c.getTime(), format);

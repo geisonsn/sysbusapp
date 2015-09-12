@@ -71,7 +71,7 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
         });
 
         response.executeCallbacks();
-        super.showRequestProgress();
+        super.handleProgressRequest();
     }
 
     @Override
@@ -88,14 +88,18 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
         EditText email = (EditText) dialogFragment.findViewById(R.id.email);
         EditText senha = (EditText) dialogFragment.findViewById(R.id.senha);
 
-        if (loginValido(dialogFragment)) {
-            if (ConnectionUtil.isNetworkConnected(context)) {
-                super.showRequestProgress();
-                task = new TemplateAsyncTask(this);
-                task.execute(email.getText().toString(), senha.getText().toString());
-            } else {
-                Toast.makeText(context, R.string.sem_conexao_com_internet, Toast.LENGTH_SHORT).show();
+        if (ConnectionUtil.isNetworkConnected(context)) {
+            if (loginValido(dialogFragment)) {
+                if (ConnectionUtil.isNetworkConnected(context)) {
+                    super.handleProgressRequest();
+                    task = new TemplateAsyncTask(this);
+                    task.execute(email.getText().toString(), senha.getText().toString());
+                } else {
+                    Toast.makeText(context, R.string.sem_conexao_com_internet, Toast.LENGTH_SHORT).show();
+                }
             }
+        } else {
+            Toast.makeText(context, R.string.voce_nao_esta_conectado, Toast.LENGTH_SHORT).show();
         }
     }
 

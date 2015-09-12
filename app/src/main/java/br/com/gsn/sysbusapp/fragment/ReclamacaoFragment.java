@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -29,8 +30,6 @@ public class ReclamacaoFragment extends ListContentFragment /*implements Busines
         LinearLayout header = (LinearLayout) rootView.findViewById(R.id.header);
         header.setVisibility(View.GONE);
 
-        ((ReclamacaoRankingBusiness)delegate).listarReclamacoes();
-
         return rootView;
     }
 
@@ -40,7 +39,38 @@ public class ReclamacaoFragment extends ListContentFragment /*implements Busines
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-   /* @Override
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((ReclamacaoRankingBusiness)delegate).listarReclamacoes();
+    }
+
+    /*@Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }*/
+
+    /* @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_nova_reclamacao) {
             startActivity(new Intent(getActivity(), NovaReclamacaoActivity.class));

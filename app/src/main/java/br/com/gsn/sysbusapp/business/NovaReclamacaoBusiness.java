@@ -40,11 +40,17 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
     }
 
     public void saveReclamacao() {
-        if (isValidForm()) {
-            if (ConnectionUtil.isNetworkConnected(context)) {
-                task = new TemplateAsyncTask<>(this);
-                task.execute(this.buildDTO());
+        if (ConnectionUtil.isNetworkConnected(context)) {
+            if (isValidForm()) {
+                if (ConnectionUtil.isNetworkConnected(context)) {
+                    task = new TemplateAsyncTask<>(this);
+                    task.execute(this.buildDTO());
+                } else {
+                    Toast.makeText(context, R.string.sem_conexao_com_internet, Toast.LENGTH_SHORT).show();
+                }
             }
+        } else {
+            Toast.makeText(context, R.string.voce_nao_esta_conectado, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -61,7 +67,6 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
     @Override
     public SpringRestResponse doInBackground(ReclamacaoRequestDTO... params) {
         return SpringRestClient.post(context, UrlServico.URL_NOVA_RECLAMACAO, params[0], ReclamacaoRequestDTO.class);
-//        return SpringRestClient.postForObject(context, UrlServico.URL_NOVA_RECLAMACAO, params[0], ReclamacaoRequestDTO.class);
     }
 
     @Override

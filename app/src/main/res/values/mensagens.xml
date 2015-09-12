@@ -7,4 +7,5 @@
     <string name="msg_sem_conexao">Sem conexão com a internet</string>
     <string name="msg_falha_na_conexao">Falha na conexão com a internet</string>
     <string name="sem_conexao_com_internet">Falha na conexão! Verifique sua conexão e tente novamente.</string>
+    <string name="voce_nao_esta_conectado">Você não está conectado! Verifique sua conexão e tente novamente.</string>
 </resources>

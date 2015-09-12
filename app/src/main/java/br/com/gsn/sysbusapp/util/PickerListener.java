@@ -5,7 +5,7 @@ import android.content.DialogInterface;
 
 import java.util.Date;
 
-public interface DatePickerListener {
+public interface PickerListener {
         void handleCreateDialog(Activity context, DialogInterface dialog, int idSource);
         void handleDataSet(Date date);
     }

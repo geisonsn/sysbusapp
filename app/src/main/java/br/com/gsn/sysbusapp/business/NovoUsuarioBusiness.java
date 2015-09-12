@@ -38,17 +38,22 @@ public class NovoUsuarioBusiness extends BusinessDialogTaskOperation<UsuarioDTO,
 
     @Override
     public void onConfirmButton(DialogInterface dialog) {
-        Dialog form = ((Dialog) dialog);
-        boolean validForm = isValidForm(form);
-        if (validForm) {
-            if (ConnectionUtil.isNetworkConnected(context)) {
-                super.showRequestProgress();
-                UsuarioDTO usuarioDTO = getUsuarioDTO(form);
-                task = new TemplateAsyncTask(this);
-                task.execute(usuarioDTO);
-            } else {
-                Toast.makeText(context, R.string.sem_conexao_com_internet, Toast.LENGTH_SHORT).show();
+
+        if (ConnectionUtil.isNetworkConnected(context)) {
+            Dialog form = ((Dialog) dialog);
+            boolean validForm = isValidForm(form);
+            if (validForm) {
+                if (ConnectionUtil.isNetworkConnected(context)) {
+                    super.handleProgressRequest();
+                    UsuarioDTO usuarioDTO = getUsuarioDTO(form);
+                    task = new TemplateAsyncTask(this);
+                    task.execute(usuarioDTO);
+                } else {
+                    Toast.makeText(context, R.string.sem_conexao_com_internet, Toast.LENGTH_SHORT).show();
+                }
             }
+        } else {
+            Toast.makeText(context, R.string.voce_nao_esta_conectado, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -73,7 +78,7 @@ public class NovoUsuarioBusiness extends BusinessDialogTaskOperation<UsuarioDTO,
             }
         });
         response.executeCallbacks();
-        super.showRequestProgress();
+        super.handleProgressRequest();
     }
 
     @Override
