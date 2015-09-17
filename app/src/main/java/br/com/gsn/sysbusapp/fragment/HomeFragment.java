@@ -1,44 +1,68 @@
 package br.com.gsn.sysbusapp.fragment;
 
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import br.com.gsn.sysbusapp.R;
+import br.com.gsn.sysbusapp.business.HomeBusiness;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends ListContentFragment {
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
+    public HomeFragment() {}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public void setBusinessDelegate() {
+        this.delegate = new HomeBusiness(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 
-
-        // Inflate the layout for this fragment
         return rootView;
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onStart() {
+        super.onStart();
+        this.mostrarTodasLinhas();
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_home, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        if (item.getItemId() == R.id.action_linhas_proximas_a_mim) {
+            this.listarLinhasProximas();
+        }
+
+        if (item.getItemId() == R.id.action_todas_as_linhas) {
+            this.mostrarTodasLinhas();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void listarLinhasProximas() {
+        ((HomeBusiness)delegate).listarLinhas();
+    }
+
+    private void mostrarTodasLinhas() {
+        ((HomeBusiness)delegate).listarLinhas();
+    }
+
+
 }

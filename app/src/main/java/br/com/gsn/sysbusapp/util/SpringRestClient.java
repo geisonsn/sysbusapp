@@ -95,8 +95,19 @@ public final class SpringRestClient {
         }
 
         try {
+
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+            //Informação sobre configuração http://wiki.fasterxml.com/JacksonFeaturesSerialization
+            /*ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+            mapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, false);*/
+
+            MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+//            messageConverter.setObjectMapper(mapper);
+
+            //restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
+            restTemplate.getMessageConverters().add(messageConverter);
 
             T returnObject = restTemplate.getForObject(url, returnType);
 

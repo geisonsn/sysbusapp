@@ -6,10 +6,19 @@
     android:padding="5dip">
 
     <TextView
+        android:id="@+id/favorito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="8dp"
+        android:textSize="35sp"
+        android:text="X"/>
+
+    <TextView
         android:id="@+id/numeroLinha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingRight="8dp"
+        android:layout_toRightOf="@id/favorito"
         android:textSize="35sp"
         android:text="999"/>
 
@@ -30,17 +39,6 @@
         android:paddingRight="8dp"
         android:text="Descrição da linha"/>
 
-    <TextView
-        android:id="@+id/linhasEmDeslocamento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/nomeEmpresa"
-        android:layout_toRightOf="@+id/descricaoLinha"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp"
-        android:textSize="12sp"
-        android:background="@drawable/bg_oval"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="22"/>
+
 
 </RelativeLayout>

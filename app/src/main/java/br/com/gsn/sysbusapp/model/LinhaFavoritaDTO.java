@@ -18,6 +18,8 @@ public class LinhaFavoritaDTO extends InformationRequest implements Serializable
 
 	private Long idUsuario;
 	
+	private Integer totalVeiculosEmDeslocamento;
+	
 	public LinhaFavoritaDTO() {}
 	
 	public LinhaFavoritaDTO(String message) {
@@ -31,7 +33,7 @@ public class LinhaFavoritaDTO extends InformationRequest implements Serializable
 	public void setIdLinhaFavorita(Long idLinhaFavorita) {
 		this.idLinhaFavorita = idLinhaFavorita;
 	}
-
+	
 	public Long getIdLinha() {
 		return idLinha;
 	}
@@ -72,5 +74,11 @@ public class LinhaFavoritaDTO extends InformationRequest implements Serializable
 		this.idUsuario = idUsuario;
 	}
 
-	
+	public Integer getTotalVeiculosEmDeslocamento() {
+		return totalVeiculosEmDeslocamento;
+	}
+
+	public void setTotalVeiculosEmDeslocamento(Integer totalVeiculosEmDeslocamento) {
+		this.totalVeiculosEmDeslocamento = totalVeiculosEmDeslocamento;
+	}
 }

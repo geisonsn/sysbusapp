@@ -15,6 +15,8 @@ public final class UrlServico {
     public static final String URL_LISTAGEM_LINHA_FAVORITA = "http://sysbusweb-gsanton.rhcloud.com/services/linhafavorita/{idUsuario}";
     public static final String URL_LISTAGEM_LINHA_POR_NUMERO = "http://sysbusweb-gsanton.rhcloud.com/services/linha/{numeroLinha}";
     public static final String URL_LISTAGEM_ORIGEM_RECLAMACAO = "http://sysbusweb-gsanton.rhcloud.com/services/origemreclamacao/{objetoReclamado}";
-    public static final String URL_LISTAGEM_RECLAMACAO_RANKING = "http://sysbusweb-gsanton.rhcloud.com/services/reclamacao/linhasreclamadastopdez";
+    public static final String URL_LINHAS_MAIS_RECLAMADAS = "http://sysbusweb-gsanton.rhcloud.com/services/reclamacao/linhasmaisreclamadas/{quantidade}";
+    public static final String URL_VEICULOS_EM_DESLOCAMENTO = "http://sysbusweb-gsanton.rhcloud.com/services/localizacaolinha/veiculosemdeslocamento/{idUsuario}/{intervalo}";
+    public static final String URL_VEICULOS_EM_DESLOCAMENTO_PROXIMOS = "http://sysbusweb-gsanton.rhcloud.com/services/localizacaolinha/veiculosemdeslocamentoproximos/{idUsuario}/{intervalo}/{distancia}/{latitude}/{longitude}";
 
 }

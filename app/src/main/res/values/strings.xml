@@ -17,6 +17,7 @@
     <string name="cadastrar_se">Cadastrar-se</string>
 
     <string name="nenhum_favorito_adicionado">Nenhum favorito adicionado</string>
+    <string name="nenhuma_com_localizacao_informada">Ná linhas com localização informada</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
@@ -53,6 +54,8 @@
     <string name="novo_usuario">Novo usuário</string>
     <string name="cadastre_se">Cadastre-se</string>
     <string name="salvar">Salvar</string>
+    <string name="action_linhas_proximas_a_mim">Linhas próximas a mim</string>
+    <string name="action_todas_as_linhas">Todas as linhas</string>
     <string name="action_nova_reclamacao">Nova reclamação</string>
     <string name="action_progress_bar">Aguarde</string>
 

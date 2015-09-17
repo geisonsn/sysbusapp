@@ -18,6 +18,7 @@ public class TemplateAsyncTask<Params, Progress, Result> extends AsyncTask<Param
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        businessOperation.onPreExecute();
     }
 
     @Override
