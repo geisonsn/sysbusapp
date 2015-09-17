@@ -38,12 +38,14 @@ public class HomeFragment extends ListContentFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_home, menu);
+
+        delegate.setMenuItemProgressBar(menu.findItem(R.id.action_progresso));
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
 
         if (item.getItemId() == R.id.action_linhas_proximas_a_mim) {
             this.listarLinhasProximas();
@@ -57,12 +59,10 @@ public class HomeFragment extends ListContentFragment {
     }
 
     private void listarLinhasProximas() {
-        ((HomeBusiness)delegate).listarLinhas();
+        ((HomeBusiness)delegate).listarLinhasProximas();
     }
 
     private void mostrarTodasLinhas() {
         ((HomeBusiness)delegate).listarLinhas();
     }
-
-
 }

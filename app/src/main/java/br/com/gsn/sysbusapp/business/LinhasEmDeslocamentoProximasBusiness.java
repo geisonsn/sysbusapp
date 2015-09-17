@@ -19,25 +19,31 @@ import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaWrapperDTO;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
+import br.com.gsn.sysbusapp.util.ConnectionUtil;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
 
 /**
  * Created by Geison on 06/09/2015.
  */
-public class LinhasProximasBusiness extends BusinessTaskOperation<Void, Integer, SpringRestResponse> {
+public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<Void, Integer, SpringRestResponse> {
 
     private ListFragment listFragment;
     private TemplateAsyncTask<Void, Integer, SpringRestResponse> task;
 
-    public LinhasProximasBusiness(ListContentFragment context) {
+    public LinhasEmDeslocamentoProximasBusiness(ListContentFragment context) {
         this.context = context.getActivity();
         this.listFragment = context;
     }
 
     public void listarLinhas() {
-        task = new TemplateAsyncTask<>(this);
-        task.execute();
+        if (ConnectionUtil.isNetworkConnected(context)) {
+//            super.showMenuItemProgressBar();
+            task = new TemplateAsyncTask<>(this);
+            task.execute();
+        } else {
+            showNoConnectionMessage();
+        }
     }
 
     @Override
@@ -54,10 +60,16 @@ public class LinhasProximasBusiness extends BusinessTaskOperation<Void, Integer,
     public SpringRestResponse doInBackground(Void... params) {
         String url = UrlServico.URL_VEICULOS_EM_DESLOCAMENTO_PROXIMOS;
         url = url.replace("{idUsuario}", String.valueOf(1));
-        url = url.replace("{intervalo}", "48");
-        url = url.replace("{distancia}", "9");
-        url = url.replace("{latitude}", "-3.131334");
-        url = url.replace("{longitude}", "-59.988090");
+
+        //Buscar das prefencias do usuario (valor padrao = 3)
+        url = url.replace("{intervalo}", "8");
+
+        //Distançia em 3km
+        url = url.replace("{distancia}", "3");
+
+        //Ponto de referencia: Bola da Suframa (-3.130969, -59.987002)
+        url = url.replace("{latitude}", "-3.130969");
+        url = url.replace("{longitude}", "-59.987002");
 
         return new SpringRestClient()
                 .showMessage(false)
@@ -104,6 +116,8 @@ public class LinhasProximasBusiness extends BusinessTaskOperation<Void, Integer,
         response.executeCallbacks();
 
         progressBar.setVisibility(View.GONE);
+
+        context.invalidateOptionsMenu();
     }
 
     @Override

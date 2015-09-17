@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements HostBusinessDeleg
             return true;
         }
 
+        //Opçao utilizada no fragmento de reclamaçao
         if (item.getItemId() == R.id.action_nova_reclamacao) {
             startActivity(new Intent(this, NovaReclamacaoActivity.class));
             return true;

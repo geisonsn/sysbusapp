@@ -2,7 +2,9 @@ package br.com.gsn.sysbusapp.abstraction;
 
 import android.app.Activity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.task.TaskOperation;
 import br.com.gsn.sysbusapp.util.DatePickerUtil;
 import br.com.gsn.sysbusapp.util.TimePickerUtil;
@@ -40,5 +42,9 @@ public abstract class BusinessTaskOperation<Params,Progress, Result> implements 
 
     public void hideMenuItemProgressBar() {
         this.menuItemProgressBar.setVisible(false);
+    }
+
+    public void showNoConnectionMessage() {
+        Toast.makeText(context, R.string.voce_nao_esta_conectado, Toast.LENGTH_SHORT).show();
     }
 }

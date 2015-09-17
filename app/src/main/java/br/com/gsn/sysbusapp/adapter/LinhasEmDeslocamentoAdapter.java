@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
+import br.com.gsn.sysbusapp.util.Dates;
 
 /**
  * Created by Geison on 01/09/2015.
@@ -38,6 +40,7 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
             viewHolder.numeroLinha = (TextView) view.findViewById(R.id.numeroLinha);
             viewHolder.nomeEmpresa = (TextView) view.findViewById(R.id.nomeEmpresa);
             viewHolder.descricaoLinha = (TextView) view.findViewById(R.id.descricaoLinha);
+            viewHolder.ultimoRegistro = (TextView) view.findViewById(R.id.ultimoRegistro);
             view.setTag(viewHolder);
         }
 
@@ -49,6 +52,9 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
         holder.nomeEmpresa.setText(" Nome da empresa" + linha.getNumeroLinha());
         holder.descricaoLinha.setText("Descricao da linha " + linha.getNumeroLinha());
 
+        Date ultimoRegistro = Dates.parse(linha.getDataHoraRegistro(), Dates.FORMAT_PT_BR_DATE_HOUR);
+        holder.ultimoRegistro.setText(Dates.format(ultimoRegistro, Dates.FORMAT_PT_BR_HOUR));
+
         return view;
     }
 
@@ -56,5 +62,6 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
         TextView numeroLinha;
         TextView nomeEmpresa;
         TextView descricaoLinha;
+        TextView ultimoRegistro;
     }
 }

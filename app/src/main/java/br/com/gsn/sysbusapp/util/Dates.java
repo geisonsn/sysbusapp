@@ -21,11 +21,23 @@ public final class Dates {
         return new SimpleDateFormat(format).format(date);
     }
 
-    public static Date parse(String date, String format) throws ParseException {
+    public static String format(String stringDate, String format) {
+
+        Date date = parse(stringDate, format);
+
+        return format(date, format);
+    }
+
+    public static Date parse(String date, String format) {
         if (date == null) {
             return null;
         }
-        return new SimpleDateFormat(format).parse(date);
+
+        try {
+            return new SimpleDateFormat(format).parse(date);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
     /**

@@ -39,6 +39,17 @@
         android:paddingRight="8dp"
         android:text="Descrição da linha"/>
 
+    <TextView
+        android:id="@+id/ultimoRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/nomeEmpresa"
+        android:paddingRight="8dp"
+        android:textSize="12sp"
+        android:text="12:00"/>
+
 
 
 </RelativeLayout>
