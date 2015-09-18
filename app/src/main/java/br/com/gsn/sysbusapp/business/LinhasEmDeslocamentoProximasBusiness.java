@@ -19,7 +19,6 @@ import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaWrapperDTO;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
-import br.com.gsn.sysbusapp.util.ConnectionUtil;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
 
@@ -37,13 +36,8 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
     }
 
     public void listarLinhas() {
-        if (ConnectionUtil.isNetworkConnected(context)) {
-//            super.showMenuItemProgressBar();
-            task = new TemplateAsyncTask<>(this);
-            task.execute();
-        } else {
-            showNoConnectionMessage();
-        }
+        task = new TemplateAsyncTask<>(this);
+        task.execute();
     }
 
     @Override
@@ -100,7 +94,8 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
         response.setOnHttpNotFound(new AbstractSpringRestResponse.OnHttpNotFound() {
             @Override
             public void doThis() {
-                emptyView.setText(R.string.nenhuma_com_localizacao_informada);
+                listFragment.setListAdapter(null);
+                emptyView.setText(R.string.nenhuma_linha_proxima);
                 listView.setEmptyView(emptyView);
             }
         });
@@ -117,7 +112,6 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
 
         progressBar.setVisibility(View.GONE);
 
-        context.invalidateOptionsMenu();
     }
 
     @Override

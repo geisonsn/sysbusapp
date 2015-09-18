@@ -14,6 +14,10 @@ public class LocalizacaoLinhaDTO extends InformationRequest implements Serializa
 	private Long idVeiculo;
 
 	private String numeroLinha;
+	
+	private String descricaoLinha;
+	
+	private String nomeEmpresa;
 
 	private String numeroRegistro;
 
@@ -27,14 +31,17 @@ public class LocalizacaoLinhaDTO extends InformationRequest implements Serializa
 	
 	public LocalizacaoLinhaDTO() {}
 	
-	public LocalizacaoLinhaDTO(String numeroLinha, String numeroRegistro,
+	public LocalizacaoLinhaDTO(Long idLinha, String numeroLinha, String descricaoLinha, String nomeEmpresa, String numeroRegistro,
 			String latitude, String longitude, Date dataHoraRegistro) {
-		this(numeroLinha, numeroRegistro, latitude, longitude, dataHoraRegistro, null);
+		this(idLinha, numeroLinha, descricaoLinha, nomeEmpresa, numeroRegistro, latitude, longitude, dataHoraRegistro, null);
 	}
 	
-	public LocalizacaoLinhaDTO(String numeroLinha, String numeroRegistro,
+	public LocalizacaoLinhaDTO(Long idLinha, String numeroLinha, String descricaoLinha, String nomeEmpresa, String numeroRegistro,
 			String latitude, String longitude, Date dataHoraRegistro, String distancia) {
+		this.idLinha = idLinha;
 		this.numeroLinha = numeroLinha;
+		this.descricaoLinha = descricaoLinha;
+		this.nomeEmpresa = nomeEmpresa;
 		this.numeroRegistro = numeroRegistro;
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -68,6 +75,22 @@ public class LocalizacaoLinhaDTO extends InformationRequest implements Serializa
 
 	public void setNumeroLinha(String numeroLinha) {
 		this.numeroLinha = numeroLinha;
+	}
+
+	public String getDescricaoLinha() {
+		return descricaoLinha;
+	}
+
+	public void setDescricaoLinha(String descricaoLinha) {
+		this.descricaoLinha = descricaoLinha;
+	}
+
+	public String getNomeEmpresa() {
+		return nomeEmpresa;
+	}
+
+	public void setNomeEmpresa(String nomeEmpresa) {
+		this.nomeEmpresa = nomeEmpresa;
 	}
 
 	public String getNumeroRegistro() {

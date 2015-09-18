@@ -1,6 +1,7 @@
 package br.com.gsn.sysbusapp.fragment;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,6 +54,11 @@ public class ReclamacaoFragment extends ListContentFragment /*implements Busines
     public void onStart() {
         super.onStart();
         ((ReclamacaoRankingBusiness)delegate).listarReclamacoes();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
     }
 
     /*@Override

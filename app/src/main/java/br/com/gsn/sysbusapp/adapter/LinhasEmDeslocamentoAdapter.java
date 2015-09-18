@@ -40,6 +40,7 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
             viewHolder.numeroLinha = (TextView) view.findViewById(R.id.numeroLinha);
             viewHolder.nomeEmpresa = (TextView) view.findViewById(R.id.nomeEmpresa);
             viewHolder.descricaoLinha = (TextView) view.findViewById(R.id.descricaoLinha);
+            viewHolder.veiculo = (TextView) view.findViewById(R.id.veiculo);
             viewHolder.ultimoRegistro = (TextView) view.findViewById(R.id.ultimoRegistro);
             view.setTag(viewHolder);
         }
@@ -48,9 +49,12 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
 
         LocalizacaoLinhaDTO linha = linhas.get(position);
 
+        holder.localizacaLinha = linha;
+
         holder.numeroLinha.setText(linha.getNumeroLinha());
-        holder.nomeEmpresa.setText(" Nome da empresa" + linha.getNumeroLinha());
-        holder.descricaoLinha.setText("Descricao da linha " + linha.getNumeroLinha());
+        holder.nomeEmpresa.setText(linha.getNomeEmpresa());
+        holder.descricaoLinha.setText(linha.getDescricaoLinha());
+        holder.veiculo.setText(linha.getNumeroRegistro());
 
         Date ultimoRegistro = Dates.parse(linha.getDataHoraRegistro(), Dates.FORMAT_PT_BR_DATE_HOUR);
         holder.ultimoRegistro.setText(Dates.format(ultimoRegistro, Dates.FORMAT_PT_BR_HOUR));
@@ -58,10 +62,16 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
         return view;
     }
 
-    static  class ViewHolder {
-        TextView numeroLinha;
-        TextView nomeEmpresa;
-        TextView descricaoLinha;
-        TextView ultimoRegistro;
+    public static class ViewHolder {
+        private TextView numeroLinha;
+        private TextView nomeEmpresa;
+        private TextView descricaoLinha;
+        private TextView veiculo;
+        private TextView ultimoRegistro;
+        private LocalizacaoLinhaDTO localizacaLinha;
+
+        public LocalizacaoLinhaDTO getLocalizacalLinha() {
+            return localizacaLinha;
+        }
     }
 }

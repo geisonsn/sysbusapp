@@ -40,16 +40,23 @@
         android:text="Descrição da linha"/>
 
     <TextView
+        android:id="@+id/veiculo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@id/nomeEmpresa"
+        android:textSize="12sp"
+        android:text="999999"/>
+
+    <TextView
         android:id="@+id/ultimoRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="right"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/nomeEmpresa"
-        android:paddingRight="8dp"
+        android:layout_alignBottom="@id/descricaoLinha"
         android:textSize="12sp"
         android:text="12:00"/>
-
-
 
 </RelativeLayout>

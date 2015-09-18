@@ -1,6 +1,7 @@
 package br.com.gsn.sysbusapp.fragment;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,11 @@ public class FavoritosFragment extends ListContentFragment /*implements Business
         ((FavoritosBusiness)delegate).listarLinhas();
 
         return rootView;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
     }
 
     /*@Override

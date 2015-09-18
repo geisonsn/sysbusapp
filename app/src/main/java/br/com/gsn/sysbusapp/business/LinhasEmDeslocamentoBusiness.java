@@ -2,9 +2,11 @@ package br.com.gsn.sysbusapp.business;
 
 import android.os.AsyncTask;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,6 @@ import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaWrapperDTO;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
-import br.com.gsn.sysbusapp.util.ConnectionUtil;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
 
@@ -36,14 +37,8 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
     }
 
     public void listarLinhas() {
-
-        if (ConnectionUtil.isNetworkConnected(context)) {
-//            showMenuItemProgressBar();
-            task = new TemplateAsyncTask<>(this);
-            task.execute();
-        } else {
-            super.showNoConnectionMessage();
-        }
+        task = new TemplateAsyncTask<>(this);
+        task.execute();
     }
 
     @Override
@@ -73,6 +68,8 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
         final TextView emptyView = (TextView) context.findViewById(android.R.id.empty);
         final ListView listView = (ListView) context.findViewById(android.R.id.list);
 
+        listView.setOnItemLongClickListener(itemLongClickListener);
+
         context.registerForContextMenu(listView);
 
         response.setOnHttpOk(new AbstractSpringRestResponse.OnHttpOk() {
@@ -93,6 +90,7 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
         response.setOnHttpNotFound(new AbstractSpringRestResponse.OnHttpNotFound() {
             @Override
             public void doThis() {
+                listFragment.setListAdapter(null);
                 emptyView.setText(R.string.nenhuma_com_localizacao_informada);
                 listView.setEmptyView(emptyView);
             }
@@ -119,4 +117,16 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
             task.cancel(true);
         }
     }
+
+
+    private AdapterView.OnItemLongClickListener itemLongClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+            LinhasEmDeslocamentoAdapter.ViewHolder viewHolder = (LinhasEmDeslocamentoAdapter.ViewHolder) view.getTag();
+
+            Toast.makeText(context, "Linha clicada " + viewHolder.getLocalizacalLinha().getNumeroLinha(), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    };
 }
