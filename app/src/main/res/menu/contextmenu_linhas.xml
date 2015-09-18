@@ -2,10 +2,10 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/reclamacar"
+    <item android:id="@+id/menu_reclamacao"
         android:title="Reclamar" />
 
-    <item android:id="@+id/exibir_no_mapa"
+    <item android:id="@+id/menu_mostrar_mapa"
         android:title="Mostrar no mapa" />
 
 </menu>

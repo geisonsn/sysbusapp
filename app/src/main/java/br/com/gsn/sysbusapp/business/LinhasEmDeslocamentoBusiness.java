@@ -6,7 +6,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,8 +69,6 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
 
         listView.setOnItemLongClickListener(itemLongClickListener);
 
-        context.registerForContextMenu(listView);
-
         response.setOnHttpOk(new AbstractSpringRestResponse.OnHttpOk() {
             @Override
             public void doThis() {
@@ -125,7 +122,6 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
 
             LinhasEmDeslocamentoAdapter.ViewHolder viewHolder = (LinhasEmDeslocamentoAdapter.ViewHolder) view.getTag();
 
-            Toast.makeText(context, "Linha clicada " + viewHolder.getLocalizacalLinha().getNumeroLinha(), Toast.LENGTH_SHORT).show();
             return false;
         }
     };

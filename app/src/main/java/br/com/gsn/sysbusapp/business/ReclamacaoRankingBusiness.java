@@ -3,6 +3,7 @@ package br.com.gsn.sysbusapp.business;
 import android.os.AsyncTask;
 import android.support.v4.app.ListFragment;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -13,12 +14,12 @@ import java.util.List;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.abstraction.BusinessTaskOperation;
-import br.com.gsn.sysbusapp.fragment.ListContentFragment;
-import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
 import br.com.gsn.sysbusapp.adapter.ReclamacaoRankingAdapter;
+import br.com.gsn.sysbusapp.fragment.ListContentFragment;
 import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
 import br.com.gsn.sysbusapp.model.ReclamacaoRankingDTO;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
+import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
 
@@ -67,6 +68,8 @@ public class ReclamacaoRankingBusiness extends BusinessTaskOperation<Void, Integ
         final ListView listView = (ListView) context.findViewById(android.R.id.list);
         final LinearLayout header = (LinearLayout) context.findViewById(R.id.header);
 
+        listView.setOnItemLongClickListener(itemLongClickListener);
+
         response.setOnHttpOk(new AbstractSpringRestResponse.OnHttpOk() {
             @Override
             public void doThis() {
@@ -106,4 +109,12 @@ public class ReclamacaoRankingBusiness extends BusinessTaskOperation<Void, Integ
             task.cancel(true);
         }
     }
+
+    private AdapterView.OnItemLongClickListener itemLongClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            ReclamacaoRankingDTO o = (ReclamacaoRankingDTO) parent.getItemAtPosition(position);
+            return false;
+        }
+    };
 }

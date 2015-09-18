@@ -10,8 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingRight="8dp"
-        android:textSize="35sp"
-        android:text="X"/>
+        android:textSize="15sp"
+        android:drawableTop="@drawable/ic_star_border_black"/>
 
     <TextView
         android:id="@+id/numeroLinha"

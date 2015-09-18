@@ -3,8 +3,10 @@ package br.com.gsn.sysbusapp.fragment;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.business.FavoritosBusiness;
@@ -13,8 +15,6 @@ import br.com.gsn.sysbusapp.business.FavoritosBusiness;
  * Created by Geison on 31/08/2015.
  */
 public class FavoritosFragment extends ListContentFragment /*implements BusinessDelegate<BusinessTaskOperation>*/ {
-
-//    private FavoritosBusiness delegate;
 
     public FavoritosFragment() {}
 
@@ -30,17 +30,18 @@ public class FavoritosFragment extends ListContentFragment /*implements Business
 
         ((FavoritosBusiness)delegate).listarLinhas();
 
+        ListView listView = (ListView)rootView.findViewById(android.R.id.list);
+
+        registerForContextMenu(listView);
+
         return rootView;
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.contextmenu_linhas, menu);
     }
-
-    /*@Override
-    public void cancelTaskOperation() {
-        delegate.cancelTaskOperation();
-    }*/
 
 }

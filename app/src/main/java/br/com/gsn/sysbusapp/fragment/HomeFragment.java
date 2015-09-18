@@ -1,6 +1,7 @@
 package br.com.gsn.sysbusapp.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -10,8 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import br.com.gsn.sysbusapp.R;
+import br.com.gsn.sysbusapp.activity.NovaReclamacaoActivity;
 import br.com.gsn.sysbusapp.business.HomeBusiness;
 
 public class HomeFragment extends ListContentFragment {
@@ -27,8 +30,6 @@ public class HomeFragment extends ListContentFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-//        View view = super.onCreateView(inflater, container, savedInstanceState);
-
         View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 
         ListView listView = (ListView)rootView.findViewById(android.R.id.list);
@@ -36,12 +37,6 @@ public class HomeFragment extends ListContentFragment {
         registerForContextMenu(listView);
 
         return rootView;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        registerForContextMenu(getListView());
-        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
@@ -75,12 +70,22 @@ public class HomeFragment extends ListContentFragment {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
-//        super.onCreateContextMenu(menu, v, menuInfo);
-
         MenuInflater  inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.contextmenu_linhas, menu);
+    }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.menu_reclamacao) {
+            startActivity(new Intent(this.getActivity(), NovaReclamacaoActivity.class));
+        }
+
+        if (item.getItemId() == R.id.menu_mostrar_mapa) {
+            Toast.makeText(this.getActivity(), "Será implementado em breve", Toast.LENGTH_SHORT).show();
+        }
+
+        return super.onContextItemSelected(item);
     }
 
     private void listarLinhasProximas() {
