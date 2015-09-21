@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <EditTextPreference
+        android:key="distancia"
+        android:dialogTitle="Defina a distância"
+        android:defaultValue="3"
+        android:summary="Distância das linhas próximas a mim"
+        android:title="Definição de distância"/>
+
+    <ListPreference
+        android:key="list_preference"
+        android:title="Distância das linhas"
+        android:dialogTitle="Esolha uma opção"
+        android:summary="Defina a distância das linhas próximas a você"
+        android:entries="@array/distancia_linhas_proximas_labels"
+        android:entryValues="@array/distancia_linhas_proximas_valores" />
+
+</PreferenceScreen>

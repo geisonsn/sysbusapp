@@ -12,9 +12,9 @@ import br.com.gsn.sysbusapp.R;
 /**
  * Created by Geison on 31/08/2015.
  */
-public class ConfiguracoesFragment extends Fragment {
+public class OldConfiguracoesFragment extends Fragment {
 
-    public ConfiguracoesFragment() {
+    public OldConfiguracoesFragment() {
     }
 
     @Override

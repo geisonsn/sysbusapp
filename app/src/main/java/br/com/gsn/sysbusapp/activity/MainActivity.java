@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -17,10 +16,10 @@ import android.widget.Toast;
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.abstraction.BusinessTaskOperation;
 import br.com.gsn.sysbusapp.abstraction.HostBusinessDelegate;
-import br.com.gsn.sysbusapp.fragment.ConfiguracoesFragment;
 import br.com.gsn.sysbusapp.fragment.FavoritosFragment;
 import br.com.gsn.sysbusapp.fragment.FragmentDrawer;
 import br.com.gsn.sysbusapp.fragment.HomeFragment;
+import br.com.gsn.sysbusapp.fragment.PrefsFragment;
 import br.com.gsn.sysbusapp.fragment.ReclamacaoFragment;
 
 
@@ -111,10 +110,18 @@ public class MainActivity extends AppCompatActivity implements HostBusinessDeleg
                 title = getString(R.string.title_reclamacoes);
                 break;
             case 3:
-                fragment = new ConfiguracoesFragment();
+//                fragment = new OldConfiguracoesFragment();
+//                startActivity(new Intent(this, ConfiguracoesActivity.class));
+                fragment = new PrefsFragment();
                 title = getString(R.string.title_configuracoes);
                 break;
             case 4:
+//                fragment = new OldConfiguracoesFragment();
+                startActivity(new Intent(this, Configuracoes2Activity.class));
+//                fragment = new PrefsFragment();
+                title = getString(R.string.title_configuracoes);
+                break;
+            case 5:
                 title = getString(R.string.title_desconectar);
                 startActivity(new Intent(this, InicialActivity.class));
                 break;
@@ -136,11 +143,6 @@ public class MainActivity extends AppCompatActivity implements HostBusinessDeleg
             // set the toolbar title
             getSupportActionBar().setTitle(title);
         }
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
     }
 
     @Override

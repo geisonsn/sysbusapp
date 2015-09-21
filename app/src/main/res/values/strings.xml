@@ -9,6 +9,8 @@
     <string name="nav_item_favoritos">Favoritos</string>
     <string name="nav_item_reclamacoes">Reclamações</string>
     <string name="nav_item_configuracoes">Configurações</string>
+    <string name="nav_item_configuracoes2">Configurações 2</string>
+    <string name="nav_item_desconectar">Desconectar</string>
 
     <string name="reclamado">Reclamado</string>
     <string name="origem_reclamacao">Origem da reclamação</string>
@@ -26,6 +28,8 @@
         <item>@string/nav_item_favoritos</item>
         <item>@string/nav_item_reclamacoes</item>
         <item>@string/nav_item_configuracoes</item>
+        <item>@string/nav_item_configuracoes2</item>
+        <item>@string/nav_item_desconectar</item>
     </string-array>
 
     <string-array name="objeto_reclamado_valores">
@@ -34,6 +38,28 @@
         <item name="motorista">Motorista</item>
         <item name="veiculo">Veículo</item>
         <item name="outros">Outros</item>
+    </string-array>
+
+    <string-array name="distancia_linhas_proximas_labels">
+        <item name="um_km">1km</item>
+        <item name="dois_km">2km</item>
+        <item name="tres_km">3km</item>
+        <item name="quatro_km">4km</item>
+        <item name="cinco_km">5km</item>
+        <item name="seis_km">6km</item>
+        <item name="sete_km">7km</item>
+        <item name="oito_km">8km</item>
+    </string-array>
+
+    <string-array name="distancia_linhas_proximas_valores">
+        <item name="um_km">1</item>
+        <item name="dois_km">2</item>
+        <item name="tres_km">3</item>
+        <item name="quatro_km">4</item>
+        <item name="cinco_km">5</item>
+        <item name="seis_km">6</item>
+        <item name="sete_km">7</item>
+        <item name="oito_km">8</item>
     </string-array>
 
     <string name="title_home">Home</string>

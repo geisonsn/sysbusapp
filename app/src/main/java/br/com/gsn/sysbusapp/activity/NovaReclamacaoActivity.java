@@ -1,6 +1,5 @@
 package br.com.gsn.sysbusapp.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -93,8 +92,9 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
 
         if (item.getItemId() == android.R.id.home) {
             delegate.cancelTaskOperation();
-//            NavUtils.navigateUpFromSameTask(this);
-            NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
+            NavUtils.navigateUpFromSameTask(this);
+//            NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
+//            onBackPressed();
         }
 
         if (item.getItemId() == R.id.action_save_reclamacao) {
