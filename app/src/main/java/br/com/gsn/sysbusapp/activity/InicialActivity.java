@@ -7,9 +7,10 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import br.com.gsn.sysbusapp.R;
-import br.com.gsn.sysbusapp.fragment.DialogContentFragment;
 import br.com.gsn.sysbusapp.dialog.LoginDialog;
 import br.com.gsn.sysbusapp.dialog.NovoUsuarioDialog;
+import br.com.gsn.sysbusapp.fragment.DialogContentFragment;
+import br.com.gsn.sysbusapp.util.PreferencesUtil;
 
 
 public class InicialActivity extends FragmentActivity {
@@ -21,6 +22,14 @@ public class InicialActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inicial);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (PreferencesUtil.getInstance(this).isUsuarioLogado()) {
+            startActivity(new Intent(this, MainActivity.class));
+        }
     }
 
     public void realizarLogin(View view) {

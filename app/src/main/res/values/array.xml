@@ -1,0 +1,29 @@
+<resources>
+
+    <string-array name="distancia_linhas_proximas_labels">
+        <item name="um_km">1km</item>
+        <item name="tres_km">3km</item>
+        <item name="cinco_km">5km</item>
+        <item name="dez_km">10km</item>
+    </string-array>
+
+    <string-array name="distancia_linhas_proximas_valores">
+        <item name="um_km">1</item>
+        <item name="tres_km">3</item>
+        <item name="cinco_km">5</item>
+        <item name="dez_km">10</item>
+    </string-array>
+
+    <string-array name="tempo_atualizacao_labels">
+        <item name="um_h">1h atrás</item>
+        <item name="tres_h">3h atrás</item>
+        <item name="cinco_h">5h atrás</item>
+    </string-array>
+
+    <string-array name="tempo_atualizacao_valores">
+        <item name="um_h">1</item>
+        <item name="tres_h">3</item>
+        <item name="cinco_h">5</item>
+    </string-array>
+
+</resources>

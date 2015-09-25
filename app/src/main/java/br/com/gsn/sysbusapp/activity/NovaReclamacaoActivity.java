@@ -1,5 +1,6 @@
 package br.com.gsn.sysbusapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import br.com.gsn.sysbusapp.business.NovaReclamacaoBusiness;
 import br.com.gsn.sysbusapp.enums.ObjetoReclamadoEnum;
 import br.com.gsn.sysbusapp.util.DatePickerUtil;
 import br.com.gsn.sysbusapp.util.Dates;
+import br.com.gsn.sysbusapp.util.PreferencesUtil;
 import br.com.gsn.sysbusapp.util.TimePickerUtil;
 
 /**
@@ -92,13 +94,12 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
 
         if (item.getItemId() == android.R.id.home) {
             delegate.cancelTaskOperation();
-            NavUtils.navigateUpFromSameTask(this);
-//            NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
-//            onBackPressed();
+            NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
+            PreferencesUtil.getInstance(this).setMenuCorrente(2);
         }
 
         if (item.getItemId() == R.id.action_save_reclamacao) {
-//            NavUtils.navigateUpFromSameTask(this);
+//            NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
             this.save();
         }
 

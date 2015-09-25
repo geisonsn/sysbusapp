@@ -23,48 +23,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:gravity="center_horizontal"
+        android:background="@color/accent_material_dark"
+        android:id="@+id/botoes">
 
-        android:orientation="vertical"
-        android:background="@color/accent_material_dark">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            android:id="@+id/botoes">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cadastrar_se"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="bold"
-                android:onClick="realizarCadastro"
-                android:layout_marginRight="40dp"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fazer_login"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="bold"
-                android:onClick="realizarLogin"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp"
-            android:text="Acessar sem usuário"
-            android:textStyle="bold"
+            android:text="@string/cadastrar_se"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:gravity="center_horizontal"
-            android:clickable="true"
-            android:onClick="acessarSemUsuario"/>
+            android:textStyle="bold"
+            android:onClick="realizarCadastro"
+            android:layout_marginRight="40dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fazer_login"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"
+            android:onClick="realizarLogin"/>
 
     </LinearLayout>
 

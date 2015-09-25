@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.gsn.sysbusapp.R;
@@ -19,8 +20,8 @@ import br.com.gsn.sysbusapp.abstraction.HostBusinessDelegate;
 import br.com.gsn.sysbusapp.fragment.FavoritosFragment;
 import br.com.gsn.sysbusapp.fragment.FragmentDrawer;
 import br.com.gsn.sysbusapp.fragment.HomeFragment;
-import br.com.gsn.sysbusapp.fragment.PrefsFragment;
 import br.com.gsn.sysbusapp.fragment.ReclamacaoFragment;
+import br.com.gsn.sysbusapp.util.PreferencesUtil;
 
 
 public class MainActivity extends AppCompatActivity implements HostBusinessDelegate, FragmentDrawer.FragmentDrawerListener {
@@ -52,6 +53,14 @@ public class MainActivity extends AppCompatActivity implements HostBusinessDeleg
 
         // display the first navigation drawer view on app launch
         displayView(0);
+
+        //Carrega o nome e o email do usúario no menu
+        carregarIdentificacaoUsuario();
+    }
+
+    private void carregarIdentificacaoUsuario() {
+        ((TextView)findViewById(R.id.nome_usuario)).setText(PreferencesUtil.getInstance(this).getString(PreferencesUtil.NOME_USUARIO));
+        ((TextView)findViewById(R.id.email_usuario)).setText(PreferencesUtil.getInstance(this).getString(PreferencesUtil.EMAIL_USUARIO));
     }
 
 
@@ -94,6 +103,16 @@ public class MainActivity extends AppCompatActivity implements HostBusinessDeleg
     }
 
     private void displayView(int position) {
+        int menuCorrente = PreferencesUtil.getInstance(this).getMenuCorrente();
+        if (menuCorrente >= 0) {
+            loadMenu(menuCorrente);
+            PreferencesUtil.getInstance(this).setMenuCorrente(-1);
+        } else {
+            loadMenu(position);
+        }
+    }
+
+    private void loadMenu(int position) {
         Fragment fragment = null;
         String title = getString(R.string.app_name);
         switch (position) {
@@ -110,19 +129,15 @@ public class MainActivity extends AppCompatActivity implements HostBusinessDeleg
                 title = getString(R.string.title_reclamacoes);
                 break;
             case 3:
-//                fragment = new OldConfiguracoesFragment();
-//                startActivity(new Intent(this, ConfiguracoesActivity.class));
-                fragment = new PrefsFragment();
+                startActivity(new Intent(this, ConfiguracoesActivity.class));
+                PreferencesUtil.getInstance(this).setMenuCorrente(position);
                 title = getString(R.string.title_configuracoes);
                 break;
             case 4:
-//                fragment = new OldConfiguracoesFragment();
-                startActivity(new Intent(this, Configuracoes2Activity.class));
-//                fragment = new PrefsFragment();
-                title = getString(R.string.title_configuracoes);
-                break;
-            case 5:
                 title = getString(R.string.title_desconectar);
+                mCurrentBusinessDelegate.cancelTaskOperation();
+                PreferencesUtil.getInstance(this).restaurarPreferencias();
+                this.finish();
                 startActivity(new Intent(this, InicialActivity.class));
                 break;
             default:
@@ -149,4 +164,5 @@ public class MainActivity extends AppCompatActivity implements HostBusinessDeleg
     public void seCurrentBusinessDelegate(BusinessTaskOperation mCurrentBusinessDelegate) {
         this.mCurrentBusinessDelegate = mCurrentBusinessDelegate;
     }
+
 }

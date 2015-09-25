@@ -19,6 +19,7 @@ import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaWrapperDTO;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
+import br.com.gsn.sysbusapp.util.PreferencesUtil;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
 
@@ -52,9 +53,13 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
 
     @Override
     public SpringRestResponse doInBackground(Void... params) {
+
+        Long idUsuario = PreferencesUtil.getInstance(context).getLong(PreferencesUtil.ID_USUARIO);
+        String intervalo = PreferencesUtil.getInstance(context).getString(PreferencesUtil.INTERVALO);
+
         String url = UrlServico.URL_VEICULOS_EM_DESLOCAMENTO;
-        url = url.replace("{idUsuario}", String.valueOf(1));
-        url = url.replace("{intervalo}", "8");
+        url = url.replace("{idUsuario}", String.valueOf(idUsuario));
+        url = url.replace("{intervalo}", intervalo);
 
         return new SpringRestClient()
                 .showMessage(false)

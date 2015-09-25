@@ -17,6 +17,7 @@ import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.model.UsuarioDTO;
 import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
 import br.com.gsn.sysbusapp.util.ConnectionUtil;
+import br.com.gsn.sysbusapp.util.PreferencesUtil;
 import br.com.gsn.sysbusapp.util.RegexValidatorUtil;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
@@ -58,9 +59,15 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
             @Override
             public void doThis() {
                 UsuarioDTO usuario = (UsuarioDTO) response.getObjectReturn();
-                Toast.makeText(context, "Usuário " + usuario.getEmail() + " logado", Toast.LENGTH_SHORT).show();
+
+                PreferencesUtil.getInstance(context).set(PreferencesUtil.ID_USUARIO, usuario.getId());
+                PreferencesUtil.getInstance(context).set(PreferencesUtil.NOME_USUARIO, usuario.getNome());
+                PreferencesUtil.getInstance(context).set(PreferencesUtil.EMAIL_USUARIO, usuario.getEmail());
+
                 onCloseDialog();
-                context.startActivity(new Intent(context, MainActivity.class));
+
+                Intent intent = new Intent(context, MainActivity.class);
+                context.startActivity(intent);
             }
         });
         response.setOnHttpNotFound(new AbstractSpringRestResponse.OnHttpNotFound() {

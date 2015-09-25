@@ -18,6 +18,7 @@ import br.com.gsn.sysbusapp.adapter.LinhaFavoritaAdapter;
 import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
 import br.com.gsn.sysbusapp.model.LinhaFavoritaDTO;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
+import br.com.gsn.sysbusapp.util.PreferencesUtil;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
 
@@ -51,8 +52,9 @@ public class FavoritosBusiness extends BusinessTaskOperation<Void, Integer, Spri
 
     @Override
     public SpringRestResponse doInBackground(Void... params) {
+        Long idUsuario = PreferencesUtil.getInstance(context).getLong(PreferencesUtil.ID_USUARIO);
         String url = UrlServico.URL_LISTAGEM_LINHA_FAVORITA;
-        url = url.replace("{idUsuario}", String.valueOf(1));
+        url = url.replace("{idUsuario}", idUsuario.toString());
 
         return new SpringRestClient()
                 .showMessage(false)

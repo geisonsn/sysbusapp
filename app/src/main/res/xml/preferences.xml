@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:key="intervalo"
+        android:title="Intervalo da atualização"
+        android:dialogTitle="Escolha o intervalo"
+        android:summary="Defina o intervalo de atualização das linhas"
+        android:entries="@array/tempo_atualizacao_labels"
+        android:entryValues="@array/tempo_atualizacao_valores"
+        android:defaultValue="3"/>
+
+    <ListPreference
+        android:key="distancia"
+        android:title="Distância das linhas"
+        android:dialogTitle="Escolha a distância"
+        android:summary="Defina a distância das linhas próximas a você"
+        android:entries="@array/distancia_linhas_proximas_labels"
+        android:entryValues="@array/distancia_linhas_proximas_valores"
+        android:defaultValue="3"/>
+
+</PreferenceScreen>
