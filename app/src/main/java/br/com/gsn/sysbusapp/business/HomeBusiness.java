@@ -2,6 +2,7 @@ package br.com.gsn.sysbusapp.business;
 
 import br.com.gsn.sysbusapp.abstraction.BusinessTaskOperation;
 import br.com.gsn.sysbusapp.fragment.ListContentFragment;
+import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
 
 /**
@@ -66,5 +67,15 @@ public class HomeBusiness extends BusinessTaskOperation<Void, Integer, SpringRes
     @Override
     public void cancelTaskOperation() {
         delegate.cancelTaskOperation();
+    }
+
+    public LocalizacaoLinhaDTO getLocalizacaoLinha() {
+        LocalizacaoLinhaDTO localizacaoLinhaDTO;
+        if (linhasEmDeslocamentoProximasBusiness != null) {
+            localizacaoLinhaDTO = linhasEmDeslocamentoProximasBusiness.localizacaoLinhaDTO;
+        } else {
+            localizacaoLinhaDTO = linhasEmDeslocamentoBusiness.localizacaoLinhaDTO;
+        }
+        return localizacaoLinhaDTO;
     }
 }

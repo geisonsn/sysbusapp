@@ -11,11 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import br.com.gsn.sysbusapp.R;
+import br.com.gsn.sysbusapp.activity.MapsActivity;
 import br.com.gsn.sysbusapp.activity.NovaReclamacaoActivity;
 import br.com.gsn.sysbusapp.business.HomeBusiness;
+import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
+import br.com.gsn.sysbusapp.parcelable.LocalizacaoLinhaParcelable;
 
 public class HomeFragment extends ListContentFragment {
 
@@ -82,7 +84,12 @@ public class HomeFragment extends ListContentFragment {
         }
 
         if (item.getItemId() == R.id.menu_mostrar_mapa) {
-            Toast.makeText(this.getActivity(), "Será implementado em breve", Toast.LENGTH_SHORT).show();
+            LocalizacaoLinhaDTO localizacaoLinha = ((HomeBusiness) delegate).getLocalizacaoLinha();
+            Bundle b = new Bundle();
+            b.putParcelable("localizacaoLinha", new LocalizacaoLinhaParcelable(localizacaoLinha));
+            Intent intent = new Intent(this.getActivity(), MapsActivity.class);
+            intent.putExtras(b);
+            startActivity(intent);
         }
 
         return super.onContextItemSelected(item);

@@ -30,6 +30,7 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
 
     private ListContentFragment listFragment;
     private TemplateAsyncTask<Void, Integer, SpringRestResponse> task;
+    public LocalizacaoLinhaDTO localizacaoLinhaDTO;
 
     public LinhasEmDeslocamentoBusiness(ListContentFragment context) {
         this.context = context.getActivity();
@@ -120,13 +121,11 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
         }
     }
 
-
     private AdapterView.OnItemLongClickListener itemLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-            LinhasEmDeslocamentoAdapter.ViewHolder viewHolder = (LinhasEmDeslocamentoAdapter.ViewHolder) view.getTag();
-
+            LocalizacaoLinhaDTO item = (LocalizacaoLinhaDTO) parent.getAdapter().getItem(position);
+            localizacaoLinhaDTO = item;
             return false;
         }
     };

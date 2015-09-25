@@ -3,6 +3,7 @@ package br.com.gsn.sysbusapp.business;
 import android.os.AsyncTask;
 import android.support.v4.app.ListFragment;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaWrapperDTO;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
+import br.com.gsn.sysbusapp.util.PreferencesUtil;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
 
@@ -29,6 +31,7 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
 
     private ListFragment listFragment;
     private TemplateAsyncTask<Void, Integer, SpringRestResponse> task;
+    public LocalizacaoLinhaDTO localizacaoLinhaDTO;
 
     public LinhasEmDeslocamentoProximasBusiness(ListContentFragment context) {
         this.context = context.getActivity();
@@ -52,14 +55,15 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
 
     @Override
     public SpringRestResponse doInBackground(Void... params) {
+
+        Long idUsuario = PreferencesUtil.getInstance(context).getLong(PreferencesUtil.ID_USUARIO);
+        String intervalo = PreferencesUtil.getInstance(context).getString(PreferencesUtil.INTERVALO);
+        String distancia = PreferencesUtil.getInstance(context).getString(PreferencesUtil.DISTANCIA);
+
         String url = UrlServico.URL_VEICULOS_EM_DESLOCAMENTO_PROXIMOS;
-        url = url.replace("{idUsuario}", String.valueOf(1));
-
-        //Buscar das prefencias do usuario (valor padrao = 3)
-        url = url.replace("{intervalo}", "8");
-
-        //Distançia em 3km
-        url = url.replace("{distancia}", "3");
+        url = url.replace("{idUsuario}", String.valueOf(idUsuario));
+        url = url.replace("{intervalo}", intervalo);
+        url = url.replace("{distancia}", distancia);
 
         //Ponto de referencia: Bola da Suframa (-3.130969, -59.987002)
         url = url.replace("{latitude}", "-3.130969");
@@ -75,6 +79,8 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
         final ProgressBar progressBar = (ProgressBar) context.findViewById(R.id.progressBar);
         final TextView emptyView = (TextView) context.findViewById(android.R.id.empty);
         final ListView listView = (ListView) context.findViewById(android.R.id.list);
+
+        listView.setOnItemLongClickListener(itemLongClickListener);
 
         response.setOnHttpOk(new AbstractSpringRestResponse.OnHttpOk() {
             @Override
@@ -120,4 +126,13 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
             task.cancel(true);
         }
     }
+
+    private AdapterView.OnItemLongClickListener itemLongClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            LocalizacaoLinhaDTO item = (LocalizacaoLinhaDTO) parent.getAdapter().getItem(position);
+            localizacaoLinhaDTO = item;
+            return false;
+        }
+    };
 }
