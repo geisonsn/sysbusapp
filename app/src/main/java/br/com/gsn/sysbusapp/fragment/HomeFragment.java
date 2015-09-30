@@ -3,6 +3,7 @@ package br.com.gsn.sysbusapp.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.activity.MapsActivity;
 import br.com.gsn.sysbusapp.activity.NovaReclamacaoActivity;
 import br.com.gsn.sysbusapp.business.HomeBusiness;
+import br.com.gsn.sysbusapp.dialog.CheckinDialog;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
 import br.com.gsn.sysbusapp.parcelable.LocalizacaoLinhaParcelable;
 
@@ -58,6 +60,11 @@ public class HomeFragment extends ListContentFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.action_checkin) {
+            DialogFragment dialogLogin = new CheckinDialog();
+            dialogLogin.show(getActivity().getSupportFragmentManager(), "checkin");
+        }
 
         if (item.getItemId() == R.id.action_linhas_proximas_a_mim) {
             this.listarLinhasProximas();

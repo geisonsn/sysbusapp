@@ -13,7 +13,7 @@ public final class UrlServico {
     public static final String URL_NOVA_LINHA = "http://sysbusweb-gsanton.rhcloud.com/services/veiculo";
     public static final String URL_LISTAGEM_LINHA = "http://sysbusweb-gsanton.rhcloud.com/services/linha";
     public static final String URL_LISTAGEM_LINHA_FAVORITA = "http://sysbusweb-gsanton.rhcloud.com/services/linhafavorita/{idUsuario}";
-    public static final String URL_LISTAGEM_LINHA_POR_NUMERO = "http://sysbusweb-gsanton.rhcloud.com/services/linha/{numeroLinha}";
+    public static final String URL_LISTAGEM_VEICULOS_POR_LINHA = "http://sysbusweb-gsanton.rhcloud.com/services/veiculo/{numeroLinha}";
     public static final String URL_LISTAGEM_ORIGEM_RECLAMACAO = "http://sysbusweb-gsanton.rhcloud.com/services/origemreclamacao/{objetoReclamado}";
     public static final String URL_LINHAS_MAIS_RECLAMADAS = "http://sysbusweb-gsanton.rhcloud.com/services/reclamacao/linhasmaisreclamadas/{quantidade}";
     public static final String URL_VEICULOS_EM_DESLOCAMENTO = "http://sysbusweb-gsanton.rhcloud.com/services/localizacaolinha/veiculosemdeslocamento/{idUsuario}/{intervalo}";
