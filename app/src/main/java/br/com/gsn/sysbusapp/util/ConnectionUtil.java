@@ -1,10 +1,9 @@
 package br.com.gsn.sysbusapp.util;
 
 import android.content.Context;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
-import android.util.Log;
 
 import java.io.IOException;
 
@@ -61,58 +60,9 @@ public final class ConnectionUtil {
         return false;
     }
 
-    /**
-     * Este método contém erros relacionados ao uso de  ConnectivityManager.getAllNetworkInfo(). Este
-     * está depreciado conforme a documentação
-     * http://developer.android.com/reference/android/net/ConnectivityManager.html#getAllNetworkInfo()
-     * @param context
-     * @return
-     */
-    @Deprecated
-    public static boolean verifyConnectionHaviTamada(Context context){
-
-        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null)
-        {
-            NetworkInfo[] info = connectivity.getAllNetworkInfo();
-            if (info != null) {
-
-                for (int i = 0; i < info.length; i++) {
-                    NetworkInfo networkInfo = info[i];
-                    boolean connected = networkInfo.isConnected();
-                    boolean connectedOrConnecting = networkInfo.isConnectedOrConnecting();
-
-                    if (networkInfo.getState() == NetworkInfo.State.CONNECTED) {
-                        return true;
-                    }
-                }
-            }
-
-        }
-        return false;
+    public static boolean isGPSConnected(Context context) {
+        LocationManager location = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        return location.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
-    @Deprecated
-    public static void verifyConnectionStackoverflow(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo Info = cm.getActiveNetworkInfo();
-        if (Info == null || !Info.isConnectedOrConnecting()) {
-            Log.i("CONNECT", "Nao conectado");
-        } else {
-            int netType = Info.getType();
-            int netSubtype = Info.getSubtype();
-
-            if (netType == ConnectivityManager.TYPE_WIFI) {
-
-                WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                int linkSpeed = wifiManager.getConnectionInfo().getLinkSpeed();
-                //Need to get wifi strength
-                Log.i("CONNECT", "sinal de wifi " + linkSpeed);
-            } else if (netType == ConnectivityManager.TYPE_MOBILE) {
-                Log.i("CONNECT", "tipo de conexao 3G");
-
-                //Need to get differentiate between 3G/GPRS
-            }
-        }
-    }
 }

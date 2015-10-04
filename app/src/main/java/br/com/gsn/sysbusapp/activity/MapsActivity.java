@@ -41,7 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void setDadosLinha() {
         String linha = ((TextView)findViewById(R.id.linha)).getText().toString() + localizacaoLinha.numeroLinha;
-        String veiculo = ((TextView)findViewById(R.id.veiculo)).getText().toString() + localizacaoLinha.idVeiculo;
+        String veiculo = ((TextView)findViewById(R.id.veiculo)).getText().toString() + localizacaoLinha.numeroRegistro;
         String atualizacao = ((TextView)findViewById(R.id.atualizacao)).getText().toString() + localizacaoLinha.dataHoraRegistro;
 
         ((TextView)findViewById(R.id.linha)).setText(linha);
@@ -64,7 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         map.addMarker(new MarkerOptions()
                 .title("Linha " + localizacaoLinha.numeroLinha)
-                .snippet("Veículo " + localizacaoLinha.idVeiculo)
+                .snippet("Veículo " + localizacaoLinha.numeroRegistro)
                 .position(latLng));
     }
 }

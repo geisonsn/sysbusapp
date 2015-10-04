@@ -14,15 +14,32 @@
         android:layout_marginRight="8dp"
         android:text="Fazer checkin"/>
 
-    <AutoCompleteTextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:layout_marginLeft="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginTop="20dp"
-        android:hint="Digite o número da linha"
-        android:id="@+id/linha"/>
+        android:orientation="horizontal">
+
+        <AutoCompleteTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="20dp"
+            android:hint="Digite o número da linha"
+            android:id="@+id/linha"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_toRightOf="@id/linha"
+            android:layout_alignTop="@id/linha"
+            style="?android:progressBarStyleSmall"
+            android:id="@+id/progressBarLinha"/>
+
+    </RelativeLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,16 +62,21 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vazio"/>
+            android:text="Vazio"
+            android:id="@+id/vazio"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Normal"/>
+            android:text="Normal"
+            android:id="@+id/normal"/>
+
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lotado"/>
+            android:text="Lotado"
+            android:id="@+id/lotado"/>
+
     </RadioGroup>
 
     <TextView

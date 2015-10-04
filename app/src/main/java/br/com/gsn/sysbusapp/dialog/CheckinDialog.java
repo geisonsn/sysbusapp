@@ -10,11 +10,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Toast;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.business.CheckinBusiness;
-import br.com.gsn.sysbusapp.business.VeiculoBusiness;
 import br.com.gsn.sysbusapp.fragment.DialogContentFragment;
 import br.com.gsn.sysbusapp.model.VeiculoDTO;
 
@@ -23,46 +21,30 @@ import br.com.gsn.sysbusapp.model.VeiculoDTO;
  */
 public class CheckinDialog extends DialogContentFragment {
 
+    private CheckinBusiness checkinBusiness;
     private AutoCompleteTextView linha;
+    private View view;
 
     @Override
     public void setBusinessDelegate() {
         this.delegate = new CheckinBusiness(getActivity());
+        checkinBusiness = ((CheckinBusiness)delegate);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.checkin, container, false);
+        this.view = inflater.inflate(R.layout.checkin, container, false);
+
+        checkinBusiness.inicializarServicoLocalizacao();
 
         Button botaoCancelar = (Button) view.findViewById(R.id.botao_cancelar);
         Button botaoLogin = (Button) view.findViewById(R.id.botao_checkin);
 
         linha = (AutoCompleteTextView) view.findViewById(R.id.linha);
-        linha.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                new VeiculoBusiness(getActivity(), view).listarVeiculos(s.toString());
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-        linha.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                VeiculoDTO v = (VeiculoDTO) parent.getItemAtPosition(position);
-                Toast.makeText(parent.getContext(), "linha selecionada " + v.getNumeroRegistro(), Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(parent.getContext(), "Nenhuma linha selecionada", Toast.LENGTH_SHORT).show();
-            }
-        });
+        linha.addTextChangedListener(textWatcherListener);
+        linha.setOnItemClickListener(itemClickListener);
 
         botaoCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,5 +62,63 @@ public class CheckinDialog extends DialogContentFragment {
 
         return view;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        checkinBusiness.startarServicoLocalizacao();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Within {@code onPause()}, we pause location updates, but leave the
+        // connection to GoogleApiClient intact.  Here, we resume receiving
+        // location updates if the user has requested them.
+        checkinBusiness.restartarServicoLocalizacao();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Stop location updates to save battery, but don't disconnect the GoogleApiClient object.
+        checkinBusiness.pausarServicoLocalizacao();
+    }
+
+    @Override
+    public void onStop() {
+        checkinBusiness.pararServicoLocalizacao();
+        super.onStop();
+    }
+
+    private TextWatcher textWatcherListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            checkinBusiness.veiculo = null;
+            if (s.length() == 3 && !linha.isPerformingCompletion()) {
+                checkinBusiness.listarVeiculos(s.toString(), view);
+            }
+            if (s.length() > 3 && !linha.isPerformingCompletion()) {
+                linha.setText(linha.getText().toString().substring(0, 2));
+                linha.setSelection(linha.getText().length());
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
+
+    private AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            VeiculoDTO v = (VeiculoDTO) parent.getItemAtPosition(position);
+            ((CheckinBusiness) delegate).veiculo = v;
+        }
+    };
 
 }

@@ -1,9 +1,12 @@
 package br.com.gsn.sysbusapp.fragment;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +23,7 @@ import br.com.gsn.sysbusapp.business.HomeBusiness;
 import br.com.gsn.sysbusapp.dialog.CheckinDialog;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
 import br.com.gsn.sysbusapp.parcelable.LocalizacaoLinhaParcelable;
+import br.com.gsn.sysbusapp.util.ConnectionUtil;
 
 public class HomeFragment extends ListContentFragment {
 
@@ -62,8 +66,32 @@ public class HomeFragment extends ListContentFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.action_checkin) {
-            DialogFragment dialogLogin = new CheckinDialog();
-            dialogLogin.show(getActivity().getSupportFragmentManager(), "checkin");
+
+            if (ConnectionUtil.isGPSConnected(getActivity())) {
+                DialogFragment dialogLogin = new CheckinDialog();
+                dialogLogin.show(getActivity().getSupportFragmentManager(), "checkin");
+            } else {
+
+
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                dialog.setTitle("Habilitar Location")
+                        .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " +
+                                "use this app")
+                        .setPositiveButton("Location Settings", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivity(myIntent);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                            }
+                        });
+                dialog.show();
+            }
+
         }
 
         if (item.getItemId() == R.id.action_linhas_proximas_a_mim) {

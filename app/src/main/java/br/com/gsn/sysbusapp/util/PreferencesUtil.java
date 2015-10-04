@@ -65,6 +65,10 @@ public final class PreferencesUtil {
         return this.preferences.getLong(name, -1);
     }
 
+    public Long getIdUsuario() {
+        return this.preferences.getLong(ID_USUARIO, -1);
+    }
+
     public void set(String name, String value) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(name, value);
