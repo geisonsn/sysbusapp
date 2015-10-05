@@ -7,7 +7,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.gsn.sysbusapp.R;
@@ -87,11 +86,7 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
 
                 LocalizacaoLinhaWrapperDTO wrapper = (LocalizacaoLinhaWrapperDTO) response.getObjectReturn();
 
-                List<LocalizacaoLinhaDTO> linhas = new ArrayList<>();
-                if (!wrapper.getLinhasFavoritas().isEmpty()) {
-                    linhas.addAll(wrapper.getLinhasFavoritas());
-                }
-                linhas.addAll(wrapper.getLinhasNaoFavoritas());
+                List<LocalizacaoLinhaDTO> linhas = organizarLinhas(wrapper);
 
                 listFragment.setListAdapter(new LinhasEmDeslocamentoAdapter(context, linhas));
             }
@@ -117,7 +112,20 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
 
         progressBar.setVisibility(View.GONE);
 
-        //hideMenuItemProgressBar();
+    }
+
+    public List<LocalizacaoLinhaDTO> organizarLinhas(LocalizacaoLinhaWrapperDTO localizacaoLinhaWrapper) {
+        List<LocalizacaoLinhaDTO> linhasFavoritas = localizacaoLinhaWrapper.getLinhasFavoritas();
+        List<LocalizacaoLinhaDTO> linhasNaoFavoritas = localizacaoLinhaWrapper.getLinhasNaoFavoritas();
+
+        for (LocalizacaoLinhaDTO naoFavorita : linhasNaoFavoritas) {
+            for (LocalizacaoLinhaDTO favorita : linhasFavoritas) {
+                if (favorita.getNumeroLinha().equals(naoFavorita.getNumeroLinha())) {
+                    naoFavorita.setLinhaFavorita("S");
+                }
+            }
+        }
+        return linhasNaoFavoritas;
     }
 
     @Override

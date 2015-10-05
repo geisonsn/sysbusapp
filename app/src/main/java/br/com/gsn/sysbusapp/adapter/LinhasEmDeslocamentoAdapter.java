@@ -2,6 +2,8 @@ package br.com.gsn.sysbusapp.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +48,30 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
             view.setTag(viewHolder);
         }
 
-        ViewHolder holder = (ViewHolder) view.getTag();
+        final ViewHolder holder = (ViewHolder) view.getTag();
 
-        LocalizacaoLinhaDTO linha = linhas.get(position);
+        final LocalizacaoLinhaDTO linha = linhas.get(position);
+
+        if (linha.getLinhaFavorita().equals("S")) {
+            Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_star_black);
+            holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+        }
+
+        holder.favorito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Drawable img = null;
+                if (linha.getLinhaFavorita().equals("S")) {
+                    img = ContextCompat.getDrawable(context, R.drawable.ic_star_black);
+                    holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                    linha.setLinhaFavorita("N");
+                } else {
+                    img = ContextCompat.getDrawable(context, R.drawable.ic_star_border_black);
+                    holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                    linha.setLinhaFavorita("S");
+                }
+            }
+        });
 
         holder.numeroLinha.setText(linha.getNumeroLinha());
         holder.nomeEmpresa.setText(linha.getNomeEmpresa());
