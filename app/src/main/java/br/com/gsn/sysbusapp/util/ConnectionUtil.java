@@ -1,9 +1,13 @@
 package br.com.gsn.sysbusapp.util;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 
 import java.io.IOException;
 
@@ -63,6 +67,29 @@ public final class ConnectionUtil {
     public static boolean isGPSConnected(Context context) {
         LocationManager location = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         return location.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    public static void showMessageLocationDisabled(final Context context) {
+
+        StringBuffer message = new StringBuffer()
+            .append("Para utilizadar este recurso é necessário habilitar o serviço de localização.");
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle("Habilitar localização")
+            .setMessage(message.toString())
+            .setPositiveButton("Habilitar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    context.startActivity(myIntent);
+                }
+            })
+            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+            }
+        });
+        dialog.show();
     }
 
 }

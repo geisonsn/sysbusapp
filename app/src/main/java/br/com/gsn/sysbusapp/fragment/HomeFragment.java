@@ -1,12 +1,9 @@
 package br.com.gsn.sysbusapp.fragment;
 
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.activity.MapsActivity;
@@ -27,11 +25,13 @@ import br.com.gsn.sysbusapp.util.ConnectionUtil;
 
 public class HomeFragment extends ListContentFragment {
 
+    private HomeBusiness homeBusiness;
     public HomeFragment() {}
 
     @Override
     public void setBusinessDelegate() {
         this.delegate = new HomeBusiness(this);
+        this.homeBusiness = (HomeBusiness) delegate;
     }
 
     @Override
@@ -44,13 +44,35 @@ public class HomeFragment extends ListContentFragment {
 
         registerForContextMenu(listView);
 
+        homeBusiness.mRequestingLocationUpdates = false;
+        homeBusiness.inicializarServicoLocalizacao();
+
         return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        homeBusiness.startarServicoLocalizacao();
         this.mostrarTodasLinhas();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        homeBusiness.restartarServicoLocalizacao();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        homeBusiness.pausarServicoLocalizacao();
+    }
+
+    @Override
+    public void onStop() {
+        homeBusiness.pausarServicoLocalizacao();
+        super.onStop();
     }
 
     @Override
@@ -71,35 +93,29 @@ public class HomeFragment extends ListContentFragment {
                 DialogFragment dialogLogin = new CheckinDialog();
                 dialogLogin.show(getActivity().getSupportFragmentManager(), "checkin");
             } else {
-
-
-                final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                dialog.setTitle("Habilitar Location")
-                        .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " +
-                                "use this app")
-                        .setPositiveButton("Location Settings", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                                Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                startActivity(myIntent);
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                            }
-                        });
-                dialog.show();
+                ConnectionUtil.showMessageLocationDisabled(getActivity());
             }
-
         }
 
         if (item.getItemId() == R.id.action_linhas_proximas_a_mim) {
-            this.listarLinhasProximas();
+            if (ConnectionUtil.isNetworkConnected(getActivity())) {
+                if (ConnectionUtil.isGPSConnected(getActivity())) {
+                    homeBusiness.capturarLocalizacao();
+                    this.listarLinhasProximas();
+                } else {
+                    ConnectionUtil.showMessageLocationDisabled(getActivity());
+                }
+            } else {
+                Toast.makeText(getActivity(), R.string.voce_nao_esta_conectado, Toast.LENGTH_SHORT).show();
+            }
         }
 
         if (item.getItemId() == R.id.action_todas_as_linhas) {
-            this.mostrarTodasLinhas();
+            if (ConnectionUtil.isNetworkConnected(getActivity())) {
+                this.mostrarTodasLinhas();
+            } else {
+                Toast.makeText(getActivity(), R.string.voce_nao_esta_conectado, Toast.LENGTH_SHORT).show();
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -137,4 +153,5 @@ public class HomeFragment extends ListContentFragment {
     private void mostrarTodasLinhas() {
         ((HomeBusiness)delegate).listarLinhas();
     }
+
 }

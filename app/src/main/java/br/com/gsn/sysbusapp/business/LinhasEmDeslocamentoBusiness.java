@@ -44,7 +44,13 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
 
     @Override
     public void onPreExecute() {
-
+        listFragment.setListAdapter(null);
+        TextView emptyView = (TextView) context.findViewById(android.R.id.empty);
+        emptyView.setText(null);
+        ListView listView = (ListView) context.findViewById(android.R.id.list);
+        listView.setEmptyView(emptyView);
+        ProgressBar progressBar = (ProgressBar) context.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -5,6 +5,7 @@
 
     <item
         android:id="@+id/action_checkin"
+        android:title="Checkin"
         android:icon="@drawable/ic_action_add"
         app:showAsAction="always" />
 
@@ -19,13 +20,5 @@
         android:title="@string/action_todas_as_linhas"
         android:orderInCategory="2"
         app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_progresso"
-        android:title="Loading..."
-        android:visible="false"
-        android:orderInCategory="1"
-        app:showAsAction="ifRoom"
-        app:actionLayout="@layout/action_view_progress" />
 
 </menu>

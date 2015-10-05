@@ -1,5 +1,6 @@
 package br.com.gsn.sysbusapp.business;
 
+import android.location.Location;
 import android.os.AsyncTask;
 import android.support.v4.app.ListFragment;
 import android.view.View;
@@ -27,10 +28,10 @@ import br.com.gsn.sysbusapp.util.UrlServico;
 /**
  * Created by Geison on 06/09/2015.
  */
-public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<Void, Integer, SpringRestResponse> {
+public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<Location, Integer, SpringRestResponse> {
 
     private ListFragment listFragment;
-    private TemplateAsyncTask<Void, Integer, SpringRestResponse> task;
+    private TemplateAsyncTask<Location, Integer, SpringRestResponse> task;
     public LocalizacaoLinhaDTO localizacaoLinhaDTO;
 
     public LinhasEmDeslocamentoProximasBusiness(ListContentFragment context) {
@@ -38,14 +39,23 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
         this.listFragment = context;
     }
 
-    public void listarLinhas() {
+    public void listarLinhas(Location location) {
         task = new TemplateAsyncTask<>(this);
-        task.execute();
+        task.execute(location);
     }
 
     @Override
     public void onPreExecute() {
+    }
 
+    public void mostrarProgressBar() {
+        listFragment.setListAdapter(null);
+        TextView emptyView = (TextView) context.findViewById(android.R.id.empty);
+        emptyView.setText(null);
+        ListView listView = (ListView) context.findViewById(android.R.id.list);
+        listView.setEmptyView(emptyView);
+        ProgressBar progressBar = (ProgressBar) context.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -54,7 +64,7 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
     }
 
     @Override
-    public SpringRestResponse doInBackground(Void... params) {
+    public SpringRestResponse doInBackground(Location... params) {
 
         Long idUsuario = PreferencesUtil.getInstance(context).getLong(PreferencesUtil.ID_USUARIO);
         String intervalo = PreferencesUtil.getInstance(context).getString(PreferencesUtil.INTERVALO);
@@ -65,9 +75,9 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
         url = url.replace("{intervalo}", intervalo);
         url = url.replace("{distancia}", distancia);
 
-        //Ponto de referencia: Bola da Suframa (-3.130969, -59.987002)
-        url = url.replace("{latitude}", "-3.130969");
-        url = url.replace("{longitude}", "-59.987002");
+        Location location = params[0];
+        url = url.replace("{latitude}", String.valueOf(location.getLatitude()));
+        url = url.replace("{longitude}", String.valueOf(location.getLongitude()));
 
         return new SpringRestClient()
                 .showMessage(false)
