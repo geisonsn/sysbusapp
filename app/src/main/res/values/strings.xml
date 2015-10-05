@@ -61,5 +61,6 @@
     <string name="action_todas_as_linhas">Todas as linhas</string>
     <string name="action_nova_reclamacao">Nova reclamação</string>
     <string name="action_progress_bar">Aguarde</string>
+    <string name="Fechar">Fechar</string>
 
 </resources>

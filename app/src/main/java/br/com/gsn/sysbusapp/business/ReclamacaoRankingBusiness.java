@@ -1,6 +1,7 @@
 package br.com.gsn.sysbusapp.business;
 
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +16,7 @@ import java.util.List;
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.abstraction.BusinessTaskOperation;
 import br.com.gsn.sysbusapp.adapter.ReclamacaoRankingAdapter;
+import br.com.gsn.sysbusapp.dialog.ReclamacaoPorLinhaDialog;
 import br.com.gsn.sysbusapp.fragment.ListContentFragment;
 import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
 import br.com.gsn.sysbusapp.model.ReclamacaoRankingDTO;
@@ -30,20 +32,32 @@ public class ReclamacaoRankingBusiness extends BusinessTaskOperation<Void, Integ
 
     private ListFragment listFragment;
     private TemplateAsyncTask<Void, Integer, SpringRestResponse> task;
+    private View view;
 
     public ReclamacaoRankingBusiness(ListContentFragment context) {
         this.context = context.getActivity();
         this.listFragment = context;
     }
 
-    public void listarReclamacoes() {
+    public void listarReclamacoes(View view) {
+        this.view = view;
         task = new TemplateAsyncTask<>(this);
         task.execute();
     }
 
     @Override
     public void onPreExecute() {
+        listFragment.setListAdapter(null);
+        LinearLayout header = (LinearLayout) view.findViewById(R.id.header);
+        header.setVisibility(View.GONE);
 
+        ProgressBar progressBar = (ProgressBar) context.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        TextView emptyView = (TextView) context.findViewById(android.R.id.empty);
+        emptyView.setText(null);
+        ListView listView = (ListView) context.findViewById(android.R.id.list);
+        listView.setEmptyView(emptyView);
     }
 
     @Override
@@ -68,7 +82,8 @@ public class ReclamacaoRankingBusiness extends BusinessTaskOperation<Void, Integ
         final ListView listView = (ListView) context.findViewById(android.R.id.list);
         final LinearLayout header = (LinearLayout) context.findViewById(R.id.header);
 
-        listView.setOnItemLongClickListener(itemLongClickListener);
+//        listView.setOnItemLongClickListener(itemLongClickListener);
+        listView.setOnItemClickListener(onItemClickListener);
 
         response.setOnHttpOk(new AbstractSpringRestResponse.OnHttpOk() {
             @Override
@@ -110,11 +125,30 @@ public class ReclamacaoRankingBusiness extends BusinessTaskOperation<Void, Integ
         }
     }
 
-    private AdapterView.OnItemLongClickListener itemLongClickListener = new AdapterView.OnItemLongClickListener() {
+    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            ReclamacaoRankingDTO o = (ReclamacaoRankingDTO) parent.getItemAtPosition(position);
+//            Toast.makeText(context, o.getNumeroLinha(), Toast.LENGTH_SHORT).show();
+            ReclamacaoPorLinhaDialog d = new ReclamacaoPorLinhaDialog();
+            d.idLinha = o.getIdLinha();
+            d.show(((FragmentActivity) context).getSupportFragmentManager(), "d");
+        }
+    };
+
+
+    /*private AdapterView.OnItemLongClickListener itemLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
             ReclamacaoRankingDTO o = (ReclamacaoRankingDTO) parent.getItemAtPosition(position);
+
+            ReclamacaoPorLinhaDialog d = new ReclamacaoPorLinhaDialog();
+            d.idLinha = o.getIdLinha();
+            d.show(((FragmentActivity) context).getSupportFragmentManager(), "d");
+
+
+//            Toast.makeText(context, o.getNumeroLinha(), Toast.LENGTH_SHORT).show();
             return false;
         }
-    };
+    };*/
 }

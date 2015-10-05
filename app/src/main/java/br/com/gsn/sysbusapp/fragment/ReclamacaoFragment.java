@@ -6,13 +6,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.business.ReclamacaoRankingBusiness;
 
 public class ReclamacaoFragment extends ListContentFragment /*implements BusinessDelegate<BusinessTaskOperation>*/ {
 
+    private View view;
     public ReclamacaoFragment() {}
 
     @Override
@@ -24,11 +24,7 @@ public class ReclamacaoFragment extends ListContentFragment /*implements Busines
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_list_reclamacao_ranking, container, false);
-
-        //Ocultando cabeçalho
-        LinearLayout header = (LinearLayout) rootView.findViewById(R.id.header);
-        header.setVisibility(View.GONE);
-
+        this.view = rootView;
         return rootView;
     }
 
@@ -41,7 +37,7 @@ public class ReclamacaoFragment extends ListContentFragment /*implements Busines
     @Override
     public void onStart() {
         super.onStart();
-        ((ReclamacaoRankingBusiness)delegate).listarReclamacoes();
+        ((ReclamacaoRankingBusiness)delegate).listarReclamacoes(this.view);
     }
 
 }

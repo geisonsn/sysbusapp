@@ -107,15 +107,15 @@ public class MainActivity extends AppCompatActivity implements HostBusinessDeleg
         switch (position) {
             case 0:
                 fragment = new HomeFragment();
-                title = getString(R.string.title_home);
+                title = "Localize sua linha";
                 break;
             case 1:
                 fragment = new FavoritosFragment();
-                title = getString(R.string.title_favoritos);
+                title = "Minhas linhas";
                 break;
             case 2:
                 fragment = new ReclamacaoFragment();
-                title = getString(R.string.title_reclamacoes);
+                title = "Mais reclamadas";
                 break;
             case 3:
                 startActivity(new Intent(this, ConfiguracoesActivity.class));
