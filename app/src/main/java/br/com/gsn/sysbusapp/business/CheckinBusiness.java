@@ -159,6 +159,7 @@ public class CheckinBusiness extends BusinessDialogTaskOperation<LocalizacaoLinh
 
     @Override
     public void onCancelButton(DialogInterface dialog) {
+        veiculoBusiness.cancelTaskOperation();
         super.onCancelButton(dialog);
     }
 
