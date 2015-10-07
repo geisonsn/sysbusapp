@@ -135,7 +135,7 @@ public class HomeFragment extends ListContentFragment {
         }
 
         if (item.getItemId() == R.id.menu_mostrar_mapa) {
-            LocalizacaoLinhaDTO localizacaoLinha = ((HomeBusiness) delegate).getLocalizacaoLinha();
+            LocalizacaoLinhaDTO localizacaoLinha = homeBusiness.getLocalizacaoLinha();
             Bundle b = new Bundle();
             b.putParcelable("localizacaoLinha", new LocalizacaoLinhaParcelable(localizacaoLinha));
             Intent intent = new Intent(this.getActivity(), MapsActivity.class);
@@ -147,11 +147,11 @@ public class HomeFragment extends ListContentFragment {
     }
 
     private void listarLinhasProximas() {
-        ((HomeBusiness)delegate).listarLinhasProximas();
+        homeBusiness.listarLinhasProximas();
     }
 
     private void mostrarTodasLinhas() {
-        ((HomeBusiness)delegate).listarLinhas();
+        homeBusiness.listarLinhas();
     }
 
 }

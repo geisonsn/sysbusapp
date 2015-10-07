@@ -108,6 +108,11 @@ public class HomeBusiness extends BusinessTaskOperation<Void, Integer, SpringRes
 
     public LocalizacaoLinhaDTO getLocalizacaoLinha() {
         LocalizacaoLinhaDTO localizacaoLinhaDTO;
+
+        if (delegate instanceof  LinhasEmDeslocamentoBusiness) {
+
+        }
+
         if (linhasEmDeslocamentoProximasBusiness != null) {
             localizacaoLinhaDTO = linhasEmDeslocamentoProximasBusiness.localizacaoLinhaDTO;
         } else {
