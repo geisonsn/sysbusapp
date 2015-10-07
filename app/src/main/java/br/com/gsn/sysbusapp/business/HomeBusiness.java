@@ -48,6 +48,10 @@ public class HomeBusiness extends BusinessTaskOperation<Void, Integer, SpringRes
             linhasEmDeslocamentoBusiness = new LinhasEmDeslocamentoBusiness(listFragment);
         }
 
+        if (this.delegate != null) {
+            delegate.cancelTaskOperation();
+        }
+
         this.delegate = linhasEmDeslocamentoBusiness;
 
         linhasEmDeslocamentoBusiness.listarLinhas();
@@ -57,6 +61,10 @@ public class HomeBusiness extends BusinessTaskOperation<Void, Integer, SpringRes
     public void listarLinhasProximas() {
         if (linhasEmDeslocamentoProximasBusiness == null) {
             linhasEmDeslocamentoProximasBusiness = new LinhasEmDeslocamentoProximasBusiness(listFragment);
+        }
+
+        if (this.delegate != null) {
+            delegate.cancelTaskOperation();
         }
 
         this.delegate = linhasEmDeslocamentoProximasBusiness;
@@ -108,15 +116,10 @@ public class HomeBusiness extends BusinessTaskOperation<Void, Integer, SpringRes
 
     public LocalizacaoLinhaDTO getLocalizacaoLinha() {
         LocalizacaoLinhaDTO localizacaoLinhaDTO;
-
         if (delegate instanceof  LinhasEmDeslocamentoBusiness) {
-
-        }
-
-        if (linhasEmDeslocamentoProximasBusiness != null) {
-            localizacaoLinhaDTO = linhasEmDeslocamentoProximasBusiness.localizacaoLinhaDTO;
-        } else {
             localizacaoLinhaDTO = linhasEmDeslocamentoBusiness.localizacaoLinhaDTO;
+        } else {
+            localizacaoLinhaDTO = linhasEmDeslocamentoProximasBusiness.localizacaoLinhaDTO;
         }
         return localizacaoLinhaDTO;
     }
