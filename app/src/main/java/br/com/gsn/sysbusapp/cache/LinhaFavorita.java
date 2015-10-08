@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import br.com.gsn.sysbusapp.model.LinhaFavoritaDTO;
+import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
 
 /**
  * Created by Geison on 30/08/2015.
@@ -13,16 +13,18 @@ public class LinhaFavorita {
 
     public static String TABLE_NAME = "linha_favorita";
     public static String ID = "_id";
+    public static String ID_USUARIO = "id_usuario";
     public static String ID_LINHA = "id_linha";
     public static String NUMERO_LINHA = "numero_linha";
     public static String DESCRICAO_LINHA = "descricao_linha";
     public static String EMPRESA = "empresa";
 
     public static final String[] COLUNAS = new String[] {
-        ID, ID_LINHA, NUMERO_LINHA, DESCRICAO_LINHA, EMPRESA
+        ID, ID_USUARIO, ID_LINHA, NUMERO_LINHA, DESCRICAO_LINHA, EMPRESA
     };
 
     private Integer id;
+    private Integer idUsuario;
     private Integer idLinha;
     private String numeroLinha;
     private String descricaoLinha;
@@ -32,10 +34,11 @@ public class LinhaFavorita {
 
     public LinhaFavorita(Cursor cursor) {
         this.id = cursor.getInt(0);
-        this.idLinha = cursor.getInt(1);
-        this.numeroLinha = cursor.getString(2);
-        this.descricaoLinha = cursor.getString(3);
-        this.empresa = cursor.getString(4);
+        this.idUsuario = cursor.getInt(1);
+        this.idLinha = cursor.getInt(2);
+        this.numeroLinha = cursor.getString(3);
+        this.descricaoLinha = cursor.getString(4);
+        this.empresa = cursor.getString(5);
     }
 
     public Integer getId() {
@@ -44,6 +47,14 @@ public class LinhaFavorita {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public Integer getIdLinha() {
@@ -78,19 +89,20 @@ public class LinhaFavorita {
         this.empresa = empresa;
     }
 
-    public static ContentValues getContentValues(LinhaFavoritaDTO linhaFavorita) {
+    public static ContentValues getContentValues(Long idUsuario, LocalizacaoLinhaDTO linhaFavorita) {
         ContentValues values = new ContentValues();
-        values.put(LinhaFavorita.ID, linhaFavorita.getIdLinhaFavorita());
+        values.put(LinhaFavorita.ID_USUARIO, idUsuario);
         values.put(LinhaFavorita.ID_LINHA, linhaFavorita.getIdLinha());
         values.put(LinhaFavorita.NUMERO_LINHA, linhaFavorita.getNumeroLinha());
         values.put(LinhaFavorita.DESCRICAO_LINHA, linhaFavorita.getDescricaoLinha());
-        values.put(LinhaFavorita.EMPRESA, linhaFavorita.getEmpresaLinha());
+        values.put(LinhaFavorita.EMPRESA, linhaFavorita.getNomeEmpresa());
         return values;
     }
 
     public ContentValues getContentValues() {
         ContentValues values = new ContentValues();
         values.put(LinhaFavorita.ID, this.getId());
+        values.put(LinhaFavorita.ID_USUARIO, this.getIdUsuario());
         values.put(LinhaFavorita.ID_LINHA, this.getIdLinha());
         values.put(LinhaFavorita.NUMERO_LINHA, this.getNumeroLinha());
         values.put(LinhaFavorita.DESCRICAO_LINHA, this.getDescricaoLinha());
@@ -106,6 +118,7 @@ public class LinhaFavorita {
         StringBuffer sql = new StringBuffer()
             .append(" CREATE TABLE " + LinhaFavorita.TABLE_NAME + "( ")
             .append(LinhaFavorita.ID + " INTEGER,  ")
+            .append(LinhaFavorita.ID_USUARIO + " INTEGER,  ")
             .append(LinhaFavorita.ID_LINHA + " INTEGER,  ")
             .append(LinhaFavorita.NUMERO_LINHA + " TEXT, ")
             .append(LinhaFavorita.DESCRICAO_LINHA + " TEXT, ")
