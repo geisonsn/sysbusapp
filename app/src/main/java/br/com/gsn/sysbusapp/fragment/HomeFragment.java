@@ -38,7 +38,7 @@ public class HomeFragment extends ListContentFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_list_localizacao_linha, container, false);
 
         ListView listView = (ListView)rootView.findViewById(android.R.id.list);
 
@@ -54,7 +54,16 @@ public class HomeFragment extends ListContentFragment {
     public void onStart() {
         super.onStart();
         homeBusiness.startarServicoLocalizacao();
-        this.mostrarTodasLinhas();
+
+        this.listarTodasLinhas();
+
+        /*if (ConnectionUtil.isGPSConnected(getActivity()) &&
+            PreferencesUtil.getInstance(getActivity()).getPesquisaLinha().equals(PreferencesUtil.MOSTRAR_LOCALIZACAO_PROXIMOS)) {
+            homeBusiness.capturarLocalizacao();
+            this.listarLinhasProximas();
+        } else {
+            this.listarTodasLinhas();
+        }*/
     }
 
     @Override
@@ -100,6 +109,7 @@ public class HomeFragment extends ListContentFragment {
         if (item.getItemId() == R.id.action_linhas_proximas_a_mim) {
             if (ConnectionUtil.isNetworkConnected(getActivity())) {
                 if (ConnectionUtil.isGPSConnected(getActivity())) {
+//                    PreferencesUtil.getInstance(getActivity()).setPesquisaLinha(PreferencesUtil.MOSTRAR_LOCALIZACAO_PROXIMOS);
                     homeBusiness.capturarLocalizacao();
                     this.listarLinhasProximas();
                 } else {
@@ -111,8 +121,9 @@ public class HomeFragment extends ListContentFragment {
         }
 
         if (item.getItemId() == R.id.action_todas_as_linhas) {
+//            PreferencesUtil.getInstance(getActivity()).setPesquisaLinha(PreferencesUtil.MOSTRAR_LOCALIZACAO_TODOS);
             if (ConnectionUtil.isNetworkConnected(getActivity())) {
-                this.mostrarTodasLinhas();
+                this.listarTodasLinhas();
             } else {
                 Toast.makeText(getActivity(), R.string.voce_nao_esta_conectado, Toast.LENGTH_SHORT).show();
             }
@@ -150,8 +161,8 @@ public class HomeFragment extends ListContentFragment {
         homeBusiness.listarLinhasProximas();
     }
 
-    private void mostrarTodasLinhas() {
-        homeBusiness.listarLinhas();
+    private void listarTodasLinhas() {
+        homeBusiness.listarTodasLinhas();
     }
 
 }

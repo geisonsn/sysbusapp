@@ -18,6 +18,9 @@ public final class PreferencesUtil {
     public static final String DISTANCIA = "distancia";
     public static final String INTERVALO = "intervalo";
     private static final String MENU_CORRENTE = "menuCorrente";
+    public static final String PESQUISA_LOCALIZACAO = "pesquisaLocalizacao";
+    public static final String MOSTRAR_LOCALIZACAO_TODOS = "T";
+    public static final String MOSTRAR_LOCALIZACAO_PROXIMOS = "P";
 
     private PreferencesUtil(Context context) {
         this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -106,6 +109,16 @@ public final class PreferencesUtil {
 
     public int getMenuCorrente() {
         return this.preferences.getInt(MENU_CORRENTE, -1);
+    }
+
+    public void setPesquisaLinha(final String pesquisa) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(PESQUISA_LOCALIZACAO, pesquisa);
+        editor.commit();
+    }
+
+    public String getPesquisaLinha() {
+        return this.preferences.getString(PESQUISA_LOCALIZACAO, MOSTRAR_LOCALIZACAO_TODOS);
     }
 
     public void limparDadosUsuario() {

@@ -44,11 +44,14 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
     @Override
     public void onPreExecute() {
         listFragment.setListAdapter(null);
-        TextView emptyView = (TextView) context.findViewById(android.R.id.empty);
+        View view = listFragment.getView();
+        TextView cabecalho = (TextView) view.findViewById(R.id.cabecalho);
+        cabecalho.setVisibility(View.GONE);
+        TextView emptyView = (TextView) view.findViewById(android.R.id.empty);
         emptyView.setText(null);
-        ListView listView = (ListView) context.findViewById(android.R.id.list);
+        ListView listView = (ListView) view.findViewById(android.R.id.list);
         listView.setEmptyView(emptyView);
-        ProgressBar progressBar = (ProgressBar) context.findViewById(R.id.progressBar);
+        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
     }
 
@@ -74,9 +77,10 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
 
     @Override
     public void onPostExecute(final SpringRestResponse response) {
-        final ProgressBar progressBar = (ProgressBar) context.findViewById(R.id.progressBar);
-        final TextView emptyView = (TextView) context.findViewById(android.R.id.empty);
-        final ListView listView = (ListView) context.findViewById(android.R.id.list);
+        final View view = listFragment.getView();
+        final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        final TextView emptyView = (TextView) view.findViewById(android.R.id.empty);
+        final ListView listView = (ListView) view.findViewById(android.R.id.list);
 
         listView.setOnItemLongClickListener(itemLongClickListener);
 
@@ -89,6 +93,10 @@ public class LinhasEmDeslocamentoBusiness extends BusinessTaskOperation<Void, In
                 List<LocalizacaoLinhaDTO> linhas = organizarLinhas(wrapper);
 
                 listFragment.setListAdapter(new LinhasEmDeslocamentoAdapter(context, linhas));
+
+                TextView cabecalho = (TextView) view.findViewById(R.id.cabecalho);
+                cabecalho.setVisibility(View.VISIBLE);
+                cabecalho.setText("Mostrando todas as linhas");
             }
         });
         response.setOnHttpNotFound(new AbstractSpringRestResponse.OnHttpNotFound() {

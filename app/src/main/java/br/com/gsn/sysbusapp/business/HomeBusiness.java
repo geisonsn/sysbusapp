@@ -43,7 +43,7 @@ public class HomeBusiness extends BusinessTaskOperation<Void, Integer, SpringRes
         this.listFragment = context;
     }
 
-    public void listarLinhas() {
+    public void listarTodasLinhas() {
         if (linhasEmDeslocamentoBusiness == null) {
             linhasEmDeslocamentoBusiness = new LinhasEmDeslocamentoBusiness(listFragment);
         }
@@ -69,7 +69,7 @@ public class HomeBusiness extends BusinessTaskOperation<Void, Integer, SpringRes
 
         this.delegate = linhasEmDeslocamentoProximasBusiness;
 
-        linhasEmDeslocamentoProximasBusiness.mostrarProgressBar();
+        linhasEmDeslocamentoProximasBusiness.mostrarStatusRequisicao();
 
         if (currentLocation == null) {
             Handler handler = new Handler();
