@@ -148,7 +148,10 @@ public class HomeFragment extends ListContentFragment {
         if (item.getItemId() == R.id.menu_mostrar_mapa) {
             LocalizacaoLinhaDTO localizacaoLinha = homeBusiness.getLocalizacaoLinha();
             Bundle b = new Bundle();
-            b.putParcelable("localizacaoLinha", new LocalizacaoLinhaParcelable(localizacaoLinha));
+
+            b.putParcelable("linhaSelecionada", new LocalizacaoLinhaParcelable(localizacaoLinha));
+            b.putParcelable("localizacaoUsuario", homeBusiness.currentLocation);
+            b.putParcelableArrayList("outrasLinhas", homeBusiness.listLocalizacaoLinhas());
             Intent intent = new Intent(this.getActivity(), MapsActivity.class);
             intent.putExtras(b);
             startActivity(intent);

@@ -1,5 +1,6 @@
 package br.com.gsn.sysbusapp.activity;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
@@ -8,15 +9,20 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.parcelable.LocalizacaoLinhaParcelable;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private LocalizacaoLinhaParcelable localizacaoLinha;
+    private LocalizacaoLinhaParcelable linhaSelecionada;
+    public Location localizacaoUsuario;
+    private ArrayList<LocalizacaoLinhaParcelable> outrasLinhas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,23 +32,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
-                localizacaoLinha = extras.getParcelable("localizacaoLinha");
+                linhaSelecionada = extras.getParcelable("linhaSelecionada");
+                localizacaoUsuario = extras.getParcelable("localizacaoUsuario");
+                outrasLinhas = extras.getParcelableArrayList("outrasLinhas");
             }
         } else {
-            localizacaoLinha = savedInstanceState.getParcelable("localizacaoLinha");
+            linhaSelecionada = savedInstanceState.getParcelable("linhaSelecionada");
+            localizacaoUsuario = savedInstanceState.getParcelable("localizacaoUsuario");
+            outrasLinhas = savedInstanceState.getParcelableArrayList("outrasLinhas");
         }
 
-        setDadosLinha();
+        setDadosLinhaSelecionada();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
-    private void setDadosLinha() {
-        String linha = ((TextView)findViewById(R.id.linha)).getText().toString() + localizacaoLinha.numeroLinha;
-        String veiculo = ((TextView)findViewById(R.id.veiculo)).getText().toString() + localizacaoLinha.numeroRegistro;
-        String atualizacao = ((TextView)findViewById(R.id.atualizacao)).getText().toString() + localizacaoLinha.dataHoraRegistro;
+    private void setDadosLinhaSelecionada() {
+        String linha = ((TextView)findViewById(R.id.linha)).getText().toString() + linhaSelecionada.numeroLinha;
+        String veiculo = ((TextView)findViewById(R.id.veiculo)).getText().toString() + linhaSelecionada.numeroRegistro;
+        String atualizacao = ((TextView)findViewById(R.id.atualizacao)).getText().toString() + linhaSelecionada.dataHoraRegistro;
 
         ((TextView)findViewById(R.id.linha)).setText(linha);
         ((TextView)findViewById(R.id.veiculo)).setText(veiculo);
@@ -52,19 +62,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable("localizacaoLinha", localizacaoLinha);
+        outState.putParcelable("localizacaoUsuario", localizacaoUsuario);
+        outState.putParcelable("linhaSelecionada", linhaSelecionada);
+        outState.putParcelableArrayList("outrasLinhas", outrasLinhas);
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
-        LatLng latLng = new LatLng(Double.valueOf(localizacaoLinha.latitude), Double.valueOf(localizacaoLinha.longitude));
+        
+        LatLng latLngLinha = new LatLng(Double.valueOf(linhaSelecionada.latitude), Double.valueOf(linhaSelecionada.longitude));
+        LatLng latLngZoom = latLngLinha;
 
-        map.setMyLocationEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+        if (localizacaoUsuario != null) {
+            LatLng latLngUsuraio = new LatLng(Double.valueOf(localizacaoUsuario.getLatitude()), Double.valueOf(localizacaoUsuario.getLongitude()));
+            MarkerOptions markerUsuario = new MarkerOptions()
+                .title("Eu")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                .position(latLngUsuraio);
+            map.addMarker(markerUsuario);
+            latLngZoom = latLngUsuraio;
+        }
+
+        setLocationOutrasLinhas(map);
+
+        map.setMyLocationEnabled(false);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngZoom, 13));
 
         map.addMarker(new MarkerOptions()
-                .title("Linha " + localizacaoLinha.numeroLinha)
-                .snippet("Veículo " + localizacaoLinha.numeroRegistro)
-                .position(latLng));
+            .title("Linha " + linhaSelecionada.numeroLinha)
+            .snippet("Veículo " + linhaSelecionada.numeroRegistro)
+            .position(latLngLinha));
+    }
+
+    private void setLocationOutrasLinhas(GoogleMap map) {
+        for (LocalizacaoLinhaParcelable linha : outrasLinhas) {
+            LatLng location = new LatLng(Double.valueOf(linha.latitude), Double.valueOf((linha.longitude)));
+            map.addMarker(new MarkerOptions()
+                .title("Linha " + linha.numeroLinha)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                .snippet("Veículo " + linha.numeroRegistro)
+                .position(location));
+        }
+
     }
 }

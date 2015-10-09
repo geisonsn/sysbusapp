@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.gsn.sysbusapp.R;
@@ -19,6 +20,7 @@ import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaWrapperDTO;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
+import br.com.gsn.sysbusapp.parcelable.LocalizacaoLinhaParcelable;
 import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
 import br.com.gsn.sysbusapp.util.PreferencesUtil;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
@@ -32,6 +34,7 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
     private ListFragment listFragment;
     private TemplateAsyncTask<Location, Integer, SpringRestResponse> task;
     public LocalizacaoLinhaDTO localizacaoLinhaDTO;
+    private List<LocalizacaoLinhaDTO> linhas;
 
     public LinhasEmDeslocamentoProximasBusiness(ListContentFragment context) {
         this.context = context.getActivity();
@@ -102,7 +105,7 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
 
                 LocalizacaoLinhaWrapperDTO wrapper = (LocalizacaoLinhaWrapperDTO) response.getObjectReturn();
 
-                List<LocalizacaoLinhaDTO> linhas = organizarLinhas(wrapper);
+                linhas = organizarLinhas(wrapper);
 
                 listFragment.setListAdapter(new LinhasEmDeslocamentoAdapter(context, linhas));
 
@@ -146,6 +149,17 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
             }
         }
         return linhasNaoFavoritas;
+    }
+
+    public ArrayList<LocalizacaoLinhaParcelable> listLocalizacaoLinhas() {
+        ArrayList<LocalizacaoLinhaParcelable> list = new ArrayList<>();
+        if (linhas != null) {
+            for (LocalizacaoLinhaDTO l : linhas) {
+                LocalizacaoLinhaParcelable linhaParcelable = new LocalizacaoLinhaParcelable(l);
+                list.add(linhaParcelable);
+            }
+        }
+        return list;
     }
 
     @Override

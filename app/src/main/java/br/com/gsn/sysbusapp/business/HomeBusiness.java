@@ -11,11 +11,14 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import java.util.ArrayList;
+
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.abstraction.BusinessTaskOperation;
 import br.com.gsn.sysbusapp.fragment.ListContentFragment;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
+import br.com.gsn.sysbusapp.parcelable.LocalizacaoLinhaParcelable;
 
 /**
  * Created by Geison on 06/09/2015.
@@ -32,7 +35,7 @@ public class HomeBusiness extends BusinessTaskOperation<Void, Integer, SpringRes
 
     private GoogleApiClient mGoogleApiClient;
     protected LocationRequest mLocationRequest;
-    private Location currentLocation;
+    public Location currentLocation;
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 4000;
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
     public Boolean mRequestingLocationUpdates;
@@ -122,6 +125,14 @@ public class HomeBusiness extends BusinessTaskOperation<Void, Integer, SpringRes
             localizacaoLinhaDTO = linhasEmDeslocamentoProximasBusiness.localizacaoLinhaDTO;
         }
         return localizacaoLinhaDTO;
+    }
+
+    public ArrayList<LocalizacaoLinhaParcelable> listLocalizacaoLinhas() {
+        if (delegate instanceof  LinhasEmDeslocamentoBusiness) {
+            return linhasEmDeslocamentoBusiness.listLocalizacaoLinhas();
+        } else {
+            return linhasEmDeslocamentoProximasBusiness.listLocalizacaoLinhas();
+        }
     }
 
     public void inicializarServicoLocalizacao() {
