@@ -52,8 +52,11 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
 
         final LocalizacaoLinhaDTO linha = linhas.get(position);
 
+        Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_star_black);
         if (linha.getLinhaFavorita().equals("S")) {
-            Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_star_black);
+            holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+        } else {
+            img = ContextCompat.getDrawable(context, R.drawable.ic_star_border_black);
             holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
         }
 
@@ -62,11 +65,11 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
             public void onClick(View v) {
                 Drawable img = null;
                 if (linha.getLinhaFavorita().equals("S")) {
-                    img = ContextCompat.getDrawable(context, R.drawable.ic_star_black);
+                    img = ContextCompat.getDrawable(context, R.drawable.ic_star_border_black);
                     holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                     linha.setLinhaFavorita("N");
                 } else {
-                    img = ContextCompat.getDrawable(context, R.drawable.ic_star_border_black);
+                    img = ContextCompat.getDrawable(context, R.drawable.ic_star_black);
                     holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                     linha.setLinhaFavorita("S");
                 }

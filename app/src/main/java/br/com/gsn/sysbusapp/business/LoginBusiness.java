@@ -49,7 +49,9 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
         urlServico = urlServico.replace("{usuario}", paramUsuario);
         urlServico = urlServico.replace("{senha}", paramSenha);
 
-        return SpringRestClient.getForObject(context, urlServico, UsuarioDTO.class);
+        return new SpringRestClient()
+            .showMessage(true)
+            .getForObject(context, urlServico, UsuarioDTO.class);
     }
 
     @Override

@@ -79,7 +79,9 @@ public class CheckinBusiness extends BusinessDialogTaskOperation<LocalizacaoLinh
 
     @Override
     public SpringRestResponse doInBackground(LocalizacaoLinhaInsertDTO... params) {
-        return SpringRestClient.post(context, UrlServico.URL_CHECKIN, params[0], LocalizacaoLinhaInsertDTO.class);
+        return new SpringRestClient()
+            .showMessage(true)
+            .post(context, UrlServico.URL_CHECKIN, params[0], LocalizacaoLinhaInsertDTO.class);
     }
 
     @Override
@@ -93,6 +95,7 @@ public class CheckinBusiness extends BusinessDialogTaskOperation<LocalizacaoLinh
                 onCloseDialog();
             }
         });
+
 
         response.executeCallbacks();
         super.handleProgressRequest();
@@ -137,7 +140,7 @@ public class CheckinBusiness extends BusinessDialogTaskOperation<LocalizacaoLinh
                         }
 
                         l.setIdLinha(this.veiculo.getIdLinha());
-                        l.setIdVeiculoLinha(this.veiculo.getIdVeiculo());
+                        l.setIdVeiculo(this.veiculo.getIdVeiculo());
                         l.setLotacaoVeiculo(lotacaoVeiculo);
                         l.setLatitude(String.valueOf(currentLocation.getLatitude()));
                         l.setLongitude(String.valueOf(currentLocation.getLongitude()));

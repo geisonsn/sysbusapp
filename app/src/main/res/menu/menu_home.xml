@@ -6,7 +6,7 @@
     <item
         android:id="@+id/action_checkin"
         android:title="Checkin"
-        android:icon="@drawable/ic_location_on_white"
+        android:icon="@drawable/ic_location_on_white_36dp"
         app:showAsAction="always" />
 
     <item

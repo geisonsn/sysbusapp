@@ -58,7 +58,7 @@ public class VeiculoBusiness extends BusinessTaskOperation<String, Integer, Spri
         url = url.replace("{numeroLinha}", params[0]);
 
         return new SpringRestClient()
-                .showMessage(false)
+                .showMessage(true)
                 .getForObject(context, url, VeiculoDTO[].class);
     }
 
@@ -75,14 +75,15 @@ public class VeiculoBusiness extends BusinessTaskOperation<String, Integer, Spri
                 AutoCompleteTextView spinner = (AutoCompleteTextView) dialog.findViewById(R.id.linha);
                 spinner.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, veiculos));
                 spinner.showDropDown();
+                spinner.setDropDownHeight(300);
             }
         });
         response.setOnHttpNotFound(new AbstractSpringRestResponse.OnHttpNotFound() {
-                                       @Override
-                                       public void doThis() {
-                                           Toast.makeText(context, R.string.linha_nao_cadastrada, Toast.LENGTH_SHORT).show();
-                                       }
-                                   }
+               @Override
+               public void doThis() {
+                   Toast.makeText(context, R.string.linha_nao_cadastrada, Toast.LENGTH_SHORT).show();
+               }
+           }
         );
         response.executeCallbacks();
     }

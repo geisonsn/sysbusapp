@@ -5,6 +5,7 @@ import java.util.Date;
 
 import br.com.gsn.sysbusapp.util.Dates;
 
+
 public class LocalizacaoLinhaDTO extends InformationRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;

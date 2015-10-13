@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,7 +128,11 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
             emptyView.setText(R.string.msg_falha_na_conexao);
             listView.setEmptyView(emptyView);
         } else if (response.getServerError()) {
-            emptyView.setText(R.string.msg_servidor_indisponivel);
+            if (response.getStatusCode() == HttpURLConnection.HTTP_UNAVAILABLE) {
+                emptyView.setText(R.string.msg_servidor_indisponivel);
+            } else {
+                emptyView.setText(R.string.msg_erro_no_servidor);
+            }
             listView.setEmptyView(emptyView);
         }
 

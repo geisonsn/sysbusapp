@@ -8,7 +8,7 @@ public class LocalizacaoLinhaInsertDTO extends InformationRequest implements Ser
 
 	private Long idLinha;
 	
-	private Long idVeiculoLinha;
+	private Long idVeiculo;
 
 	private Long idUsuario;
 	
@@ -36,12 +36,12 @@ public class LocalizacaoLinhaInsertDTO extends InformationRequest implements Ser
 		this.idLinha = idLinha;
 	}
 
-	public Long getIdVeiculoLinha() {
-		return idVeiculoLinha;
+	public Long getIdVeiculo() {
+		return idVeiculo;
 	}
 
-	public void setIdVeiculoLinha(Long idVeiculoLinha) {
-		this.idVeiculoLinha = idVeiculoLinha;
+	public void setIdVeiculo(Long idVeiculo) {
+		this.idVeiculo = idVeiculo;
 	}
 
 	public Long getIdUsuario() {

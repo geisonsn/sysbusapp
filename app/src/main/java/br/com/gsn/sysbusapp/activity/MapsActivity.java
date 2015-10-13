@@ -77,7 +77,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng latLngUsuraio = new LatLng(Double.valueOf(localizacaoUsuario.getLatitude()), Double.valueOf(localizacaoUsuario.getLongitude()));
             MarkerOptions markerUsuario = new MarkerOptions()
                 .title("Eu")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_person_pin_black_36dp))
                 .position(latLngUsuraio);
             map.addMarker(markerUsuario);
             latLngZoom = latLngUsuraio;
@@ -98,10 +98,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for (LocalizacaoLinhaParcelable linha : outrasLinhas) {
             LatLng location = new LatLng(Double.valueOf(linha.latitude), Double.valueOf((linha.longitude)));
             map.addMarker(new MarkerOptions()
-                .title("Linha " + linha.numeroLinha)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                .snippet("Veículo " + linha.numeroRegistro)
-                .position(location));
+                    .title("Linha " + linha.numeroLinha)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_directions_bus_black_36dp))
+                    .snippet("Veículo " + linha.numeroRegistro)
+                    .position(location));
         }
 
     }

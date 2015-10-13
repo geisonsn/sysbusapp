@@ -98,6 +98,12 @@ public abstract class AbstractSpringRestResponse {
         }
     }
 
+    protected void onServerError() {
+        if (showMessage) {
+            Toast.makeText(context, R.string.msg_erro_no_servidor, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     protected void onHttpNotFound() {
         if (onHttpNotFound == null) {
             if (showMessage) {
@@ -154,7 +160,7 @@ public abstract class AbstractSpringRestResponse {
             if (this.statusCode == HttpURLConnection.HTTP_UNAVAILABLE) {
                 onHttpUnavailable();
             } else {
-                Toast.makeText(context, "Ocorreu um erro no servidor. Tente novamente.", Toast.LENGTH_SHORT).show();
+                onServerError();
             }
         } else if (StatusCodeFamily.getFamily(this.statusCode) == StatusCodeFamily.OTHER) {
             if (this.statusCode == AbstractSpringRestResponse.CONNECTION_FAILED) {

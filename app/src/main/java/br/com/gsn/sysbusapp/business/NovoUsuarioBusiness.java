@@ -21,6 +21,7 @@ import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.model.UsuarioDTO;
 import br.com.gsn.sysbusapp.util.ConnectionUtil;
+import br.com.gsn.sysbusapp.util.PreferencesUtil;
 import br.com.gsn.sysbusapp.util.RegexValidatorUtil;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
@@ -64,7 +65,9 @@ public class NovoUsuarioBusiness extends BusinessDialogTaskOperation<UsuarioDTO,
 
     @Override
     public SpringRestResponse doInBackground(UsuarioDTO... params) {
-        return SpringRestClient.post(context, UrlServico.URL_NOVO_USUARIO, params[0], UsuarioDTO.class);
+        return new SpringRestClient()
+            .showMessage(true)
+            .post(context, UrlServico.URL_NOVO_USUARIO, params[0], UsuarioDTO.class);
     }
 
     @Override
@@ -73,6 +76,11 @@ public class NovoUsuarioBusiness extends BusinessDialogTaskOperation<UsuarioDTO,
             @Override
             public void doThis() {
                 UsuarioDTO u = (UsuarioDTO) response.getObjectReturn();
+
+                PreferencesUtil.getInstance(context).set(PreferencesUtil.ID_USUARIO, u.getId());
+                PreferencesUtil.getInstance(context).set(PreferencesUtil.NOME_USUARIO, u.getNome());
+                PreferencesUtil.getInstance(context).set(PreferencesUtil.EMAIL_USUARIO, u.getEmail());
+
                 Toast.makeText(context, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
                 context.startActivity(new Intent(context, MainActivity.class));
             }

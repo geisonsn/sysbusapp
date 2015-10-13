@@ -26,7 +26,9 @@ import br.com.gsn.sysbusapp.util.ConnectionUtil;
 public class HomeFragment extends ListContentFragment {
 
     private HomeBusiness homeBusiness;
-    public HomeFragment() {}
+
+    public HomeFragment() {
+    }
 
     @Override
     public void setBusinessDelegate() {
@@ -40,7 +42,7 @@ public class HomeFragment extends ListContentFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_list_localizacao_linha, container, false);
 
-        ListView listView = (ListView)rootView.findViewById(android.R.id.list);
+        ListView listView = (ListView) rootView.findViewById(android.R.id.list);
 
         registerForContextMenu(listView);
 
@@ -134,7 +136,7 @@ public class HomeFragment extends ListContentFragment {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        MenuInflater  inflater = getActivity().getMenuInflater();
+        MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.contextmenu_linhas, menu);
     }
 
