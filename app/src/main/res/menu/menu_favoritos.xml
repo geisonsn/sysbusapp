@@ -9,4 +9,12 @@
         android:orderInCategory="1"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_progresso"
+        android:title="Loading..."
+        android:visible="false"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"
+        app:actionLayout="@layout/action_view_progress" />
+
 </menu>

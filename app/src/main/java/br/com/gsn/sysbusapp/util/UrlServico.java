@@ -24,7 +24,7 @@ public final class UrlServico {
     public static final String URL_LISTAGEM_LINHA_FAVORITA = "http://sysbusweb-gsanton.rhcloud.com/services/linhafavorita/{idUsuario}";
 
     //Sincronização de favoritos
-    public static final String URL_SINCRONIZAR_FAVORITOS = "http://sysbusweb-gsanton.rhcloud.com/services/linhafavorita/sincronizar";
+    public static final String URL_SINCRONIZAR_FAVORITOS = "http://sysbusweb-gsanton.rhcloud.com/services/linhafavorita/sincronizarFavoritos";
 
     //Listagem de origem reclamação
     public static final String URL_LISTAGEM_ORIGEM_RECLAMACAO = "http://sysbusweb-gsanton.rhcloud.com/services/origemreclamacao/{objetoReclamado}";

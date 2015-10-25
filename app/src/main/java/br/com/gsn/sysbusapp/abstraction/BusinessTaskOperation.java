@@ -1,6 +1,7 @@
 package br.com.gsn.sysbusapp.abstraction;
 
 import android.app.Activity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ public abstract class BusinessTaskOperation<Params,Progress, Result> implements 
     protected DatePickerUtil.DatePickerWrapper datePickerWrapper;
     protected TimePickerUtil.TimePickerWrapper timePickerWrapper;
     protected MenuItem menuItemProgressBar;
+    protected Menu menu;
 
     protected BusinessTaskOperation() {
         this.datePickerWrapper =  new DatePickerUtil.DatePickerWrapper();
@@ -36,6 +38,10 @@ public abstract class BusinessTaskOperation<Params,Progress, Result> implements 
         this.menuItemProgressBar = menuItemProgressBar;
     }
 
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
     public void showMenuItemProgressBar() {
         this.menuItemProgressBar.setVisible(true);
     }
@@ -47,4 +53,5 @@ public abstract class BusinessTaskOperation<Params,Progress, Result> implements 
     public void showNoConnectionMessage() {
         Toast.makeText(context, R.string.voce_nao_esta_conectado, Toast.LENGTH_SHORT).show();
     }
+
 }

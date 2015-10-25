@@ -11,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.activity.NovaReclamacaoActivity;
 import br.com.gsn.sysbusapp.business.FavoritosBusiness;
+import br.com.gsn.sysbusapp.business.SincronizarFavoritosBusiness;
 import br.com.gsn.sysbusapp.model.LinhaFavoritaDTO;
 import br.com.gsn.sysbusapp.util.PreferencesUtil;
 
@@ -25,12 +25,20 @@ import br.com.gsn.sysbusapp.util.PreferencesUtil;
 public class FavoritosFragment extends ListContentFragment /*implements BusinessDelegate<BusinessTaskOperation>*/ {
 
     private LinhaFavoritaDTO linhaFavorita;
+    private FavoritosBusiness favoritosBusiness;
 
     public FavoritosFragment() {}
 
     @Override
     public void setBusinessDelegate() {
-        this.delegate = new FavoritosBusiness(this);
+        favoritosBusiness = new FavoritosBusiness(this);
+        this.delegate = favoritosBusiness;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        favoritosBusiness.sincronizarFavoritos(SincronizarFavoritosBusiness.Mode.SILENCIOSO);
     }
 
     @Override
@@ -68,9 +76,15 @@ public class FavoritosFragment extends ListContentFragment /*implements Business
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        delegate.setMenu(menu);
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_sincronizar_favoritos) {
-            Toast.makeText(getActivity(), "Implementar sincronizacao", Toast.LENGTH_SHORT).show();
+            favoritosBusiness.sincronizarFavoritos(SincronizarFavoritosBusiness.Mode.NORMAL);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -88,7 +102,7 @@ public class FavoritosFragment extends ListContentFragment /*implements Business
         }
 
         if (item.getItemId() == R.id.menu_excluir) {
-            Toast.makeText(getActivity(), "Implementar exclusao", Toast.LENGTH_SHORT).show();
+            favoritosBusiness.excluirFavorito(linhaFavorita);
         }
         return super.onContextItemSelected(item);
     }

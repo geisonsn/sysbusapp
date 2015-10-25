@@ -96,9 +96,10 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
 
     private void salvarFavoritosOffline(List<LinhaFavoritaDTO> linhasFavoritas) {
         for (LinhaFavoritaDTO l : linhasFavoritas) {
-            boolean isFavorita = linhaFavoritaDao.isLinhaFavorita(l.getIdLinha(), l.getIdLinha());
+            Long idUsuario = l.getIdUsuario();
+            boolean isFavorita = linhaFavoritaDao.isLinhaFavorita(idUsuario, l.getIdLinha());
             if (!isFavorita) {
-                linhaFavoritaDao.insert(l);
+                linhaFavoritaDao.insert(idUsuario, l);
             }
         }
     }

@@ -37,6 +37,7 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         View view = convertView;
 
         if (view == null) {
@@ -55,6 +56,7 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
         final ViewHolder holder = (ViewHolder) view.getTag();
 
         final LocalizacaoLinhaDTO linha = linhas.get(position);
+        final Long idUsuario = PreferencesUtil.getInstance(context).getIdUsuario();
 
         controlarExibicaoIconeFavorito(holder, linha);
 
@@ -64,16 +66,16 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
                 Drawable img = null;
 
                 boolean isLinhaFavorita = linhaFavoritaDao
-                    .isLinhaFavorita(linha.getIdLinha(), PreferencesUtil.getInstance(context).getIdUsuario());
+                    .isLinhaFavorita(idUsuario, linha.getIdLinha());
 
                 if (isLinhaFavorita) {
                     img = ContextCompat.getDrawable(context, R.drawable.ic_star_border_black);
                     holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                    linhaFavoritaDao.delete(linha.getIdLinha());
+                    linhaFavoritaDao.delete(idUsuario, linha.getIdLinha());
                 } else {
                     img = ContextCompat.getDrawable(context, R.drawable.ic_star_black);
                     holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                    linhaFavoritaDao.insert(linha);
+                    linhaFavoritaDao.insert(idUsuario, linha);
                 }
             }
         });
@@ -95,9 +97,11 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
      * @param linha
      */
     private void controlarExibicaoIconeFavorito(ViewHolder holder, LocalizacaoLinhaDTO linha) {
+        Long idUsuario = PreferencesUtil.getInstance(context).getIdUsuario();
         Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_star_black);
-        boolean isLinhaFavorita = linhaFavoritaDao
-            .isLinhaFavorita(linha.getIdLinha(), PreferencesUtil.getInstance(context).getIdUsuario());
+
+        boolean isLinhaFavorita = linhaFavoritaDao.isLinhaFavorita(idUsuario, linha.getIdLinha());
+
         if (isLinhaFavorita) {
             holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
         } else {
