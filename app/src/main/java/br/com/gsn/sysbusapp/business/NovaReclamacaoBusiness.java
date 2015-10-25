@@ -40,6 +40,11 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
         this.context = context;
     }
 
+    public void initForm(Long idLinha) {
+        linhaBusiness = new LinhaBusiness(context);
+        listarLinhas(idLinha);
+    }
+
     public void saveReclamacao() {
 
         if (ConnectionUtil.isNetworkConnected(context)) {
@@ -111,13 +116,8 @@ public class NovaReclamacaoBusiness extends BusinessTaskOperation<ReclamacaoRequ
         }
     }
 
-    public void initForm() {
-        linhaBusiness = new LinhaBusiness(context);
-        listarLinhas();
-    }
-
-    public void listarLinhas() {
-        linhaBusiness.listarLinhas();
+    public void listarLinhas(Long idLinha) {
+        linhaBusiness.listarLinhas(idLinha);
     }
 
     public void listarOrigemReclamacao(String reclamado) {

@@ -9,12 +9,17 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.abstraction.BusinessDialogTaskOperation;
 import br.com.gsn.sysbusapp.activity.MainActivity;
 import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
+import br.com.gsn.sysbusapp.model.LinhaFavoritaDTO;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.model.UsuarioDTO;
+import br.com.gsn.sysbusapp.model.UsuarioWrapperDTO;
+import br.com.gsn.sysbusapp.persistence.LinhaFavoritaDao;
 import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
 import br.com.gsn.sysbusapp.util.ConnectionUtil;
 import br.com.gsn.sysbusapp.util.PreferencesUtil;
@@ -29,9 +34,11 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
 
     private DialogInterface dialog;
     private TemplateAsyncTask<String, Integer, SpringRestResponse> task;
+    private LinhaFavoritaDao linhaFavoritaDao;
 
     public LoginBusiness(Activity context) {
         this.context = context;
+        linhaFavoritaDao = new LinhaFavoritaDao(context);
     }
 
     @Override
@@ -51,7 +58,7 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
 
         return new SpringRestClient()
             .showMessage(true)
-            .getForObject(context, urlServico, UsuarioDTO.class);
+            .getForObject(context, urlServico, UsuarioWrapperDTO.class);
     }
 
     @Override
@@ -60,17 +67,21 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
         response.setOnHttpOk(new AbstractSpringRestResponse.OnHttpOk() {
             @Override
             public void doThis() {
-                UsuarioDTO usuario = (UsuarioDTO) response.getObjectReturn();
+                UsuarioWrapperDTO wrapper = (UsuarioWrapperDTO) response.getObjectReturn();
+                UsuarioDTO usuario = wrapper.getUsuario();
 
                 PreferencesUtil.getInstance(context).set(PreferencesUtil.ID_USUARIO, usuario.getId());
                 PreferencesUtil.getInstance(context).set(PreferencesUtil.NOME_USUARIO, usuario.getNome());
                 PreferencesUtil.getInstance(context).set(PreferencesUtil.EMAIL_USUARIO, usuario.getEmail());
+
+                salvarFavoritosOffline(wrapper.getLinhasFavoritas());
 
                 onCloseDialog();
 
                 Intent intent = new Intent(context, MainActivity.class);
                 context.startActivity(intent);
             }
+
         });
         response.setOnHttpNotFound(new AbstractSpringRestResponse.OnHttpNotFound() {
             @Override
@@ -81,6 +92,15 @@ public class LoginBusiness extends BusinessDialogTaskOperation<String, Integer, 
 
         response.executeCallbacks();
         super.handleProgressRequest();
+    }
+
+    private void salvarFavoritosOffline(List<LinhaFavoritaDTO> linhasFavoritas) {
+        for (LinhaFavoritaDTO l : linhasFavoritas) {
+            boolean isFavorita = linhaFavoritaDao.isLinhaFavorita(l.getIdLinha(), l.getIdLinha());
+            if (!isFavorita) {
+                linhaFavoritaDao.insert(l);
+            }
+        }
     }
 
     @Override

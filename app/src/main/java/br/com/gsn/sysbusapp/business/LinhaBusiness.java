@@ -25,13 +25,15 @@ import br.com.gsn.sysbusapp.util.UrlServico;
  */
 public class LinhaBusiness extends BusinessTaskOperation<Void, Integer, SpringRestResponse> {
 
+    private Long idLinha;
     private TemplateAsyncTask<Void, Integer, SpringRestResponse> task;
 
     public LinhaBusiness(Activity context) {
         this.context = context;
     }
 
-    public void listarLinhas() {
+    public void listarLinhas(Long idLinha) {
+        this.idLinha = idLinha;
         showProgressBar();
         this.task = new TemplateAsyncTask<>(this);
         task.execute();
@@ -59,20 +61,41 @@ public class LinhaBusiness extends BusinessTaskOperation<Void, Integer, SpringRe
         response.setOnHttpOk(new AbstractSpringRestResponse.OnHttpOk() {
             @Override
             public void doThis() {
-                LinhaDTO[] linhas = (LinhaDTO[]) response.getObjectReturn();
-                Spinner spinnerLinhas = (Spinner) context.findViewById(R.id.linha);
-
-                List<LinhaDTO> source = new ArrayList<>();
-                LinhaDTO l = new LinhaDTO();
-                l.setNumeroLinha("Selecione");
-                source.add(l);
-                source.addAll(Arrays.asList(linhas));
-
-                spinnerLinhas.setAdapter(new ArrayAdapter<LinhaDTO>(context, android.R.layout.simple_spinner_item, source));
+                carregarCombo(response);
             }
         });
         response.executeCallbacks();
         showProgressBar();
+    }
+
+    private void carregarCombo(SpringRestResponse response) {
+        LinhaDTO[] linhas = (LinhaDTO[]) response.getObjectReturn();
+        Spinner spinnerLinhas = (Spinner) context.findViewById(R.id.linha);
+
+        List<LinhaDTO> source = new ArrayList<>();
+        LinhaDTO l = new LinhaDTO();
+        l.setNumeroLinha("Selecione");
+        source.add(l);
+        source.addAll(Arrays.asList(linhas));
+
+        spinnerLinhas.setAdapter(new ArrayAdapter<LinhaDTO>(context, android.R.layout.simple_spinner_item, source));
+
+        if (idLinha != null) {
+            Spinner linha = (Spinner) context.findViewById(R.id.linha);
+            linha.setSelection(getPosition(linhas, idLinha) + 1);
+        }
+    }
+
+    public int getPosition(LinhaDTO[] source, Long idLinha) {
+        int cont = 0, position = 0;
+        for (LinhaDTO linha : source) {
+            if (linha.getIdLinha() == idLinha) {
+                position = cont;
+                break;
+            }
+            cont++;
+        }
+        return position;
     }
 
     @Override

@@ -15,7 +15,9 @@ import java.util.List;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
+import br.com.gsn.sysbusapp.persistence.LinhaFavoritaDao;
 import br.com.gsn.sysbusapp.util.Dates;
+import br.com.gsn.sysbusapp.util.PreferencesUtil;
 
 /**
  * Created by Geison on 01/09/2015.
@@ -24,11 +26,13 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
 
     private Context context;
     private List<LocalizacaoLinhaDTO> linhas;
+    private LinhaFavoritaDao linhaFavoritaDao;
 
     public LinhasEmDeslocamentoAdapter(Context context, List<LocalizacaoLinhaDTO> linhasFavorita) {
         super(context, R.layout.item_lista_home, linhasFavorita);
         this.context = context;
         this.linhas = linhasFavorita;
+        linhaFavoritaDao = new LinhaFavoritaDao(context);
     }
 
     @Override
@@ -52,26 +56,24 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
 
         final LocalizacaoLinhaDTO linha = linhas.get(position);
 
-        Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_star_black);
-        if (linha.getLinhaFavorita().equals("S")) {
-            holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-        } else {
-            img = ContextCompat.getDrawable(context, R.drawable.ic_star_border_black);
-            holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-        }
+        controlarExibicaoIconeFavorito(holder, linha);
 
         holder.favorito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Drawable img = null;
-                if (linha.getLinhaFavorita().equals("S")) {
+
+                boolean isLinhaFavorita = linhaFavoritaDao
+                    .isLinhaFavorita(linha.getIdLinha(), PreferencesUtil.getInstance(context).getIdUsuario());
+
+                if (isLinhaFavorita) {
                     img = ContextCompat.getDrawable(context, R.drawable.ic_star_border_black);
                     holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                    linha.setLinhaFavorita("N");
+                    linhaFavoritaDao.delete(linha.getIdLinha());
                 } else {
                     img = ContextCompat.getDrawable(context, R.drawable.ic_star_black);
                     holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                    linha.setLinhaFavorita("S");
+                    linhaFavoritaDao.insert(linha);
                 }
             }
         });
@@ -85,6 +87,23 @@ public class LinhasEmDeslocamentoAdapter extends ArrayAdapter<LocalizacaoLinhaDT
         holder.ultimoRegistro.setText(Dates.format(ultimoRegistro, Dates.FORMAT_PT_BR_HOUR));
 
         return view;
+    }
+
+    /**
+     * Controla a exibição do ícone de favorito
+     * @param holder
+     * @param linha
+     */
+    private void controlarExibicaoIconeFavorito(ViewHolder holder, LocalizacaoLinhaDTO linha) {
+        Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_star_black);
+        boolean isLinhaFavorita = linhaFavoritaDao
+            .isLinhaFavorita(linha.getIdLinha(), PreferencesUtil.getInstance(context).getIdUsuario());
+        if (isLinhaFavorita) {
+            holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+        } else {
+            img = ContextCompat.getDrawable(context, R.drawable.ic_star_border_black);
+            holder.favorito.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+        }
     }
 
     public static class ViewHolder {

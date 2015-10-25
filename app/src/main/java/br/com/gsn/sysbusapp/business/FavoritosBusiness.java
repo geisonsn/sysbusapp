@@ -1,105 +1,77 @@
 package br.com.gsn.sysbusapp.business;
 
-import android.os.AsyncTask;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.abstraction.BusinessTaskOperation;
-import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
-import br.com.gsn.sysbusapp.fragment.ListContentFragment;
 import br.com.gsn.sysbusapp.adapter.LinhaFavoritaAdapter;
-import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
+import br.com.gsn.sysbusapp.cache.LinhaFavorita;
+import br.com.gsn.sysbusapp.fragment.ListContentFragment;
 import br.com.gsn.sysbusapp.model.LinhaFavoritaDTO;
-import br.com.gsn.sysbusapp.model.SpringRestResponse;
+import br.com.gsn.sysbusapp.persistence.LinhaFavoritaDao;
 import br.com.gsn.sysbusapp.util.PreferencesUtil;
-import br.com.gsn.sysbusapp.util.SpringRestClient;
-import br.com.gsn.sysbusapp.util.UrlServico;
 
 /**
  * Created by Geison on 06/09/2015.
  */
-public class FavoritosBusiness extends BusinessTaskOperation<Void, Integer, SpringRestResponse> {
+public class FavoritosBusiness extends BusinessTaskOperation<Void, Void, Void> {
 
     private ListFragment listFragment;
-    private TemplateAsyncTask<Void, Integer, SpringRestResponse> task;
+    private LinhaFavoritaDao linhaFavoritaDao;
 
     public FavoritosBusiness(ListContentFragment context) {
         this.context = context.getActivity();
         this.listFragment = context;
+        this.linhaFavoritaDao = new LinhaFavoritaDao(context.getActivity());
     }
 
-    public void listarLinhas() {
-        task = new TemplateAsyncTask<>(this);
-        task.execute();
+    public void listarLinhas(View view) {
+        List<LinhaFavorita> list = linhaFavoritaDao.list(PreferencesUtil.getInstance(context).getIdUsuario());
+        List<LinhaFavoritaDTO> linhasFavoritas = new ArrayList<>();
+        for (LinhaFavorita l : list) {
+            LinhaFavoritaDTO lo = new LinhaFavoritaDTO();
+            lo.setIdLinha(l.getIdLinha().longValue());
+            lo.setNumeroLinha(l.getNumeroLinha());
+            lo.setDescricaoLinha(l.getDescricaoLinha());
+            lo.setEmpresaLinha(l.getEmpresa());
+            linhasFavoritas.add(lo);
+        }
+
+        if (list.isEmpty()) {
+            TextView emptyView = (TextView) view.findViewById(android.R.id.empty);
+            ListView listView = (ListView) view.findViewById(android.R.id.list);
+            emptyView.setText(R.string.nenhum_favorito_adicionado);
+            listView.setEmptyView(emptyView);
+        } else {
+            listFragment.setListAdapter(new LinhaFavoritaAdapter(context, linhasFavoritas));
+        }
     }
 
     @Override
     public void onPreExecute() {
+    }
+
+    @Override
+    public void onProgressUpdate(Void... values) {
 
     }
 
     @Override
-    public void onProgressUpdate(Integer... values) {
-
+    public Void doInBackground(Void... params) {
+        return null;
     }
 
     @Override
-    public SpringRestResponse doInBackground(Void... params) {
-        Long idUsuario = PreferencesUtil.getInstance(context).getLong(PreferencesUtil.ID_USUARIO);
-        String url = UrlServico.URL_LISTAGEM_LINHA_FAVORITA;
-        url = url.replace("{idUsuario}", idUsuario.toString());
-
-        return new SpringRestClient()
-                .showMessage(false)
-                .getForObject(context, url, LinhaFavoritaDTO[].class);
-    }
-
-    @Override
-    public void onPostExecute(final SpringRestResponse response) {
-        final ProgressBar progressBar = (ProgressBar) context.findViewById(R.id.progressBar);
-        final TextView emptyView = (TextView) context.findViewById(android.R.id.empty);
-        final ListView listView = (ListView) context.findViewById(android.R.id.list);
-
-        response.setOnHttpOk(new AbstractSpringRestResponse.OnHttpOk() {
-            @Override
-            public void doThis() {
-                LinhaFavoritaDTO[] linhas = (LinhaFavoritaDTO[]) response.getObjectReturn();
-                List<LinhaFavoritaDTO> linhasFavoritas = Arrays.asList(linhas);
-                listFragment.setListAdapter(new LinhaFavoritaAdapter(context, linhasFavoritas));
-            }
-        });
-        response.setOnHttpNotFound(new AbstractSpringRestResponse.OnHttpNotFound() {
-            @Override
-            public void doThis() {
-                emptyView.setText(R.string.nenhum_favorito_adicionado);
-                listView.setEmptyView(emptyView);
-            }
-        });
-
-        if (response.getConnectionFailed()) {
-            emptyView.setText(R.string.msg_falha_na_conexao);
-            listView.setEmptyView(emptyView);
-        } else if (response.getServerError()) {
-            emptyView.setText(R.string.msg_servidor_indisponivel);
-            listView.setEmptyView(emptyView);
-        }
-
-        response.executeCallbacks();
-
-        progressBar.setVisibility(View.GONE);
+    public void onPostExecute(final Void response) {
     }
 
     @Override
     public void cancelTaskOperation() {
-        if (task != null && task.getStatus() == AsyncTask.Status.RUNNING) {
-            task.cancel(true);
-        }
     }
 }

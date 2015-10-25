@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import br.com.gsn.sysbusapp.model.LinhaFavoritaDTO;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
 
 /**
@@ -89,13 +90,23 @@ public class LinhaFavorita {
         this.empresa = empresa;
     }
 
-    public static ContentValues getContentValues(Long idUsuario, LocalizacaoLinhaDTO linhaFavorita) {
+    public static ContentValues getContentValues(Long idUsuario, LocalizacaoLinhaDTO localizacaoLinhaDTO) {
         ContentValues values = new ContentValues();
         values.put(LinhaFavorita.ID_USUARIO, idUsuario);
-        values.put(LinhaFavorita.ID_LINHA, linhaFavorita.getIdLinha());
-        values.put(LinhaFavorita.NUMERO_LINHA, linhaFavorita.getNumeroLinha());
-        values.put(LinhaFavorita.DESCRICAO_LINHA, linhaFavorita.getDescricaoLinha());
-        values.put(LinhaFavorita.EMPRESA, linhaFavorita.getNomeEmpresa());
+        values.put(LinhaFavorita.ID_LINHA, localizacaoLinhaDTO.getIdLinha());
+        values.put(LinhaFavorita.NUMERO_LINHA, localizacaoLinhaDTO.getNumeroLinha());
+        values.put(LinhaFavorita.DESCRICAO_LINHA, localizacaoLinhaDTO.getDescricaoLinha());
+        values.put(LinhaFavorita.EMPRESA, localizacaoLinhaDTO.getNomeEmpresa());
+        return values;
+    }
+
+    public static ContentValues getContentValues(Long idUsuario, LinhaFavoritaDTO linhaFavoritaDTO) {
+        ContentValues values = new ContentValues();
+        values.put(LinhaFavorita.ID_USUARIO, idUsuario);
+        values.put(LinhaFavorita.ID_LINHA, linhaFavoritaDTO.getIdLinha());
+        values.put(LinhaFavorita.NUMERO_LINHA, linhaFavoritaDTO.getNumeroLinha());
+        values.put(LinhaFavorita.DESCRICAO_LINHA, linhaFavoritaDTO.getDescricaoLinha());
+        values.put(LinhaFavorita.EMPRESA, linhaFavoritaDTO.getEmpresaLinha());
         return values;
     }
 

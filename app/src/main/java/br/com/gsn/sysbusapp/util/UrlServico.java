@@ -23,6 +23,9 @@ public final class UrlServico {
     //Listagem de linhas favoritas
     public static final String URL_LISTAGEM_LINHA_FAVORITA = "http://sysbusweb-gsanton.rhcloud.com/services/linhafavorita/{idUsuario}";
 
+    //Sincronização de favoritos
+    public static final String URL_SINCRONIZAR_FAVORITOS = "http://sysbusweb-gsanton.rhcloud.com/services/linhafavorita/sincronizar";
+
     //Listagem de origem reclamação
     public static final String URL_LISTAGEM_ORIGEM_RECLAMACAO = "http://sysbusweb-gsanton.rhcloud.com/services/origemreclamacao/{objetoReclamado}";
 
@@ -36,8 +39,7 @@ public final class UrlServico {
     //Inclusão de localização da linha
     public static final String URL_CHECKIN = "http://sysbusweb-gsanton.rhcloud.com/services/localizacaolinha";
     //Listagem de linhas em deslocamenot
-    public static final String URL_VEICULOS_EM_DESLOCAMENTO = "http://sysbusweb-gsanton.rhcloud.com/services/localizacaolinha/veiculosemdeslocamento/{idUsuario}/{intervalo}";
+    public static final String URL_VEICULOS_EM_DESLOCAMENTO = "http://sysbusweb-gsanton.rhcloud.com/services/localizacaolinha/veiculosemdeslocamento/{intervalo}";
     //Listagem de linhas em deslocamento próximas
-    public static final String URL_VEICULOS_EM_DESLOCAMENTO_PROXIMOS = "http://sysbusweb-gsanton.rhcloud.com/services/localizacaolinha/veiculosemdeslocamentoproximos/{idUsuario}/{intervalo}/{distancia}/{latitude}/{longitude}";
-
+    public static final String URL_VEICULOS_EM_DESLOCAMENTO_PROXIMOS = "http://sysbusweb-gsanton.rhcloud.com/services/localizacaolinha/veiculosemdeslocamentoproximos/{intervalo}/{distancia}/{latitude}/{longitude}";
 }

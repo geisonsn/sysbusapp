@@ -22,7 +22,6 @@ import br.com.gsn.sysbusapp.business.NovaReclamacaoBusiness;
 import br.com.gsn.sysbusapp.enums.ObjetoReclamadoEnum;
 import br.com.gsn.sysbusapp.util.DatePickerUtil;
 import br.com.gsn.sysbusapp.util.Dates;
-import br.com.gsn.sysbusapp.util.PreferencesUtil;
 import br.com.gsn.sysbusapp.util.TimePickerUtil;
 
 /**
@@ -30,6 +29,7 @@ import br.com.gsn.sysbusapp.util.TimePickerUtil;
  */
 public class NovaReclamacaoActivity extends AppCompatActivity implements BusinessDelegate<BusinessTaskOperation> {
 
+    private Long idLinha;
     private NovaReclamacaoBusiness delegate;
     private ProgressBar progressBar;
     private Spinner reclamado, reclamacao, linha;
@@ -39,6 +39,16 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                idLinha = extras.getLong("idLinha");
+            }
+        } else {
+            idLinha = savedInstanceState.getLong("idLinha");
+        }
+
         setContentView(R.layout.nova_reclamacao);
 
         reclamado = (Spinner) findViewById(R.id.objetoReclamado);
@@ -68,7 +78,13 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
         //Registrando o delegate
         setBusinessDelegate();
 
-        delegate.initForm();
+        delegate.initForm(idLinha);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong("idLinha", idLinha);
     }
 
     @Override
@@ -95,7 +111,7 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
         if (item.getItemId() == android.R.id.home) {
             delegate.cancelTaskOperation();
             NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
-            PreferencesUtil.getInstance(this).setMenuCorrente(2);
+//            PreferencesUtil.getInstance(this).setMenuCorrente(2);
         }
 
         if (item.getItemId() == R.id.action_save_reclamacao) {

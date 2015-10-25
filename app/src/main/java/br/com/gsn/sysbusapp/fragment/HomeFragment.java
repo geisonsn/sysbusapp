@@ -22,6 +22,7 @@ import br.com.gsn.sysbusapp.dialog.CheckinDialog;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
 import br.com.gsn.sysbusapp.parcelable.LocalizacaoLinhaParcelable;
 import br.com.gsn.sysbusapp.util.ConnectionUtil;
+import br.com.gsn.sysbusapp.util.PreferencesUtil;
 
 public class HomeFragment extends ListContentFragment {
 
@@ -144,7 +145,12 @@ public class HomeFragment extends ListContentFragment {
     public boolean onContextItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.menu_reclamacao) {
-            startActivity(new Intent(this.getActivity(), NovaReclamacaoActivity.class));
+            PreferencesUtil.getInstance(getActivity()).setMenuCorrente(0);
+            Bundle bundle = new Bundle();
+            bundle.putLong("idLinha", homeBusiness.getLocalizacaoLinha().getIdLinha());
+            Intent intent = new Intent(this.getActivity(), NovaReclamacaoActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
 
         if (item.getItemId() == R.id.menu_mostrar_mapa) {

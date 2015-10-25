@@ -1,14 +1,18 @@
 package br.com.gsn.sysbusapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import br.com.gsn.sysbusapp.R;
+import br.com.gsn.sysbusapp.activity.NovaReclamacaoActivity;
 import br.com.gsn.sysbusapp.business.ReclamacaoRankingBusiness;
+import br.com.gsn.sysbusapp.util.PreferencesUtil;
 
 public class ReclamacaoFragment extends ListContentFragment /*implements BusinessDelegate<BusinessTaskOperation>*/ {
 
@@ -40,4 +44,11 @@ public class ReclamacaoFragment extends ListContentFragment /*implements Busines
         ((ReclamacaoRankingBusiness)delegate).listarReclamacoes(this.view);
     }
 
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        if (item.getItemId() == R.id.action_nova_reclamacao) {
+            PreferencesUtil.getInstance(getActivity()).setMenuCorrente(2);
+            startActivity(new Intent(getActivity(), NovaReclamacaoActivity.class));
+        }
+        return false;
+    }
 }

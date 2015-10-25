@@ -77,12 +77,6 @@ public class MainActivity extends AppCompatActivity implements HostBusinessDeleg
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //Opçao utilizada no fragmento de reclamaçao
-        if (item.getItemId() == R.id.action_nova_reclamacao) {
-            startActivity(new Intent(this, NovaReclamacaoActivity.class));
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

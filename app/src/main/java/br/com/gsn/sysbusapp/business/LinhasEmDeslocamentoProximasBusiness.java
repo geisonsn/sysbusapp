@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import br.com.gsn.sysbusapp.R;
@@ -19,7 +20,6 @@ import br.com.gsn.sysbusapp.adapter.LinhasEmDeslocamentoAdapter;
 import br.com.gsn.sysbusapp.fragment.ListContentFragment;
 import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
 import br.com.gsn.sysbusapp.model.LocalizacaoLinhaDTO;
-import br.com.gsn.sysbusapp.model.LocalizacaoLinhaWrapperDTO;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.parcelable.LocalizacaoLinhaParcelable;
 import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
@@ -73,12 +73,10 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
     @Override
     public SpringRestResponse doInBackground(Location... params) {
 
-        Long idUsuario = PreferencesUtil.getInstance(context).getLong(PreferencesUtil.ID_USUARIO);
         String intervalo = PreferencesUtil.getInstance(context).getString(PreferencesUtil.INTERVALO);
         String distancia = PreferencesUtil.getInstance(context).getString(PreferencesUtil.DISTANCIA);
 
         String url = UrlServico.URL_VEICULOS_EM_DESLOCAMENTO_PROXIMOS;
-        url = url.replace("{idUsuario}", String.valueOf(idUsuario));
         url = url.replace("{intervalo}", intervalo);
         url = url.replace("{distancia}", distancia);
 
@@ -88,7 +86,7 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
 
         return new SpringRestClient()
                 .showMessage(false)
-                .getForObject(context, url, LocalizacaoLinhaWrapperDTO.class);
+                .getForObject(context, url, LocalizacaoLinhaDTO[].class);
     }
 
     @Override
@@ -104,9 +102,8 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
             @Override
             public void doThis() {
 
-                LocalizacaoLinhaWrapperDTO wrapper = (LocalizacaoLinhaWrapperDTO) response.getObjectReturn();
-
-                linhas = organizarLinhas(wrapper);
+                LocalizacaoLinhaDTO[] wrapper = (LocalizacaoLinhaDTO[]) response.getObjectReturn();
+                linhas = Arrays.asList(wrapper);
 
                 listFragment.setListAdapter(new LinhasEmDeslocamentoAdapter(context, linhas));
 
@@ -140,20 +137,6 @@ public class LinhasEmDeslocamentoProximasBusiness extends BusinessTaskOperation<
 
         progressBar.setVisibility(View.GONE);
 
-    }
-
-    public List<LocalizacaoLinhaDTO> organizarLinhas(LocalizacaoLinhaWrapperDTO localizacaoLinhaWrapper) {
-        List<LocalizacaoLinhaDTO> linhasFavoritas = localizacaoLinhaWrapper.getLinhasFavoritas();
-        List<LocalizacaoLinhaDTO> linhasNaoFavoritas = localizacaoLinhaWrapper.getLinhasNaoFavoritas();
-
-        for (LocalizacaoLinhaDTO naoFavorita : linhasNaoFavoritas) {
-            for (LocalizacaoLinhaDTO favorita : linhasFavoritas) {
-                if (favorita.getNumeroLinha().equals(naoFavorita.getNumeroLinha())) {
-                    naoFavorita.setLinhaFavorita("S");
-                }
-            }
-        }
-        return linhasNaoFavoritas;
     }
 
     public ArrayList<LocalizacaoLinhaParcelable> listLocalizacaoLinhas() {

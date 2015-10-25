@@ -86,10 +86,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setLocationOutrasLinhas(map);
 
         map.setMyLocationEnabled(false);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngZoom, 13));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngZoom, 15));
 
         map.addMarker(new MarkerOptions()
             .title("Linha " + linhaSelecionada.numeroLinha)
+            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_directions_bus_black_36dp))
             .snippet("Veículo " + linhaSelecionada.numeroRegistro)
             .position(latLngLinha));
     }
