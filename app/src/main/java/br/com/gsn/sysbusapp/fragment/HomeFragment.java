@@ -114,7 +114,11 @@ public class HomeFragment extends ListContentFragment {
                 if (ConnectionUtil.isGPSConnected(getActivity())) {
 //                    PreferencesUtil.getInstance(getActivity()).setPesquisaLinha(PreferencesUtil.MOSTRAR_LOCALIZACAO_PROXIMOS);
                     homeBusiness.capturarLocalizacao();
-                    this.listarLinhasProximas();
+                    if (homeBusiness.currentLocation != null) {
+                        this.listarLinhasProximas();
+                    } else {
+                        Toast.makeText(getActivity(), R.string.localizacao_nao_capturada, Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     ConnectionUtil.showMessageLocationDisabled(getActivity());
                 }
