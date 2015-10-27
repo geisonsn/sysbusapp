@@ -1,6 +1,6 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
         <LinearLayout
@@ -15,6 +15,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorAccent"
                 android:text="Reclamado"/>
 
             <TextView
@@ -22,6 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorAccent"
                 android:text="Reclamação"/>
 
             <TextView
@@ -29,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorAccent"
                 android:text="Total"/>
 
         </LinearLayout>
@@ -52,8 +55,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true">
+            android:layout_gravity="center_horizontal">
 
             <ProgressBar
                 android:layout_width="wrap_content"
@@ -63,4 +65,4 @@
 
         </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

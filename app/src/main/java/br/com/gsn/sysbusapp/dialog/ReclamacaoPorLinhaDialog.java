@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.business.ReclamacaoPorLinhaBusiness;
@@ -18,6 +19,7 @@ public class ReclamacaoPorLinhaDialog extends DialogContentFragment {
 
     private ReclamacaoPorLinhaBusiness reclamacaoPorLinhaBusiness;
     public Long idLinha;
+    public String linha;
 
     @Override
     public void setBusinessDelegate() {
@@ -30,6 +32,9 @@ public class ReclamacaoPorLinhaDialog extends DialogContentFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.principais_reclamacoes_por_linha, container, false);
+
+        TextView title = (TextView) view.findViewById(R.id.title);
+        title.setText(title.getText().toString() + " " + linha);
 
         Button botaoFechar = (Button) view.findViewById(R.id.botao_fechar);
 

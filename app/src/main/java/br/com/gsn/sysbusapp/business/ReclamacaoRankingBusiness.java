@@ -132,6 +132,7 @@ public class ReclamacaoRankingBusiness extends BusinessTaskOperation<Void, Integ
 //            Toast.makeText(context, o.getNumeroLinha(), Toast.LENGTH_SHORT).show();
             ReclamacaoPorLinhaDialog d = new ReclamacaoPorLinhaDialog();
             d.idLinha = o.getIdLinha();
+            d.linha = o.getNumeroLinha();
             d.show(((FragmentActivity) context).getSupportFragmentManager(), "d");
         }
     };
