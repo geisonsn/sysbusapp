@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import br.com.gsn.sysbusapp.model.AbstractSpringRestResponse;
 import br.com.gsn.sysbusapp.model.LinhaDTO;
 import br.com.gsn.sysbusapp.model.SpringRestResponse;
 import br.com.gsn.sysbusapp.task.TemplateAsyncTask;
+import br.com.gsn.sysbusapp.util.ConnectionUtil;
 import br.com.gsn.sysbusapp.util.SpringRestClient;
 import br.com.gsn.sysbusapp.util.UrlServico;
 
@@ -27,21 +29,44 @@ public class LinhaBusiness extends BusinessTaskOperation<Void, Integer, SpringRe
 
     private Long idLinha;
     private TemplateAsyncTask<Void, Integer, SpringRestResponse> task;
+    public List<LinhaDTO> linhas = new ArrayList<>();
 
-    public LinhaBusiness(Activity context) {
+    private NovaReclamacaoBusiness novaReclamacaoBusiness;
+
+    public LinhaBusiness(Activity context, NovaReclamacaoBusiness novaReclamacaoBusiness) {
         this.context = context;
+        this.novaReclamacaoBusiness = novaReclamacaoBusiness;
     }
 
     public void listarLinhas(Long idLinha) {
         this.idLinha = idLinha;
-        showProgressBar();
+
+//        this.cancelTaskOperation();
+
+        inicializarComboLinha(context);
+
         this.task = new TemplateAsyncTask<>(this);
-        task.execute();
+
+        if (ConnectionUtil.isNetworkConnected(context)) {
+            task.execute();
+        } else {
+            showNoConnectionMessage();
+            toogleRefreshButton(true);
+        }
+    }
+
+    public void inicializarComboLinha(Activity context) {
+        LinhaDTO linhaDTO = new LinhaDTO();
+        linhaDTO.setNumeroLinha("Selecione");
+        this.linhas = new ArrayList<>();
+        this.linhas.add(linhaDTO);
+        Spinner spinnerLinhas = (Spinner)context.findViewById(R.id.linha);
+        spinnerLinhas.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, linhas));
     }
 
     @Override
     public void onPreExecute() {
-
+        toogleProgressBar();
     }
 
     @Override
@@ -64,36 +89,53 @@ public class LinhaBusiness extends BusinessTaskOperation<Void, Integer, SpringRe
                 carregarCombo(response);
             }
         });
+
+        if (response.getConnectionFailed()) {
+            Toast.makeText(context, "Não foi possível carregar a lista de linhas devido a falha em sua conexão.", Toast.LENGTH_LONG).show();
+        }
+
         response.executeCallbacks();
-        showProgressBar();
+
+        toogleRefreshButton(response.getConnectionFailed());
+        toogleProgressBar();
     }
 
-    private void carregarCombo(SpringRestResponse response) {
-        LinhaDTO[] linhas = (LinhaDTO[]) response.getObjectReturn();
-        Spinner spinnerLinhas = (Spinner) context.findViewById(R.id.linha);
-
-        List<LinhaDTO> source = new ArrayList<>();
-        LinhaDTO l = new LinhaDTO();
-        l.setNumeroLinha("Selecione");
-        source.add(l);
-        source.addAll(Arrays.asList(linhas));
-
-        spinnerLinhas.setAdapter(new ArrayAdapter<LinhaDTO>(context, android.R.layout.simple_spinner_item, source));
-
-        if (idLinha != null) {
-            Spinner linha = (Spinner) context.findViewById(R.id.linha);
-            linha.setSelection(getPosition(linhas, idLinha) + 1);
+    /**
+     * Exibe ícone para recarregar combo em caso de falha na conexão
+     * @param connectionFailed
+     */
+    public void toogleRefreshButton(boolean connectionFailed) {
+        if (connectionFailed) {
+            novaReclamacaoBusiness.getMenu().findItem(R.id.action_recarregar_dados).setVisible(true);
+        } else {
+            Spinner linha = (Spinner) context.findViewById(R.id.reclamacao);
+            if (linha.getAdapter().getCount() > 1) {
+                novaReclamacaoBusiness.getMenu().findItem(R.id.action_recarregar_dados).setVisible(false);
+            }
         }
     }
 
-    public int getPosition(LinhaDTO[] source, Long idLinha) {
-        int cont = 0, position = 0;
+    private void carregarCombo(SpringRestResponse response) {
+        LinhaDTO[] source = (LinhaDTO[]) response.getObjectReturn();
+        Spinner spinnerLinhas = (Spinner) context.findViewById(R.id.linha);
+
+        linhas.addAll(Arrays.asList(source));
+
+        spinnerLinhas.setAdapter(new ArrayAdapter<LinhaDTO>(context, android.R.layout.simple_spinner_item, linhas));
+
+        if (idLinha != null) {
+            Spinner linha = (Spinner) context.findViewById(R.id.linha);
+            linha.setSelection(getPosition(linhas, idLinha));
+        }
+    }
+
+    public int getPosition(List<LinhaDTO> source, Long idLinha) {
+        int position = 1;
         for (LinhaDTO linha : source) {
             if (linha.getIdLinha() == idLinha) {
-                position = cont;
-                break;
+               return position;
             }
-            cont++;
+            position++;
         }
         return position;
     }
@@ -105,7 +147,7 @@ public class LinhaBusiness extends BusinessTaskOperation<Void, Integer, SpringRe
         }
     }
 
-    public void showProgressBar() {
+    public void toogleProgressBar() {
         ProgressBar progressBar = (ProgressBar) context
                 .findViewById(R.id.progressBarLinha);
 

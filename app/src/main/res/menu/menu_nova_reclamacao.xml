@@ -7,15 +7,16 @@
         android:id="@+id/action_save_reclamacao"
         android:title="Salvar"
         android:orderInCategory="1"
-        android:icon="@drawable/ic_action_save"
-        app:showAsAction="always" />
+        android:icon="@drawable/ic_save_white_36dp"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_recarregar_dados"
         android:title="Recarregar dados"
         android:orderInCategory="2"
-        android:icon="@drawable/ic_action_cached"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/ic_autorenew_white_36dp"
+        app:showAsAction="always"
+        android:visible="false"/>
 
     <item
         android:id="@+id/action_progresso"

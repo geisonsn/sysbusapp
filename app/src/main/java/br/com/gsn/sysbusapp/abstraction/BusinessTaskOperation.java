@@ -42,6 +42,10 @@ public abstract class BusinessTaskOperation<Params,Progress, Result> implements 
         this.menu = menu;
     }
 
+    public Menu getMenu() {
+        return this.menu;
+    }
+
     public void showMenuItemProgressBar() {
         this.menuItemProgressBar.setVisible(true);
     }

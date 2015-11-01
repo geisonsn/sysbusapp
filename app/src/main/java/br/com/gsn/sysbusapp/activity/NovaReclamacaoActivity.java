@@ -13,13 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import br.com.gsn.sysbusapp.R;
 import br.com.gsn.sysbusapp.abstraction.BusinessDelegate;
 import br.com.gsn.sysbusapp.abstraction.BusinessTaskOperation;
 import br.com.gsn.sysbusapp.business.NovaReclamacaoBusiness;
-import br.com.gsn.sysbusapp.enums.ObjetoReclamadoEnum;
 import br.com.gsn.sysbusapp.util.DatePickerUtil;
 import br.com.gsn.sysbusapp.util.Dates;
 import br.com.gsn.sysbusapp.util.TimePickerUtil;
@@ -78,13 +76,15 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
         //Registrando o delegate
         setBusinessDelegate();
 
-        delegate.initForm(idLinha);
+        delegate.inicializarCombos();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putLong("idLinha", idLinha);
+        if (idLinha != null) {
+            outState.putLong("idLinha", idLinha);
+        }
     }
 
     @Override
@@ -101,7 +101,9 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        delegate.setMenu(menu);
         delegate.setMenuItemProgressBar(menu.findItem(R.id.action_progresso));
+        delegate.listarLinhas(idLinha);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -120,8 +122,8 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
         }
 
         if (item.getItemId() == R.id.action_recarregar_dados) {
-            Toast.makeText(this, "Será implementado em breve", Toast.LENGTH_SHORT).show();
-            //TODO implementar recarremento de dados
+//            Toast.makeText(this, "Será implementado em breve", Toast.LENGTH_SHORT).show();
+            delegate.recarregarCombos();
         }
 
         return super.onOptionsItemSelected(item);
@@ -153,7 +155,9 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (position > 0) {
+            delegate.changeComboOrigemReclamacao(position);
+
+            /*if (position > 0) {
                 String[] source = getResources().getStringArray(R.array.objeto_reclamado_valores);
                 String reclamado = source[position];
                 ObjetoReclamadoEnum objetoReclamadoEnum = ObjetoReclamadoEnum.getFromDescricao(reclamado);
@@ -161,16 +165,18 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
                 handleContainerMotivoReclamacao(objetoReclamadoEnum);
 
                 if (!ObjetoReclamadoEnum.OUTROS.equals(objetoReclamadoEnum)) {
-                    delegate.listarOrigemReclamacao(objetoReclamadoEnum.name());
+                    delegate.listarOrigemReclamacao(objetoReclamadoEnum);
                 }
-            }
+            } else {
+                delegate.inicializarComboOrigemReclamacao();
+            }*/
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
     };
 
-    public void handleContainerMotivoReclamacao(ObjetoReclamadoEnum reclamado) {
+    /*public void handleContainerMotivoReclamacao(ObjetoReclamadoEnum reclamado) {
         View containerMotivoReclamacao = findViewById(R.id.container_motivo_reclamacao);
         View dividerMotivoReclamacao = findViewById(R.id.divider_motivo_reclamacao);
         if (ObjetoReclamadoEnum.OUTROS.equals(reclamado)) {
@@ -180,7 +186,7 @@ public class NovaReclamacaoActivity extends AppCompatActivity implements Busines
             containerMotivoReclamacao.setVisibility(View.VISIBLE);
             dividerMotivoReclamacao.setVisibility(View.VISIBLE);
         }
-    }
+    }*/
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
